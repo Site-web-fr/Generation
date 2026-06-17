@@ -34,6 +34,8 @@ jobs:
 
       - name: Build for GitHub Pages
         working-directory: halles-lez-landings
+        env:
+          GITHUB_PAGES: 'true'
         run: npm run build:pages
 
       - name: Upload artifact
