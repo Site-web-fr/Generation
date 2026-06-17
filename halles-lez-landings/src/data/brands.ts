@@ -8,6 +8,7 @@ export interface MenuItem {
 
 export interface Brand {
   slug: string;
+  logo: string;
   name: string;
   subtitle: string;
   tagline: string;
@@ -49,6 +50,7 @@ const MAPS =
 export const brands: Brand[] = [
   {
     slug: 'rouge-beef',
+    logo: '/logos/rouge-beef.svg',
     name: 'Rouge Beef',
     subtitle: 'Burgers & viandes maturées',
     tagline: 'Le burger haut de gamme du Massif Central',
@@ -96,6 +98,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'manita',
+    logo: '/logos/manita.svg',
     name: 'MANITA',
     subtitle: 'Saveurs entre Suds',
     tagline: 'La caravane gourmande des frères Pourcel',
@@ -141,6 +144,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'naked',
+    logo: '/logos/naked.svg',
     name: 'NAKED',
     subtitle: 'Bar à cocktails & œufs',
     tagline: 'L\'essentiel, dans sa plus simple apparence',
@@ -185,6 +189,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'blue-india',
+    logo: '/logos/blue-india.svg',
     name: 'Blue India',
     subtitle: 'Cuisine indienne moderne',
     tagline: 'L\'Inde revisitée, healthy et savoureuse',
@@ -231,6 +236,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'banger',
+    logo: '/logos/banger.svg',
     name: 'BANGER',
     subtitle: 'Smash burgers · Pancakes · Cookies',
     tagline: 'Attention, ça déchire !',
@@ -276,6 +282,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'soleira',
+    logo: '/logos/soleira.svg',
     name: 'SOLEIRA',
     subtitle: 'Cuisine du Sud-Ouest',
     tagline: 'Le Sud-Ouest en mode street food',
@@ -321,6 +328,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'casa-asado',
+    logo: '/logos/casa-asado.svg',
     name: 'Casa Asado',
     subtitle: 'Bar à viandes',
     tagline: 'L\'asado argentin au cœur des Halles',
@@ -366,6 +374,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'maria-bonita',
+    logo: '/logos/maria-bonita.svg',
     name: 'Maria Bonita',
     subtitle: 'Empanadas argentines',
     tagline: '100% latino, directement en Amérique du Sud',
@@ -411,6 +420,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'bambino-tonton',
+    logo: '/logos/bambino-tonton.svg',
     name: 'Bambino & Tonton Haricot',
     subtitle: 'Pizza Club · Bar à salades',
     tagline: 'Deux stands, une même exigence',
@@ -457,6 +467,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'la-bodeguita',
+    logo: '/logos/la-bodeguita.svg',
     name: 'La Bodeguita',
     subtitle: 'Paëllas & tapas espagnoles',
     tagline: 'La vraie paëlla en 15 minutes',

@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { brands } from '../data/brands';
+import { assetUrl, copyToClipboard, pageUrl } from '../utils/url';
 import './Hub.css';
 
 export default function Hub() {
+  const handleCopy = (slug: string) => {
+    copyToClipboard(pageUrl(slug));
+  };
+
   return (
     <div className="hub">
       <div className="hub-bg" />
@@ -29,6 +34,9 @@ export default function Hub() {
         >
           10 landing pages sur-mesure · Charte graphique · CRO · Animations · Uber Eats intégré
         </motion.p>
+        <motion.p className="hub-deploy-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+          📱 Accessible depuis votre téléphone une fois déployé sur GitHub Pages
+        </motion.p>
       </header>
 
       <div className="hub-grid">
@@ -52,14 +60,25 @@ export default function Hub() {
             >
               <div className="hub-card-glow" />
               <div className="hub-card-top">
-                <span className="hub-card-emoji">{brand.menu[0].emoji}</span>
+                <img src={assetUrl(`/logos/${brand.slug}.svg`)} alt="" className="hub-card-logo" />
                 {brand.uberEats && <span className="hub-uber-tag">Uber Eats</span>}
               </div>
               <h2>{brand.name}</h2>
               <p>{brand.subtitle}</p>
-              <span className="hub-card-cta">
-                Voir la démo →
-              </span>
+              <div className="hub-card-links">
+                <span className="hub-card-cta">Voir la démo →</span>
+                <button
+                  type="button"
+                  className="hub-copy-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCopy(brand.slug);
+                  }}
+                >
+                  📋 Lien mobile
+                </button>
+              </div>
             </Link>
           </motion.div>
         ))}

@@ -579,3 +579,78 @@
   color: var(--brand-text);
   border-top: 2px solid var(--brand-primary);
 }
+
+/* ─── Export PDF (print) ─── */
+@media print {
+  .no-print,
+  .landing-nav,
+  .sticky-cta,
+  .share-bar,
+  .hero-scroll,
+  .location-map iframe {
+    display: none !important;
+  }
+
+  .landing {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 2rem 1rem;
+    page-break-after: avoid;
+  }
+
+  .hero h1 {
+    -webkit-text-fill-color: #111 !important;
+    color: #111 !important;
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle,
+  .hero-desc,
+  .menu-card p,
+  .location-address,
+  .testimonial-card cite {
+    color: #444 !important;
+  }
+
+  .menu-card,
+  .perk-card,
+  .testimonial-card,
+  .location-section {
+    background: #f8f8f8 !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+  }
+
+  .btn-primary,
+  .menu-order {
+    color: #111 !important;
+  }
+
+  .final-cta::before {
+    content: 'Proposition commerciale — démo site web Halles du Lez';
+    display: block;
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .landing-footer {
+    padding-bottom: 1rem;
+  }
+
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.65rem;
+    color: #666;
+  }
+
+  .hero-ctas a[href]::after,
+  .menu-order::after {
+    content: none;
+  }
+}
+

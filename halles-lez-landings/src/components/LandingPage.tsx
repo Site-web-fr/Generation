@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import type { Brand } from '../data/brands';
+import ShareBar, { BrandLogo } from './ShareBar';
 import './LandingPage.css';
 
 interface Props {
@@ -71,7 +72,7 @@ export default function LandingPage({ brand }: Props) {
         <Link to="/" className="landing-nav-back">
           ← Propositions
         </Link>
-        <span className="landing-nav-logo">{brand.name}</span>
+        <BrandLogo slug={brand.slug} alt={brand.name} className="nav-logo" />
         <div className="landing-nav-actions">
           {brand.uberEats ? (
             <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-uber">
@@ -85,6 +86,8 @@ export default function LandingPage({ brand }: Props) {
         </div>
       </header>
 
+      <ShareBar slug={brand.slug} brandName={brand.name} />
+
       <motion.section ref={heroRef} className="hero">
         <div className="hero-bg" />
         <motion.div className="hero-content" style={{ y: heroY, opacity: heroOpacity }}>
@@ -96,6 +99,13 @@ export default function LandingPage({ brand }: Props) {
           >
             {brand.stand} · Halles du Lez
           </motion.span>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.25 }}
+          >
+            <BrandLogo slug={brand.slug} alt={brand.name} className="hero-logo" />
+          </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -284,7 +294,7 @@ export default function LandingPage({ brand }: Props) {
         <Link to="/">← Retour aux 10 propositions</Link>
       </footer>
 
-      <div className={`sticky-cta ${scrolled ? 'visible' : ''}`}>
+      <div className={`sticky-cta no-print ${scrolled ? 'visible' : ''}`}>
         {brand.uberEats ? (
           <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="sticky-btn sticky-uber">
             <span>Commander</span>

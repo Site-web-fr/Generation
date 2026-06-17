@@ -1,11 +1,13 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
+// GitHub Pages: https://site-web-fr.github.io/Generation/
+const base = process.env.GITHUB_PAGES === 'true' ? '/Generation/' : '/';
+
 export default defineConfig({
+  base,
   plugins: [react()],
   preview: {
-    // SPA fallback for client-side routes
     host: true,
   },
 });
