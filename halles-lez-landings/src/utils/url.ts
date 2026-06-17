@@ -8,8 +8,17 @@ export function assetUrl(path: string): string {
 /** Full public URL for a landing page — shareable from mobile. */
 export function pageUrl(slug?: string): string {
   const base = import.meta.env.BASE_URL;
+  const origin = window.location.origin;
+  const basePath = base.endsWith('/') ? base : `${base}/`;
+
+  // GitHub Pages project site: HashRouter (#/slug) car les sous-routes 404 sans serveur
+  if (base !== '/') {
+    const hash = slug ? `#/${slug}` : '#/';
+    return `${origin}${basePath}${hash}`;
+  }
+
   const path = slug ? `${base}${slug}`.replace(/\/{2,}/g, '/') : base;
-  return new URL(path, window.location.origin).href;
+  return new URL(path, origin).href;
 }
 
 export async function copyToClipboard(text: string): Promise<boolean> {

@@ -1,10 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Hub from './components/Hub';
 import LandingPage from './components/LandingPage';
 import { brands, getBrandBySlug } from './data/brands';
 
-const rawBase = import.meta.env.BASE_URL;
-const basename = rawBase === '/' ? undefined : rawBase.replace(/\/$/, '');
+const isGitHubPages = import.meta.env.BASE_URL !== '/';
+const Router = isGitHubPages ? HashRouter : BrowserRouter;
 
 function BrandRoute({ slug }: { slug: string }) {
   const brand = getBrandBySlug(slug);
@@ -14,7 +14,7 @@ function BrandRoute({ slug }: { slug: string }) {
 
 export default function App() {
   return (
-    <BrowserRouter basename={basename}>
+    <Router>
       <Routes>
         <Route path="/" element={<Hub />} />
         {brands.map((b) => (
@@ -22,6 +22,6 @@ export default function App() {
         ))}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }

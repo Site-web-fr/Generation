@@ -13,16 +13,16 @@ Une fois déployé, le site est accessible depuis **n'importe quel téléphone**
 
 | Commerce | URL |
 |----------|-----|
-| Rouge Beef | `https://site-web-fr.github.io/Generation/rouge-beef` |
-| MANITA | `https://site-web-fr.github.io/Generation/manita` |
-| NAKED | `https://site-web-fr.github.io/Generation/naked` |
-| Blue India | `https://site-web-fr.github.io/Generation/blue-india` |
-| BANGER | `https://site-web-fr.github.io/Generation/banger` |
-| SOLEIRA | `https://site-web-fr.github.io/Generation/soleira` |
-| Casa Asado | `https://site-web-fr.github.io/Generation/casa-asado` |
-| Maria Bonita | `https://site-web-fr.github.io/Generation/maria-bonita` |
-| Bambino & Tonton | `https://site-web-fr.github.io/Generation/bambino-tonton` |
-| La Bodeguita | `https://site-web-fr.github.io/Generation/la-bodeguita` |
+| Rouge Beef | `https://site-web-fr.github.io/Generation/#/rouge-beef` |
+| MANITA | `https://site-web-fr.github.io/Generation/#/manita` |
+| NAKED | `https://site-web-fr.github.io/Generation/#/naked` |
+| Blue India | `https://site-web-fr.github.io/Generation/#/blue-india` |
+| BANGER | `https://site-web-fr.github.io/Generation/#/banger` |
+| SOLEIRA | `https://site-web-fr.github.io/Generation/#/soleira` |
+| Casa Asado | `https://site-web-fr.github.io/Generation/#/casa-asado` |
+| Maria Bonita | `https://site-web-fr.github.io/Generation/#/maria-bonita` |
+| Bambino & Tonton | `https://site-web-fr.github.io/Generation/#/bambino-tonton` |
+| La Bodeguita | `https://site-web-fr.github.io/Generation/#/la-bodeguita` |
 
 ### Activer GitHub Pages (une seule fois)
 
