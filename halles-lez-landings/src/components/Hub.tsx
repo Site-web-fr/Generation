@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 import { brands } from '../data/brands';
+import { useSeo } from '../hooks/useSeo';
+import { hubSeoWithBrands } from '../utils/seo';
 import { assetUrl, copyToClipboard, pageUrl } from '../utils/url';
 import './Hub.css';
 
 export default function Hub() {
+  const seo = useMemo(() => hubSeoWithBrands(brands), []);
+  useSeo(seo);
+
   const handleCopy = (slug: string) => {
     copyToClipboard(pageUrl(slug));
   };
@@ -12,6 +18,7 @@ export default function Hub() {
   return (
     <div className="hub">
       <div className="hub-bg" />
+      <main>
       <header className="hub-header">
         <motion.span
           className="hub-badge"
@@ -94,6 +101,7 @@ export default function Hub() {
           </motion.div>
         ))}
       </div>
+      </main>
 
       <footer className="hub-footer">
         <p>

@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import type { Brand } from '../data/brands';
+import { useSeo } from '../hooks/useSeo';
 import ShareBar, { BrandLogo } from './ShareBar';
 import { assetUrl } from '../utils/url';
+import { brandSeo } from '../utils/seo';
 import './LandingPage.css';
 
 interface Props {
@@ -38,12 +40,10 @@ function Section({
 export default function LandingPage({ brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const featured = brand.menu[0];
+  const secondary = brand.menu[1];
+  const seo = useMemo(() => brandSeo(brand), [brand]);
+  useSeo(seo);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -95,29 +95,55 @@ export default function LandingPage({ brand }: Props) {
 
       <ShareBar slug={brand.slug} brandName={brand.name} />
 
-      <motion.section ref={heroRef} className="hero">
-        <div
-          className={`hero-bg ${brand.heroImage ? 'hero-bg--photo' : ''}`}
-          style={
-            brand.heroImage
-              ? ({ '--hero-photo': `url(${assetUrl(brand.heroImage)})` } as React.CSSProperties)
-              : undefined
-          }
-        />
-        <motion.div className="hero-content" style={{ y: heroY, opacity: heroOpacity }}>
-          <motion.span
-            className="hero-badge"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            {brand.stand} · Halles du Lez
-          </motion.span>
+      <main>
+      <motion.section ref={heroRef} className="hero" aria-label={`${brand.name} — accueil`}>
+        <div className="hero-bg" aria-hidden="true">
+          <div className="hero-orb hero-orb-1" />
+          <div className="hero-orb hero-orb-2" />
+        </div>
+
+        <div className="hero-layout">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.25 }}
+            className="hero-showcase"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
+            <div className="hero-visual">
+              {featured?.image ? (
+                <img
+                  src={assetUrl(featured.image)}
+                  alt={`${featured.name} — ${brand.name}`}
+                  className="hero-dish"
+                  fetchPriority="high"
+                />
+              ) : (
+                <div className="hero-dish hero-dish-fallback">{featured?.emoji ?? '🍽️'}</div>
+              )}
+              <div className="hero-visual-shine" aria-hidden="true" />
+              {featured?.badge && <span className="hero-offer-badge">{featured.badge}</span>}
+              {featured?.price && <span className="hero-price-tag">{featured.price}</span>}
+            </div>
+            {secondary?.image && (
+              <motion.div
+                className="hero-visual-secondary"
+                initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+                animate={{ opacity: 1, scale: 1, rotate: -6 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+              >
+                <img src={assetUrl(secondary.image)} alt={secondary.name} loading="lazy" />
+                <span>{secondary.name}</span>
+              </motion.div>
+            )}
+          </motion.div>
+
+          <motion.div
+            className="hero-copy"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.7 }}
+          >
+            <span className="hero-badge">{brand.stand} · Halles du Lez · Montpellier</span>
             <BrandLogo
               slug={brand.slug}
               alt={brand.name}
@@ -125,26 +151,22 @@ export default function LandingPage({ brand }: Props) {
               logo={brand.logo}
               logoFallback={brand.logoFallback}
             />
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            {brand.name}
-          </motion.h1>
-          <motion.p className="hero-subtitle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            {brand.tagline}
-          </motion.p>
-          <motion.p className="hero-desc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-            {brand.description}
-          </motion.p>
-          <motion.div
-            className="hero-ctas"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.75 }}
-          >
+            <h1>{brand.name}</h1>
+            <p className="hero-subtitle">{brand.tagline}</p>
+
+            {featured && (
+              <div className="hero-offer-card">
+                <p className="hero-offer-label">L&apos;incontournable</p>
+                <p className="hero-offer-title">
+                  {featured.name} <strong>{featured.price}</strong>
+                </p>
+                <p className="hero-offer-desc">{featured.description}</p>
+              </div>
+            )}
+
+            <p className="hero-desc">{brand.description}</p>
+
+            <div className="hero-ctas">
             {brand.uberEats ? (
               <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
                 <span className="uber-icon">UE</span>
@@ -158,25 +180,24 @@ export default function LandingPage({ brand }: Props) {
             <a href="#menu" className="btn btn-ghost btn-lg">
               {brand.ctaSecondary}
             </a>
+            </div>
+
+            <div className="hero-stats">
+              {brand.stats.map((s) => (
+                <div key={s.label} className="hero-stat">
+                  <strong>{s.value}</strong>
+                  <span>{s.label}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
-          <motion.div
-            className="hero-stats"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9 }}
-          >
-            {brand.stats.map((s) => (
-              <div key={s.label} className="hero-stat">
-                <strong>{s.value}</strong>
-                <span>{s.label}</span>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
+        </div>
+
         <motion.div
           className="hero-scroll"
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
+          aria-hidden="true"
         >
           ↓
         </motion.div>
@@ -342,6 +363,8 @@ export default function LandingPage({ brand }: Props) {
           )}
         </div>
       </Section>
+
+      </main>
 
       <footer className="landing-footer">
         <p>
