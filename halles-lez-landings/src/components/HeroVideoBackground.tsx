@@ -8,36 +8,39 @@ interface Props {
 
 export default function HeroVideoBackground({ src, poster }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   useEffect(() => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
     const sync = () => setActive(!motion.matches);
-
     sync();
     motion.addEventListener('change', sync);
     return () => motion.removeEventListener('change', sync);
   }, []);
 
+  const tryPlay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.play().catch(() => {});
+  };
+
   useEffect(() => {
     const el = videoRef.current;
     if (!active || !el) return;
 
+    tryPlay();
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
+        if (entry.isIntersecting) tryPlay();
+        else el.pause();
       },
-      { threshold: 0.15 },
+      { threshold: 0.05 },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [active]);
+  }, [active, src]);
 
   if (!active) return null;
 
@@ -52,7 +55,9 @@ export default function HeroVideoBackground({ src, poster }: Props) {
         autoPlay
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
+        onLoadedData={tryPlay}
+        onCanPlay={tryPlay}
         aria-hidden="true"
       />
       <div className="hero-video-overlay" aria-hidden="true" />
