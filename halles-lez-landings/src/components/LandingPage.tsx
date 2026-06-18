@@ -7,7 +7,7 @@ import ShareBar, { BrandLogo } from './ShareBar';
 import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
-import HeroVideoBackground from './HeroVideoBackground';
+import HeroDishVideo from './HeroDishVideo';
 import './LandingPage.css';
 
 interface Props {
@@ -101,9 +101,6 @@ export default function LandingPage({ brand }: Props) {
       <main>
       <motion.section ref={heroRef} className="hero" aria-label={`${brand.name} — accueil`}>
         <div className="hero-bg" aria-hidden="true">
-          {heroVideo && (
-            <HeroVideoBackground src={heroVideo.src} poster={brand.heroImage} />
-          )}
           <div className="hero-orb hero-orb-1" />
           <div className="hero-orb hero-orb-2" />
         </div>
@@ -116,7 +113,14 @@ export default function LandingPage({ brand }: Props) {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="hero-visual">
-              {featured?.image ? (
+              {heroVideo ? (
+                <HeroDishVideo
+                  src={heroVideo.src}
+                  poster={featured?.image ?? brand.heroImage ?? ''}
+                  alt={`${featured?.name ?? brand.name} — ${brand.name}`}
+                  objectPosition={heroVideo.objectPosition}
+                />
+              ) : featured?.image ? (
                 <img
                   src={assetUrl(featured.image)}
                   alt={`${featured.name} — ${brand.name}`}
