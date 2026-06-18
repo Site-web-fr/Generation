@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import type { Brand } from '../data/brands';
@@ -20,7 +21,7 @@ function Section({
   className = '',
   id,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   id?: string;
 }) {
@@ -72,7 +73,7 @@ export default function LandingPage({ brand }: Props) {
     '--font-heading-transform': brand.fonts.headingTransform ?? 'none',
     '--hero-pattern': brand.heroPattern,
     '--hero-glow': brand.heroGlow,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return (
     <div className="landing" style={style}>
@@ -268,7 +269,7 @@ export default function LandingPage({ brand }: Props) {
             <p>Consultez les avis des clients sur Google, ou suivez l’actu du stand sur ses réseaux.</p>
             <div className="reviews-actions">
               <a href={brand.googleReviewsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                ★ Voir les avis Google
+                🔎 Voir les avis Google
               </a>
               {brand.instagram && (
                 <a href={brand.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
@@ -307,12 +308,14 @@ export default function LandingPage({ brand }: Props) {
 
       <footer className="landing-footer">
         <p>{brand.name} · {brand.stand} · Halles du Lez · 1348 Avenue Raymond Dugrand, Montpellier</p>
-        <p className="swm-credit">
-          Maquette proposée par <strong>Site Web Montpellier</strong> ·{' '}
-          <a href="https://www.sitewebmontpellier.fr" target="_blank" rel="noopener noreferrer">
-            sitewebmontpellier.fr
-          </a>
-        </p>
+        {!pitchMode && (
+          <p className="swm-credit">
+            Maquette proposée par <strong>Site Web Montpellier</strong> ·{' '}
+            <a href="https://www.sitewebmontpellier.fr" target="_blank" rel="noopener noreferrer">
+              sitewebmontpellier.fr
+            </a>
+          </p>
+        )}
         <Link to="/">{pitchMode ? '← Retour aux Halles du Lez' : '← Tous les commerces'}</Link>
       </footer>
 

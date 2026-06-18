@@ -378,7 +378,7 @@ const RESIDENTS: Resident[] = [
     entrance: 'Entrée Nord',
     description:
       'Carte de croque-monsieur élaborée par la cheffe Camille Dreulle : recettes originales préparées sur place avec des produits frais et locaux.',
-    specialties: ['Croque jambon supérieur & truffe', 'Croque canard confit', 'Croque tome de Savoie IGP'],
+    specialties: ['Croque jambon supérieur & truffe', 'Croque canard confit', 'Croque tome de Savoie'],
     phone: '0756949442',
     web: 'jeanlecroquant.fr',
     uberEats: 'https://www.ubereats.com/fr/store/jean-le-croquant-halles-du-lez/sU14JZthQciMZY08mGsIRA',

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
+import type { CSSProperties } from 'react';
 import { brands } from '../data/brands';
 import { usePitchMode } from '../hooks/usePitchMode';
 import { useSeo } from '../hooks/useSeo';
@@ -57,7 +58,7 @@ export default function Hub() {
                     '--font-heading': brand.fonts.heading,
                     '--font-heading-spacing': brand.fonts.headingSpacing ?? 'normal',
                     '--font-heading-transform': brand.fonts.headingTransform ?? 'none',
-                  } as React.CSSProperties
+                  } as CSSProperties
                 }
               >
                 <div className="hub-card-glow" />
@@ -94,12 +95,14 @@ export default function Hub() {
             hallesdulez.com
           </a>
         </p>
-        <p>
-          Maquettes proposées par Site Web Montpellier ·{' '}
-          <a href="https://www.sitewebmontpellier.fr" target="_blank" rel="noopener noreferrer">
-            sitewebmontpellier.fr
-          </a>
-        </p>
+        {!pitchMode && (
+          <p>
+            Maquettes proposées par Site Web Montpellier ·{' '}
+            <a href="https://www.sitewebmontpellier.fr" target="_blank" rel="noopener noreferrer">
+              sitewebmontpellier.fr
+            </a>
+          </p>
+        )}
       </footer>
     </div>
   );
