@@ -20,6 +20,7 @@ export default function App() {
         {brands.map((b) => (
           <Route key={b.slug} path={`/${b.slug}`} element={<BrandRoute slug={b.slug} />} />
         ))}
+        <Route path="/bambino-tonton" element={<Navigate to="/bambino" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

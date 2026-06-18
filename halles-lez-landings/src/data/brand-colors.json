@@ -1,0 +1,187 @@
+{
+  "aux-copains-dabord": {
+    "primary": "#000000",
+    "accent": "#000000",
+    "bg": "#0a0a0a"
+  },
+  "kochi": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "la-vita-al-dente": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "bar-des-halles": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "bar-a-lez": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "la-bodeguita": {
+    "primary": "#030302",
+    "accent": "#030301",
+    "bg": "#0a0a0a"
+  },
+  "soleira": {
+    "primary": "#1d1d1b",
+    "accent": "#1e1e1c",
+    "bg": "#0a0a0a"
+  },
+  "comptoir-alaryk": {
+    "primary": "#161613",
+    "accent": "#171714",
+    "bg": "#0a0a0a"
+  },
+  "naked": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "blue-india": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "manita": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "chicken-shake": {
+    "primary": "#1d1d1b",
+    "accent": "#1c1c1a",
+    "bg": "#0a0a0a"
+  },
+  "dom-pata-negra": {
+    "primary": "#171714",
+    "accent": "#161614",
+    "bg": "#0a0a0a"
+  },
+  "comptoir-des-iles": {
+    "primary": "#171714",
+    "accent": "#161614",
+    "bg": "#0a0a0a"
+  },
+  "bonobo": {
+    "primary": "#000000",
+    "accent": "#000000",
+    "bg": "#0a0a0a"
+  },
+  "ummi": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "casa-asado": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "tonton-haricot": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "bambino": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "ma-cocotte": {
+    "primary": "#171713",
+    "accent": "#171714",
+    "bg": "#0a0a0a"
+  },
+  "mamaona": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "oh-my-goz": {
+    "primary": "#020201",
+    "accent": "#010101",
+    "bg": "#0a0a0a"
+  },
+  "hyoga": {
+    "primary": "#dedede",
+    "accent": "#393939",
+    "bg": "#c0c0c0"
+  },
+  "latelier": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "sax": {
+    "primary": "#dedede",
+    "accent": "#393939",
+    "bg": "#c0c0c0"
+  },
+  "jean-le-croquant": {
+    "primary": "#0e0e0e",
+    "accent": "#0e0e0e",
+    "bg": "#0a0a0a"
+  },
+  "opa": {
+    "primary": "#1d1d1b",
+    "accent": "#1e1e1c",
+    "bg": "#0a0a0a"
+  },
+  "bouchon-petit-jardin": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "maria-bonita": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "tok-tok-wok": {
+    "primary": "#000000",
+    "accent": "#000000",
+    "bg": "#0a0a0a"
+  },
+  "clara-jung": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  },
+  "banger": {
+    "primary": "#1d1d1b",
+    "accent": "#1e1e1c",
+    "bg": "#0a0a0a"
+  },
+  "cherry": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "rouge-beef": {
+    "primary": "#171714",
+    "accent": "#171713",
+    "bg": "#0a0a0a"
+  },
+  "pitas-de-sacha": {
+    "primary": "#171714",
+    "accent": "#161614",
+    "bg": "#0a0a0a"
+  },
+  "rotisserie-du-lez": {
+    "primary": "#171714",
+    "accent": "#161614",
+    "bg": "#0a0a0a"
+  },
+  "lepicurieuse": {
+    "primary": "#171714",
+    "accent": "#161613",
+    "bg": "#0a0a0a"
+  }
+}

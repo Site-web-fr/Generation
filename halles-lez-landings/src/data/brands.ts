@@ -520,6 +520,44 @@ const rawBrands: Brand[] = [
   },
 ];
 
+import residents from './residents-manifest.json';
+import { brandFromResident, type ResidentManifest } from './brand-factory';
+
+function buildDetailedOverrides(): Record<string, Brand> {
+  const map: Record<string, Brand> = {};
+  for (const b of rawBrands) {
+    if (b.slug === 'bambino-tonton') {
+      map.bambino = {
+        ...b,
+        slug: 'bambino',
+        name: 'Bambino',
+        subtitle: 'Pizza Club',
+        tagline: 'Deux stands, une même exigence — pizzas napolitaines',
+        stand: 'Stand 3B',
+        menu: [b.menu[0], b.menu[2], b.menu[0]],
+        ctaPrimary: 'Commander Bambino sur Uber Eats',
+        ctaSecondary: 'Voir les pizzas',
+      };
+      map['tonton-haricot'] = {
+        ...b,
+        slug: 'tonton-haricot',
+        name: 'Tonton Haricot',
+        subtitle: 'Bar à salades',
+        tagline: 'Composez votre salade aux Halles du Lez',
+        stand: 'Stand 3A',
+        menu: [b.menu[1], b.menu[1], b.menu[1]],
+        ctaPrimary: 'Composer ma salade',
+        ctaSecondary: 'Voir la carte',
+      };
+    } else {
+      map[b.slug] = b;
+    }
+  }
+  return map;
+}
+
+const detailedBySlug = buildDetailedOverrides();
+
 function withAssets(brand: Brand): Brand {
   const assets = getBrandAssets(brand.slug);
   return {
@@ -536,7 +574,10 @@ function withAssets(brand: Brand): Brand {
   };
 }
 
-export const brands: Brand[] = rawBrands.map(withAssets);
+export const brands: Brand[] = (residents as ResidentManifest[]).map((r) => {
+  const detailed = detailedBySlug[r.slug];
+  return withAssets(detailed ?? brandFromResident(r));
+});
 
 export function getBrandBySlug(slug: string): Brand | undefined {
   return brands.find((b) => b.slug === slug);

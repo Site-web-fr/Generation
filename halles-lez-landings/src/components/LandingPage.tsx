@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import { useSeo } from '../hooks/useSeo';
 import ShareBar, { BrandLogo } from './ShareBar';
+import { brands } from '../data/brands';
 import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
@@ -382,7 +383,7 @@ export default function LandingPage({ brand }: Props) {
         </p>
         {brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
         {heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
-        <Link to="/">← Retour aux 10 propositions</Link>
+        <Link to="/">← Retour aux {brands.length} propositions</Link>
       </footer>
 
       <div className={`sticky-cta no-print ${scrolled ? 'visible' : ''}`}>

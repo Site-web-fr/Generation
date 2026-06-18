@@ -56,8 +56,8 @@ export const brandVideos: Record<string, BrandVideo> = {
     objectPosition: 'center 54%',
     credit: 'Vidéo © @mariabonitamontpellier · Instagram',
   },
-  'bambino-tonton': {
-    src: '/videos/bambino-tonton.mp4',
+  bambino: {
+    src: '/videos/bambino.mp4',
     reelUrl: IG('C76Nw3JNk2P'),
     objectPosition: 'center 50%',
     credit: 'Vidéo © @bambinopizzaclub · Instagram',

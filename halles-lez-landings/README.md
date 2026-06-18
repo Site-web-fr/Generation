@@ -1,6 +1,6 @@
 # Halles du Lez — Propositions Landing Pages
 
-10 landing pages de démonstration pour la prospection commerciale des commerces des **Halles du Lez** (Montpellier).
+37 landing pages de démonstration pour la prospection commerciale des **37 corners** du food court des **Halles du Lez** (Montpellier).
 
 ## Voir sur mobile (GitHub Pages)
 
@@ -39,7 +39,7 @@ Chaque landing a un bouton **📱 Partager** et **📄 Export PDF** (impression 
 - Hero plein écran avec photo réelle par commerce
 - Galerie « En images » + lien Instagram
 - Menu avec photos de plats (remplaçables par visuels Insta)
-- Hub central listant les 10 propositions
+- Hub central listant les 37 propositions (logos officiels Halles du Lez)
 - Landing page par commerce avec charte graphique dédiée
 - Animations Framer Motion, CRO (sticky CTA, urgence, social proof)
 - Uber Eats intégré : Rouge Beef, Blue India, Soleira, Bambino

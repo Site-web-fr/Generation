@@ -39,7 +39,7 @@ export default function Hub() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          10 landing pages sur-mesure · Charte graphique · CRO · Animations · Uber Eats intégré
+          {brands.length} landing pages sur-mesure · Logos officiels Halles du Lez · Charte graphique · CRO
         </motion.p>
         <motion.p className="hub-deploy-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
           📱 Accessible depuis votre téléphone une fois déployé sur GitHub Pages
@@ -82,6 +82,7 @@ export default function Hub() {
                 {brand.uberEats && <span className="hub-uber-tag">Uber Eats</span>}
               </div>
               <h2>{brand.name}</h2>
+              <p className="hub-card-stand">{brand.stand}</p>
               <p>{brand.subtitle}</p>
               <div className="hub-card-links">
                 <span className="hub-card-cta">Voir la démo →</span>

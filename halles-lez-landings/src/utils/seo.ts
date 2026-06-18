@@ -94,7 +94,7 @@ export function brandSeo(brand: Brand): SeoConfig {
 
 export function hubSeoWithBrands(brands: Brand[]): SeoConfig {
   return {
-    title: `${SITE_NAME} — 10 restaurants & food court`,
+    title: `${SITE_NAME} — ${brands.length} restaurants & food court`,
     description:
       'Rouge Beef, MANITA, Blue India, BANGER, SOLEIRA, Casa Asado, Maria Bonita, Bambino, La Bodeguita — corners gastronomiques aux Halles du Lez, Montpellier 34000.',
     canonical: HUB_URL,
