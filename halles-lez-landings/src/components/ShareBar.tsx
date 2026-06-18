@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { assetUrl, copyToClipboard, exportPdf, pageUrl } from '../utils/url';
+import { pitchPageUrl } from '../utils/pitch-mode';
 import './ShareBar.css';
 
 interface Props {
   slug: string;
   brandName: string;
+  pitchMode?: boolean;
 }
 
-export default function ShareBar({ slug, brandName }: Props) {
+export default function ShareBar({ slug, brandName, pitchMode = false }: Props) {
   const [copied, setCopied] = useState(false);
-  const url = pageUrl(slug);
+  const url = pitchMode ? pitchPageUrl(slug) : pageUrl(slug);
 
   const handleCopy = async () => {
     const ok = await copyToClipboard(url);
@@ -24,7 +26,9 @@ export default function ShareBar({ slug, brandName }: Props) {
       try {
         await navigator.share({
           title: `${brandName} — Halles du Lez`,
-          text: `Découvrez la proposition site web pour ${brandName}`,
+          text: pitchMode
+            ? `Découvrez ${brandName} aux Halles du Lez`
+            : `Découvrez la proposition site web pour ${brandName}`,
           url,
         });
         return;
@@ -39,7 +43,7 @@ export default function ShareBar({ slug, brandName }: Props) {
     <div className="share-bar no-print">
       <div className="share-bar-inner">
         <div className="share-bar-url">
-          <span className="share-label">Lien démo mobile</span>
+          <span className="share-label">{pitchMode ? 'Partager cette page' : 'Lien démo mobile'}</span>
           <code>{url}</code>
         </div>
         <div className="share-bar-actions">

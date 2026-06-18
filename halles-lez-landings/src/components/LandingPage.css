@@ -1046,7 +1046,7 @@
 /* Testimonial */
 .social-section {
   padding: 3rem 1.5rem 5rem;
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -1077,6 +1077,109 @@
   color: var(--brand-muted);
   font-size: 0.9rem;
   font-style: normal;
+}
+
+/* Google Reviews */
+.google-reviews-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.google-reviews-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.google-reviews-header h2 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.google-rating-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--brand-primary) 10%, var(--brand-bg-alt));
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent);
+}
+
+.google-rating-summary strong {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.google-rating-count {
+  color: var(--brand-muted);
+  font-size: 0.85rem;
+}
+
+.google-stars {
+  display: inline-flex;
+  gap: 0.1rem;
+  letter-spacing: 0.02em;
+}
+
+.google-stars .star-filled {
+  color: #fbbf24;
+}
+
+.google-stars .star-empty {
+  color: color-mix(in srgb, var(--brand-muted) 40%, transparent);
+}
+
+.google-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.google-review-card {
+  margin: 0;
+  padding: 1.35rem;
+  border-radius: 18px;
+  background: var(--brand-bg-alt);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 8%, transparent);
+}
+
+.google-review-card p {
+  margin: 0.75rem 0;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+.google-review-card cite {
+  color: var(--brand-muted);
+  font-size: 0.85rem;
+  font-style: normal;
+}
+
+.google-reviews-link {
+  display: inline-flex;
+  color: var(--brand-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.google-reviews-link:hover {
+  text-decoration: underline;
+}
+
+.btn-call {
+  white-space: nowrap;
+}
+
+.sticky-call {
+  background: color-mix(in srgb, var(--brand-accent) 18%, var(--brand-bg-alt));
+  border-color: color-mix(in srgb, var(--brand-accent) 35%, transparent);
 }
 
 /* Location */

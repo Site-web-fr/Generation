@@ -12,6 +12,9 @@ import { brandSeo } from '../utils/seo';
 import HeroDishVideo from './HeroDishVideo';
 import HeroIntro from './HeroIntro';
 import InteractiveMenu from './InteractiveMenu';
+import GoogleReviews from './GoogleReviews';
+import { usePitchMode } from '../hooks/usePitchMode';
+import { formatPhoneDisplay, phoneHref } from '../data/stand-contacts';
 import './LandingPage.css';
 
 interface Props {
@@ -46,6 +49,7 @@ function Section({
 export default function LandingPage({ brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
+  const pitchMode = usePitchMode();
   const heroRef = useRef(null);
   const featured = brand.menu[0];
   const secondary = brand.menu[1];
@@ -91,7 +95,7 @@ export default function LandingPage({ brand }: Props) {
       />
       <header className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <Link to="/" className="landing-nav-back">
-          ← Propositions
+          {pitchMode ? '← Halles du Lez' : '← Propositions'}
         </Link>
         <BrandHeroLogo
           slug={brand.slug}
@@ -104,6 +108,11 @@ export default function LandingPage({ brand }: Props) {
           className="nav-logo"
         />
         <div className="landing-nav-actions">
+          {brand.phone && (
+            <a href={phoneHref(brand.phone)} className="btn btn-sm btn-call">
+              Appeler
+            </a>
+          )}
           {brand.uberEats ? (
             <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-uber">
               Uber Eats
@@ -116,7 +125,7 @@ export default function LandingPage({ brand }: Props) {
         </div>
       </header>
 
-      <ShareBar slug={brand.slug} brandName={brand.name} />
+      <ShareBar slug={brand.slug} brandName={brand.name} pitchMode={pitchMode} />
 
       <main>
       <motion.section ref={heroRef} className="hero" aria-label={`${brand.name} — accueil`}>
@@ -221,6 +230,11 @@ export default function LandingPage({ brand }: Props) {
                 {brand.ctaPrimary}
               </a>
             )}
+            {brand.phone && (
+              <a href={phoneHref(brand.phone)} className="btn btn-outline btn-lg btn-call">
+                📞 {formatPhoneDisplay(brand.phone)}
+              </a>
+            )}
             <a href="#menu" className="btn btn-ghost btn-lg">
               {brand.ctaSecondary}
             </a>
@@ -248,9 +262,19 @@ export default function LandingPage({ brand }: Props) {
       </motion.section>
 
       <div className="urgency-bar">
-        <span>🔥 Ouvert aujourd&apos;hui</span>
-        <span className="sep">·</span>
-        <span>{brand.hours}</span>
+        {pitchMode ? (
+          <>
+            <span>📍 {brand.stand}</span>
+            <span className="sep">·</span>
+            <span>{brand.hours}</span>
+          </>
+        ) : (
+          <>
+            <span>🔥 Ouvert aujourd&apos;hui</span>
+            <span className="sep">·</span>
+            <span>{brand.hours}</span>
+          </>
+        )}
         <span className="sep">·</span>
         <span>Tram L3 Pablo Picasso</span>
       </div>
@@ -313,13 +337,19 @@ export default function LandingPage({ brand }: Props) {
         </Section>
       )}
 
-      <Section className="social-section">
-        <div className="testimonial-card">
-          <div className="quote-mark">"</div>
-          <p>{brand.testimonials[0].text}</p>
-          <cite>— {brand.testimonials[0].author}</cite>
-        </div>
-      </Section>
+      {brand.googleReviews ? (
+        <Section className="social-section">
+          <GoogleReviews brand={brand} reviews={brand.googleReviews} />
+        </Section>
+      ) : (
+        <Section className="social-section">
+          <div className="testimonial-card">
+            <div className="quote-mark">&ldquo;</div>
+            <p>{brand.testimonials[0].text}</p>
+            <cite>— {brand.testimonials[0].author}</cite>
+          </div>
+        </Section>
+      )}
 
       <Section className="location-section" id="venir">
         <div className="location-grid">
@@ -332,7 +362,17 @@ export default function LandingPage({ brand }: Props) {
               {brand.phone && <li><strong>Tél</strong> {brand.phone}</li>}
             </ul>
             <div className="location-actions">
-              <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              {brand.phone && (
+                <a href={phoneHref(brand.phone)} className="btn btn-primary btn-call">
+                  📞 Appeler {formatPhoneDisplay(brand.phone)}
+                </a>
+              )}
+              <a
+                href={brand.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn ${brand.phone ? 'btn-outline' : 'btn-primary'}`}
+              >
                 📍 Itinéraire Google Maps
               </a>
               {brand.instagram && (
@@ -377,15 +417,29 @@ export default function LandingPage({ brand }: Props) {
       </main>
 
       <footer className="landing-footer">
-        <p>
-          Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
-        </p>
-        {brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
-        {heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
-        <Link to="/">← Retour aux {brands.length} propositions</Link>
+        {pitchMode ? (
+          <p>
+            {brand.name} · {brand.stand} · Halles du Lez Montpellier
+          </p>
+        ) : (
+          <p>
+            Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
+          </p>
+        )}
+        {!pitchMode && brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
+        {!pitchMode && heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
+        <Link to="/">
+          {pitchMode ? '← Retour aux Halles du Lez' : `← Retour aux ${brands.length} propositions`}
+        </Link>
       </footer>
 
       <div className={`sticky-cta no-print ${scrolled ? 'visible' : ''}`}>
+        {brand.phone && (
+          <a href={phoneHref(brand.phone)} className="sticky-btn sticky-call">
+            <span>Appeler</span>
+            <small>{formatPhoneDisplay(brand.phone)}</small>
+          </a>
+        )}
         {brand.uberEats ? (
           <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="sticky-btn sticky-uber">
             <span>Commander</span>
