@@ -68,6 +68,18 @@ public/
 
 Les chemins sont configurés dans `src/data/assets.ts`.
 
+### Sources des photos actuelles
+
+| Commerce | Source réelle | Complément |
+|----------|---------------|------------|
+| MANITA | Photos clients Sluurpy (@manita_montpellier) | — |
+| Blue India | Claap.fr + Instagram @blueindia_mtp | Thali IA |
+| SOLEIRA | MarcheDuLez.com | Plats IA |
+| Rouge Beef | Studio Therese (charte) | Burger IA |
+| Autres | — | Plats IA inspirés des menus Insta |
+
+Pour remplacer par les vraies photos Instagram : déposer les fichiers JPG dans `public/photos/menu/` et relancer le déploiement.
+
 ## Build
 
 ```bash
