@@ -80,7 +80,19 @@ Les chemins sont configurés dans `src/data/assets.ts`.
 
 Pour remplacer par les vraies photos Instagram : déposer les fichiers JPG dans `public/photos/menu/` et relancer le déploiement.
 
-## Build
+## Vidéos promo hero (Instagram Reels)
+
+Les fonds animés du hero utilisent des reels Instagram hébergés dans `public/videos/` (un MP4 par commerce).
+
+```bash
+# Télécharger les 8 reels accessibles (yt-dlp requis)
+python3 scripts/fetch-instagram-videos.py
+```
+
+Les URLs sources sont listées dans `src/data/videos.ts`. Soleira et La Bodeguita utilisent une boucle Ken Burns à partir de la photo hero tant que leurs reels ne sont pas téléchargeables sans connexion Instagram.
+
+Le composant `HeroVideoBackground` respecte `prefers-reduced-motion` et met en pause la vidéo hors écran.
+
 
 ```bash
 npm run build          # local

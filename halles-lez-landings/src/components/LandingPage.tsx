@@ -4,8 +4,10 @@ import { motion, useInView } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import { useSeo } from '../hooks/useSeo';
 import ShareBar, { BrandLogo } from './ShareBar';
+import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
+import HeroVideoBackground from './HeroVideoBackground';
 import './LandingPage.css';
 
 interface Props {
@@ -42,6 +44,7 @@ export default function LandingPage({ brand }: Props) {
   const heroRef = useRef(null);
   const featured = brand.menu[0];
   const secondary = brand.menu[1];
+  const heroVideo = useMemo(() => getBrandVideo(brand.slug), [brand.slug]);
   const seo = useMemo(() => brandSeo(brand), [brand]);
   useSeo(seo);
 
@@ -98,6 +101,9 @@ export default function LandingPage({ brand }: Props) {
       <main>
       <motion.section ref={heroRef} className="hero" aria-label={`${brand.name} — accueil`}>
         <div className="hero-bg" aria-hidden="true">
+          {heroVideo && (
+            <HeroVideoBackground src={heroVideo.src} poster={brand.heroImage} />
+          )}
           <div className="hero-orb hero-orb-1" />
           <div className="hero-orb hero-orb-2" />
         </div>
@@ -371,6 +377,7 @@ export default function LandingPage({ brand }: Props) {
           Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
         </p>
         {brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
+        {heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
         <Link to="/">← Retour aux 10 propositions</Link>
       </footer>
 
