@@ -35,7 +35,10 @@ Chaque landing a un bouton **📱 Partager** et **📄 Export PDF** (impression 
 
 ## Fonctionnalités
 
-- Logos SVG par marque (inspirés de leur identité)
+- Logos officiels Halles du Lez + photos des stands
+- Hero plein écran avec photo réelle par commerce
+- Galerie « En images » + lien Instagram
+- Menu avec photos de plats (remplaçables par visuels Insta)
 - Hub central listant les 10 propositions
 - Landing page par commerce avec charte graphique dédiée
 - Animations Framer Motion, CRO (sticky CTA, urgence, social proof)
@@ -50,6 +53,20 @@ npm run dev
 ```
 
 Ouvrir `http://localhost:5173`
+
+## Ajouter des visuels Instagram
+
+Remplacer les fichiers dans `public/` :
+
+```
+public/
+  logos-official/   → logo PNG transparent par slug
+  photos/hero/      → 1 photo hero (jpg ou png)
+  photos/menu/      → slug-1, slug-2, slug-3 (1 par plat)
+  photos/gallery/   → photos supplémentaires
+```
+
+Les chemins sont configurés dans `src/data/assets.ts`.
 
 ## Build
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import ShareBar, { BrandLogo } from './ShareBar';
+import { assetUrl } from '../utils/url';
 import './LandingPage.css';
 
 interface Props {
@@ -72,7 +73,13 @@ export default function LandingPage({ brand }: Props) {
         <Link to="/" className="landing-nav-back">
           ← Propositions
         </Link>
-        <BrandLogo slug={brand.slug} alt={brand.name} className="nav-logo" />
+        <BrandLogo
+          slug={brand.slug}
+          alt={brand.name}
+          className="nav-logo"
+          logo={brand.logo}
+          logoFallback={brand.logoFallback}
+        />
         <div className="landing-nav-actions">
           {brand.uberEats ? (
             <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-uber">
@@ -89,7 +96,14 @@ export default function LandingPage({ brand }: Props) {
       <ShareBar slug={brand.slug} brandName={brand.name} />
 
       <motion.section ref={heroRef} className="hero">
-        <div className="hero-bg" />
+        <div
+          className={`hero-bg ${brand.heroImage ? 'hero-bg--photo' : ''}`}
+          style={
+            brand.heroImage
+              ? ({ '--hero-photo': `url(${assetUrl(brand.heroImage)})` } as React.CSSProperties)
+              : undefined
+          }
+        />
         <motion.div className="hero-content" style={{ y: heroY, opacity: heroOpacity }}>
           <motion.span
             className="hero-badge"
@@ -104,7 +118,13 @@ export default function LandingPage({ brand }: Props) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.25 }}
           >
-            <BrandLogo slug={brand.slug} alt={brand.name} className="hero-logo" />
+            <BrandLogo
+              slug={brand.slug}
+              alt={brand.name}
+              className="hero-logo"
+              logo={brand.logo}
+              logoFallback={brand.logoFallback}
+            />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -205,7 +225,13 @@ export default function LandingPage({ brand }: Props) {
               transition={{ delay: i * 0.12 }}
               whileHover={{ y: -6 }}
             >
-              <div className="menu-emoji">{item.emoji}</div>
+              {item.image ? (
+                <div className="menu-photo-wrap">
+                  <img src={assetUrl(item.image)} alt={item.name} className="menu-photo" loading="lazy" />
+                </div>
+              ) : (
+                <div className="menu-emoji">{item.emoji}</div>
+              )}
               {item.badge && <span className="menu-badge">{item.badge}</span>}
               <h3>{item.name}</h3>
               <p>{item.description}</p>
@@ -225,6 +251,36 @@ export default function LandingPage({ brand }: Props) {
           ))}
         </div>
       </Section>
+
+      {brand.gallery && brand.gallery.length > 0 && (
+        <Section className="gallery-section" id="galerie">
+          <div className="section-header">
+            <span className="section-label">En images</span>
+            <h2>L&apos;ambiance {brand.name}</h2>
+          </div>
+          <div className="gallery-grid">
+            {brand.gallery.map((img, i) => (
+              <motion.figure
+                key={img.src}
+                className="gallery-item"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+              >
+                <img src={assetUrl(img.src)} alt={img.alt} loading="lazy" />
+              </motion.figure>
+            ))}
+          </div>
+          {brand.instagram && (
+            <p className="gallery-instagram">
+              <a href={brand.instagram} target="_blank" rel="noopener noreferrer">
+                Voir plus sur Instagram →
+              </a>
+            </p>
+          )}
+        </Section>
+      )}
 
       <Section className="social-section">
         <div className="testimonial-card">
@@ -291,6 +347,7 @@ export default function LandingPage({ brand }: Props) {
         <p>
           Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
         </p>
+        {brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
         <Link to="/">← Retour aux 10 propositions</Link>
       </footer>
 

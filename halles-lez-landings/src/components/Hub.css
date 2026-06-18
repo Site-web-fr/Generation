@@ -84,6 +84,29 @@
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.hub-card-photo {
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-photo);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  transition: opacity 0.3s, transform 0.4s;
+}
+
+.hub-card:hover .hub-card-photo {
+  opacity: 0.5;
+  transform: scale(1.03);
+}
+
+.hub-card-top,
+.hub-card h2,
+.hub-card p,
+.hub-card-links {
+  position: relative;
+  z-index: 1;
+}
+
 .hub-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);

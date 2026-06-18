@@ -141,11 +141,29 @@
   background: var(--hero-pattern), var(--hero-glow), var(--brand-bg);
 }
 
-.hero-bg::after {
+.hero-bg--photo {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 50%, var(--brand-bg) 100%),
+    var(--hero-pattern),
+    var(--hero-glow),
+    var(--brand-bg);
+}
+
+.hero-bg--photo::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, var(--brand-bg) 100%);
+  background-image: var(--hero-photo);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.1) contrast(1.05);
+}
+
+.hero-bg--photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, var(--brand-bg) 100%);
 }
 
 .hero-content {
@@ -319,11 +337,51 @@
 
 .menu-card {
   position: relative;
-  padding: 2rem;
+  padding: 0;
   background: var(--brand-bg-alt);
   border-radius: 24px;
   border: 1px solid color-mix(in srgb, var(--brand-text) 8%, transparent);
   transition: box-shadow 0.3s, border-color 0.3s;
+  overflow: hidden;
+}
+
+.menu-card .menu-badge {
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+
+.menu-card h3,
+.menu-card p,
+.menu-card .menu-footer {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.menu-card h3 {
+  padding-top: 0.25rem;
+}
+
+.menu-card .menu-footer {
+  padding-bottom: 1.5rem;
+}
+
+.menu-photo-wrap {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.menu-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.menu-card:hover .menu-photo {
+  transform: scale(1.05);
 }
 
 .menu-card:hover {
@@ -334,6 +392,7 @@
 .menu-emoji {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  padding: 1.5rem 1.5rem 0;
 }
 
 .menu-badge {
@@ -382,6 +441,60 @@
 
 .menu-order:hover {
   text-decoration: underline;
+}
+
+/* Gallery */
+.gallery-section {
+  padding: 4rem 1.5rem 5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid color-mix(in srgb, var(--brand-text) 10%, transparent);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04);
+}
+
+.gallery-instagram {
+  text-align: center;
+  margin: 2rem 0 0;
+}
+
+.gallery-instagram a {
+  color: var(--brand-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.gallery-instagram a:hover {
+  text-decoration: underline;
+}
+
+.image-credit {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-top: 0.25rem;
 }
 
 /* Testimonial */

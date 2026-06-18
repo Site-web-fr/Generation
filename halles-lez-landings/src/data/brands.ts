@@ -1,14 +1,21 @@
+import { getBrandAssets } from './assets';
+
 export interface MenuItem {
   name: string;
   description: string;
   price: string;
   badge?: string;
   emoji: string;
+  image?: string;
 }
 
 export interface Brand {
   slug: string;
   logo: string;
+  logoFallback?: string;
+  heroImage?: string;
+  gallery?: { src: string; alt: string }[];
+  imageCredit?: string;
   name: string;
   subtitle: string;
   tagline: string;
@@ -47,7 +54,7 @@ const ADDRESS = '1348 Avenue Raymond Dugrand, Halles du Lez — 34000 Montpellie
 const MAPS =
   'https://www.google.com/maps/search/?api=1&query=1348+Avenue+Raymond+Dugrand+Montpellier';
 
-export const brands: Brand[] = [
+const rawBrands: Brand[] = [
   {
     slug: 'rouge-beef',
     logo: '/logos/rouge-beef.svg',
@@ -512,6 +519,24 @@ export const brands: Brand[] = [
     ctaSecondary: 'Voir les tapas',
   },
 ];
+
+function withAssets(brand: Brand): Brand {
+  const assets = getBrandAssets(brand.slug);
+  return {
+    ...brand,
+    logo: assets.logo,
+    logoFallback: assets.logoFallback,
+    heroImage: assets.heroImage,
+    gallery: assets.gallery,
+    imageCredit: assets.imageCredit,
+    menu: brand.menu.map((item, i) => ({
+      ...item,
+      image: assets.menuImages[i] || item.image,
+    })),
+  };
+}
+
+export const brands: Brand[] = rawBrands.map(withAssets);
 
 export function getBrandBySlug(slug: string): Brand | undefined {
   return brands.find((b) => b.slug === slug);

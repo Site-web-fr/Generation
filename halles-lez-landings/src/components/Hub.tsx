@@ -55,12 +55,23 @@ export default function Hub() {
                   '--card-primary': brand.colors.primary,
                   '--card-bg': brand.colors.bg,
                   '--card-accent': brand.colors.accent,
+                  '--card-photo': brand.heroImage ? `url(${assetUrl(brand.heroImage)})` : 'none',
                 } as React.CSSProperties
               }
             >
+              {brand.heroImage && <div className="hub-card-photo" aria-hidden />}
               <div className="hub-card-glow" />
               <div className="hub-card-top">
-                <img src={assetUrl(`/logos/${brand.slug}.svg`)} alt="" className="hub-card-logo" />
+                <img
+                  src={assetUrl(brand.logo)}
+                  alt=""
+                  className="hub-card-logo"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    const fb = assetUrl(brand.logoFallback ?? `/logos/${brand.slug}.svg`);
+                    if (img.src !== fb) img.src = fb;
+                  }}
+                />
                 {brand.uberEats && <span className="hub-uber-tag">Uber Eats</span>}
               </div>
               <h2>{brand.name}</h2>

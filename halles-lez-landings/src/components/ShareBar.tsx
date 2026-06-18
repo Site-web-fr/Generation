@@ -58,12 +58,31 @@ export default function ShareBar({ slug, brandName }: Props) {
   );
 }
 
-export function BrandLogo({ slug, alt, className = '' }: { slug: string; alt: string; className?: string }) {
+export function BrandLogo({
+  slug,
+  alt,
+  className = '',
+  logo,
+  logoFallback,
+}: {
+  slug: string;
+  alt: string;
+  className?: string;
+  logo?: string;
+  logoFallback?: string;
+}) {
+  const primary = assetUrl(logo ?? `/logos-official/${slug}.png`);
+  const fallback = assetUrl(logoFallback ?? `/logos/${slug}.svg`);
+
   return (
     <img
-      src={assetUrl(`/logos/${slug}.svg`)}
+      src={primary}
       alt={alt}
       className={`brand-logo ${className}`}
+      onError={(e) => {
+        const img = e.currentTarget;
+        if (img.src !== fallback) img.src = fallback;
+      }}
     />
   );
 }
