@@ -2,14 +2,18 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { brands } from '../data/brands';
+import { usePitchMode } from '../hooks/usePitchMode';
 import { useSeo } from '../hooks/useSeo';
 import { hubSeoWithBrands } from '../utils/seo';
 import { assetUrl, copyToClipboard, pageUrl } from '../utils/url';
 import './Hub.css';
 
 export default function Hub() {
+  const pitchMode = usePitchMode();
   const seo = useMemo(() => hubSeoWithBrands(brands), []);
   useSeo(seo);
+
+  const standPath = (slug: string) => `/${slug}`;
 
   const handleCopy = (slug: string) => {
     copyToClipboard(pageUrl(slug));
@@ -20,13 +24,15 @@ export default function Hub() {
       <div className="hub-bg" />
       <main>
       <header className="hub-header">
-        <motion.span
-          className="hub-badge"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          Proposition commerciale 2026
-        </motion.span>
+        {!pitchMode && (
+          <motion.span
+            className="hub-badge"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            Proposition commerciale 2026
+          </motion.span>
+        )}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,11 +45,15 @@ export default function Hub() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          {brands.length} landing pages sur-mesure · Logos officiels Halles du Lez · Charte graphique · CRO
+          {pitchMode
+            ? `${brands.length} adresses gourmandes · Food court Montpellier`
+            : `${brands.length} landing pages sur-mesure · Logos officiels Halles du Lez · Charte graphique · CRO`}
         </motion.p>
-        <motion.p className="hub-deploy-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-          📱 Accessible depuis votre téléphone une fois déployé sur GitHub Pages
-        </motion.p>
+        {!pitchMode && (
+          <motion.p className="hub-deploy-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+            📱 Accessible depuis votre téléphone une fois déployé sur GitHub Pages
+          </motion.p>
+        )}
       </header>
 
       <div className="hub-grid">
@@ -55,7 +65,7 @@ export default function Hub() {
             transition={{ delay: 0.05 * i }}
           >
             <Link
-              to={`/${brand.slug}`}
+              to={standPath(brand.slug)}
               className="hub-card"
               style={
                 {
@@ -89,7 +99,7 @@ export default function Hub() {
               <p className="hub-card-stand">{brand.stand}</p>
               <p>{brand.subtitle}</p>
               <div className="hub-card-links">
-                <span className="hub-card-cta">Voir la démo →</span>
+                <span className="hub-card-cta">{pitchMode ? 'Découvrir →' : 'Voir la démo →'}</span>
                 <button
                   type="button"
                   className="hub-copy-btn"
@@ -110,10 +120,21 @@ export default function Hub() {
 
       <footer className="hub-footer">
         <p>
-          Démonstrations créées pour prospection · Données publiques Halles du Lez ·{' '}
-          <a href="https://hallesdulez.com" target="_blank" rel="noopener noreferrer">
-            hallesdulez.com
-          </a>
+          {pitchMode ? (
+            <>
+              Halles du Lez · 1348 Avenue Raymond Dugrand, Montpellier ·{' '}
+              <a href="https://hallesdulez.com" target="_blank" rel="noopener noreferrer">
+                hallesdulez.com
+              </a>
+            </>
+          ) : (
+            <>
+              Démonstrations créées pour prospection · Données publiques Halles du Lez ·{' '}
+              <a href="https://hallesdulez.com" target="_blank" rel="noopener noreferrer">
+                hallesdulez.com
+              </a>
+            </>
+          )}
         </p>
       </footer>
     </div>

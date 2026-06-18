@@ -1,6 +1,7 @@
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Hub from './components/Hub';
 import LandingPage from './components/LandingPage';
+import { PitchModeProvider } from './hooks/usePitchMode';
 import { brands, getBrandBySlug } from './data/brands';
 
 const isGitHubPages = import.meta.env.BASE_URL !== '/';
@@ -14,15 +15,17 @@ function BrandRoute({ slug }: { slug: string }) {
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hub />} />
-        {brands.map((b) => (
-          <Route key={b.slug} path={`/${b.slug}`} element={<BrandRoute slug={b.slug} />} />
-        ))}
-        <Route path="/bambino-tonton" element={<Navigate to="/bambino" replace />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+    <PitchModeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Hub />} />
+          {brands.map((b) => (
+            <Route key={b.slug} path={`/${b.slug}`} element={<BrandRoute slug={b.slug} />} />
+          ))}
+          <Route path="/bambino-tonton" element={<Navigate to="/bambino" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </PitchModeProvider>
   );
 }

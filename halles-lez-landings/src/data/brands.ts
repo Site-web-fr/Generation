@@ -1,4 +1,6 @@
 import { getBrandAssets } from './assets';
+import type { LogoKind } from './logo-sources';
+import type { GoogleReviews } from './stand-contacts';
 
 export interface MenuItem {
   name: string;
@@ -13,6 +15,8 @@ export interface Brand {
   slug: string;
   logo: string;
   logoFallback?: string;
+  logoChain?: string[];
+  logoKind?: LogoKind;
   heroImage?: string;
   gallery?: { src: string; alt: string }[];
   imageCredit?: string;
@@ -53,6 +57,7 @@ export interface Brand {
   testimonials: { text: string; author: string }[];
   ctaPrimary: string;
   ctaSecondary: string;
+  googleReviews?: GoogleReviews;
 }
 
 const ADDRESS = '1348 Avenue Raymond Dugrand, Halles du Lez — 34000 Montpellier';
@@ -528,6 +533,7 @@ const rawBrands: Brand[] = [
 import residents from './residents-manifest.json';
 import { brandFromResident, type ResidentManifest } from './brand-factory';
 import { fontsForSlug } from './typography';
+import { getStandContact } from './stand-contacts';
 
 function buildDetailedOverrides(): Record<string, Brand> {
   const map: Record<string, Brand> = {};
@@ -570,6 +576,8 @@ function withAssets(brand: Brand): Brand {
     ...brand,
     logo: assets.logo,
     logoFallback: assets.logoFallback,
+    logoChain: assets.logoChain,
+    logoKind: assets.logoKind,
     heroImage: assets.heroImage,
     gallery: assets.gallery,
     imageCredit: assets.imageCredit,
@@ -596,8 +604,14 @@ function enrichFonts(
 
 export const brands: Brand[] = (residents as ResidentManifest[]).map((r) => {
   const detailed = detailedBySlug[r.slug];
+  const contact = getStandContact(r.slug);
   const brand = withAssets(detailed ?? brandFromResident(r));
-  return { ...brand, fonts: enrichFonts(r.slug, r.category, brand.fonts) };
+  return {
+    ...brand,
+    phone: brand.phone ?? contact.phone,
+    googleReviews: brand.googleReviews ?? contact.googleReviews,
+    fonts: enrichFonts(r.slug, r.category, brand.fonts),
+  };
 });
 
 export function getBrandBySlug(slug: string): Brand | undefined {

@@ -72,16 +72,77 @@
   object-fit: contain;
 }
 
-.brand-logo.hero-logo {
-  height: clamp(3rem, 10vw, 5rem);
-  max-width: min(90vw, 320px);
-  margin: 0 auto 1rem;
+/* Wordmark charte (stands phares) */
+.brand-logo--wordmark.brand-logo--hero {
+  height: clamp(3.25rem, 12vw, 5.5rem);
+  max-width: min(92vw, 420px);
+  margin: 0 auto;
+  display: block;
+  filter: drop-shadow(0 8px 28px color-mix(in srgb, var(--brand-primary) 35%, transparent));
+}
+
+.brand-logo--wordmark.brand-logo--intro {
+  width: min(78vw, 360px);
+  height: auto;
+  max-height: 28vh;
+  filter: drop-shadow(0 12px 40px color-mix(in srgb, var(--brand-primary) 45%, transparent));
+}
+
+.brand-logo--wordmark.brand-logo--nav {
+  height: 1.75rem;
+  max-width: 120px;
+}
+
+/* Picto officiel Halles — médaillon aux couleurs charte */
+.brand-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--brand-primary) 22%, var(--brand-bg-alt)),
+    color-mix(in srgb, var(--brand-secondary) 18%, var(--brand-bg))
+  );
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 45%, transparent);
+  box-shadow:
+    0 12px 40px color-mix(in srgb, var(--brand-primary) 25%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--brand-accent) 15%, transparent);
+}
+
+.brand-logo-badge--hero {
+  margin: 0 auto 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.brand-logo-badge--intro {
+  margin: 0 auto;
+}
+
+.brand-logo-badge--nav {
+  padding: 0.35rem 0.5rem;
+  border-radius: 12px;
+}
+
+.brand-logo-picto {
+  width: 148px;
+  height: 151px;
+  max-width: 148px;
+  max-height: 151px;
+  object-fit: contain;
   display: block;
 }
 
-.brand-logo.nav-logo {
-  height: 1.75rem;
-  max-width: 120px;
+.brand-logo-badge--nav .brand-logo-picto {
+  width: 40px;
+  height: 41px;
+  max-width: 40px;
+  max-height: 41px;
+}
+
+.hero-logo-wrap {
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 600px) {

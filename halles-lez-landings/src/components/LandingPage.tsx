@@ -1,15 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import { useSeo } from '../hooks/useSeo';
-import ShareBar, { BrandLogo } from './ShareBar';
+import ShareBar from './ShareBar';
+import BrandHeroLogo from './BrandHeroLogo';
 import { brands } from '../data/brands';
 import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
 import HeroDishVideo from './HeroDishVideo';
-import HallesFloorPlan from './HallesFloorPlan';
+import HeroIntro from './HeroIntro';
+import InteractiveMenu from './InteractiveMenu';
+import GoogleReviews from './GoogleReviews';
+import { usePitchMode } from '../hooks/usePitchMode';
+import { formatPhoneDisplay, phoneHref } from '../data/stand-contacts';
 import './LandingPage.css';
 
 interface Props {
@@ -43,7 +48,8 @@ function Section({
 
 export default function LandingPage({ brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
-  const [locationView, setLocationView] = useState<'plan' | 'maps'>('plan');
+  const reduceMotion = useReducedMotion();
+  const pitchMode = usePitchMode();
   const heroRef = useRef(null);
   const featured = brand.menu[0];
   const secondary = brand.menu[1];
@@ -77,18 +83,36 @@ export default function LandingPage({ brand }: Props) {
 
   return (
     <div className="landing" style={style}>
+      <HeroIntro
+        brandName={brand.name}
+        slug={brand.slug}
+        logo={brand.logo}
+        logoFallback={brand.logoFallback}
+        logoChain={brand.logoChain}
+        logoKind={brand.logoKind}
+        primaryColor={brand.colors.primary}
+        bgColor={brand.colors.bg}
+      />
       <header className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <Link to="/" className="landing-nav-back">
-          ← Propositions
+          {pitchMode ? '← Halles du Lez' : '← Propositions'}
         </Link>
-        <BrandLogo
+        <BrandHeroLogo
           slug={brand.slug}
-          alt={brand.name}
-          className="nav-logo"
+          name={brand.name}
           logo={brand.logo}
           logoFallback={brand.logoFallback}
+          logoChain={brand.logoChain}
+          kind={brand.logoKind}
+          variant="nav"
+          className="nav-logo"
         />
         <div className="landing-nav-actions">
+          {brand.phone && (
+            <a href={phoneHref(brand.phone)} className="btn btn-sm btn-call">
+              Appeler
+            </a>
+          )}
           {brand.uberEats ? (
             <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-uber">
               Uber Eats
@@ -101,7 +125,7 @@ export default function LandingPage({ brand }: Props) {
         </div>
       </header>
 
-      <ShareBar slug={brand.slug} brandName={brand.name} />
+      <ShareBar slug={brand.slug} brandName={brand.name} pitchMode={pitchMode} />
 
       <main>
       <motion.section ref={heroRef} className="hero" aria-label={`${brand.name} — accueil`}>
@@ -159,14 +183,28 @@ export default function LandingPage({ brand }: Props) {
             transition={{ delay: 0.15, duration: 0.7 }}
           >
             <span className="hero-badge">{brand.stand} · Halles du Lez · Montpellier</span>
-            <BrandLogo
-              slug={brand.slug}
-              alt={brand.name}
-              className="hero-logo"
-              logo={brand.logo}
-              logoFallback={brand.logoFallback}
-            />
-            <h1>{brand.name}</h1>
+            <motion.div
+              className="hero-logo-wrap"
+              initial={{ opacity: 0, y: 16, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                delay: reduceMotion ? 0 : 1.05,
+                duration: reduceMotion ? 0.2 : 0.65,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <BrandHeroLogo
+                slug={brand.slug}
+                name={brand.name}
+                logo={brand.logo}
+                logoFallback={brand.logoFallback}
+                logoChain={brand.logoChain}
+                kind={brand.logoKind}
+                variant="hero"
+                className="hero-logo"
+              />
+            </motion.div>
+            <h1 className="hero-title-visually-hidden">{brand.name}</h1>
             <p className="hero-subtitle">{brand.tagline}</p>
 
             {featured && (
@@ -190,6 +228,11 @@ export default function LandingPage({ brand }: Props) {
             ) : (
               <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
                 {brand.ctaPrimary}
+              </a>
+            )}
+            {brand.phone && (
+              <a href={phoneHref(brand.phone)} className="btn btn-outline btn-lg btn-call">
+                📞 {formatPhoneDisplay(brand.phone)}
               </a>
             )}
             <a href="#menu" className="btn btn-ghost btn-lg">
@@ -219,9 +262,19 @@ export default function LandingPage({ brand }: Props) {
       </motion.section>
 
       <div className="urgency-bar">
-        <span>🔥 Ouvert aujourd&apos;hui</span>
-        <span className="sep">·</span>
-        <span>{brand.hours}</span>
+        {pitchMode ? (
+          <>
+            <span>📍 {brand.stand}</span>
+            <span className="sep">·</span>
+            <span>{brand.hours}</span>
+          </>
+        ) : (
+          <>
+            <span>🔥 Ouvert aujourd&apos;hui</span>
+            <span className="sep">·</span>
+            <span>{brand.hours}</span>
+          </>
+        )}
         <span className="sep">·</span>
         <span>Tram L3 Pablo Picasso</span>
       </div>
@@ -249,43 +302,9 @@ export default function LandingPage({ brand }: Props) {
         <div className="section-header">
           <span className="section-label">{brand.cuisine}</span>
           <h2>Nos incontournables</h2>
+          <p className="section-lead">Explorez la carte — sélectionnez un plat pour voir le détail.</p>
         </div>
-        <div className="menu-grid">
-          {brand.menu.map((item, i) => (
-            <motion.article
-              key={item.name}
-              className="menu-card"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              whileHover={{ y: -6 }}
-            >
-              {item.image ? (
-                <div className="menu-photo-wrap">
-                  <img src={assetUrl(item.image)} alt={item.name} className="menu-photo" loading="lazy" />
-                </div>
-              ) : (
-                <div className="menu-emoji">{item.emoji}</div>
-              )}
-              {item.badge && <span className="menu-badge">{item.badge}</span>}
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <div className="menu-footer">
-                <span className="menu-price">{item.price}</span>
-                {brand.uberEats ? (
-                  <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="menu-order">
-                    Commander →
-                  </a>
-                ) : (
-                  <a href={brand.googleMaps} className="menu-order">
-                    Venir →
-                  </a>
-                )}
-              </div>
-            </motion.article>
-          ))}
-        </div>
+        <InteractiveMenu brand={brand} />
       </Section>
 
       {brand.gallery && brand.gallery.length > 0 && (
@@ -318,13 +337,19 @@ export default function LandingPage({ brand }: Props) {
         </Section>
       )}
 
-      <Section className="social-section">
-        <div className="testimonial-card">
-          <div className="quote-mark">"</div>
-          <p>{brand.testimonials[0].text}</p>
-          <cite>— {brand.testimonials[0].author}</cite>
-        </div>
-      </Section>
+      {brand.googleReviews ? (
+        <Section className="social-section">
+          <GoogleReviews brand={brand} reviews={brand.googleReviews} />
+        </Section>
+      ) : (
+        <Section className="social-section">
+          <div className="testimonial-card">
+            <div className="quote-mark">&ldquo;</div>
+            <p>{brand.testimonials[0].text}</p>
+            <cite>— {brand.testimonials[0].author}</cite>
+          </div>
+        </Section>
+      )}
 
       <Section className="location-section" id="venir">
         <div className="location-grid">
@@ -337,7 +362,17 @@ export default function LandingPage({ brand }: Props) {
               {brand.phone && <li><strong>Tél</strong> {brand.phone}</li>}
             </ul>
             <div className="location-actions">
-              <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              {brand.phone && (
+                <a href={phoneHref(brand.phone)} className="btn btn-primary btn-call">
+                  📞 Appeler {formatPhoneDisplay(brand.phone)}
+                </a>
+              )}
+              <a
+                href={brand.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn ${brand.phone ? 'btn-outline' : 'btn-primary'}`}
+              >
                 📍 Itinéraire Google Maps
               </a>
               {brand.instagram && (
@@ -347,44 +382,13 @@ export default function LandingPage({ brand }: Props) {
               )}
             </div>
           </div>
-          <div className="location-visual">
-            <div className="location-view-tabs" role="tablist" aria-label="Mode de localisation">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={locationView === 'plan'}
-                className={`location-view-tab ${locationView === 'plan' ? 'is-active' : ''}`}
-                onClick={() => setLocationView('plan')}
-              >
-                Plan des Halles
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={locationView === 'maps'}
-                className={`location-view-tab ${locationView === 'maps' ? 'is-active' : ''}`}
-                onClick={() => setLocationView('maps')}
-              >
-                Google Maps
-              </button>
-            </div>
-            {locationView === 'plan' ? (
-              <HallesFloorPlan
-                slug={brand.slug}
-                brandName={brand.name}
-                standLabel={brand.stand}
-                primaryColor={brand.colors.primary}
-              />
-            ) : (
-              <div className="location-map">
-                <iframe
-                  title={`Carte ${brand.name}`}
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2888.5!2d3.9059!3d43.5927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6af5b9210be4f%3A0x37115173b8fa1d62!2sHalles%20du%20Lez!5e0!3m2!1sfr!2sfr!4v1"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            )}
+          <div className="location-map">
+            <iframe
+              title={`Carte ${brand.name}`}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2888.5!2d3.9059!3d43.5927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6af5b9210be4f%3A0x37115173b8fa1d62!2sHalles%20du%20Lez!5e0!3m2!1sfr!2sfr!4v1"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </Section>
@@ -413,15 +417,29 @@ export default function LandingPage({ brand }: Props) {
       </main>
 
       <footer className="landing-footer">
-        <p>
-          Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
-        </p>
-        {brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
-        {heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
-        <Link to="/">← Retour aux {brands.length} propositions</Link>
+        {pitchMode ? (
+          <p>
+            {brand.name} · {brand.stand} · Halles du Lez Montpellier
+          </p>
+        ) : (
+          <p>
+            Proposition commerciale · Landing page démo · {brand.name} · Halles du Lez Montpellier
+          </p>
+        )}
+        {!pitchMode && brand.imageCredit && <p className="image-credit">{brand.imageCredit}</p>}
+        {!pitchMode && heroVideo && <p className="image-credit">{heroVideo.credit}</p>}
+        <Link to="/">
+          {pitchMode ? '← Retour aux Halles du Lez' : `← Retour aux ${brands.length} propositions`}
+        </Link>
       </footer>
 
       <div className={`sticky-cta no-print ${scrolled ? 'visible' : ''}`}>
+        {brand.phone && (
+          <a href={phoneHref(brand.phone)} className="sticky-btn sticky-call">
+            <span>Appeler</span>
+            <small>{formatPhoneDisplay(brand.phone)}</small>
+          </a>
+        )}
         {brand.uberEats ? (
           <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="sticky-btn sticky-uber">
             <span>Commander</span>
