@@ -63,6 +63,10 @@ export default function Hub() {
                   '--card-bg': brand.colors.bg,
                   '--card-accent': brand.colors.accent,
                   '--card-photo': brand.heroImage ? `url(${assetUrl(brand.heroImage)})` : 'none',
+                  '--font-heading': brand.fonts.heading,
+                  '--font-body': brand.fonts.body,
+                  '--font-heading-spacing': brand.fonts.headingSpacing ?? 'normal',
+                  '--font-heading-transform': brand.fonts.headingTransform ?? 'none',
                 } as React.CSSProperties
               }
             >

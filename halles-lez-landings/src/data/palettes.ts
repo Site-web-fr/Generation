@@ -1,3 +1,5 @@
+import { fontsForSlug } from './typography';
+
 /** Palettes charte par type de cuisine — complète l'extraction logo Halles du Lez. */
 export interface BrandPalette {
   bg: string;
@@ -200,5 +202,6 @@ const SLUG_PALETTE: Record<string, keyof typeof PALETTES> = {
 
 export function paletteForSlug(slug: string, category: string): BrandPalette {
   const key = SLUG_PALETTE[slug] ?? (category === 'boire' ? 'boire' : 'default');
-  return PALETTES[key] ?? PALETTES.default;
+  const palette = PALETTES[key] ?? PALETTES.default;
+  return { ...palette, fonts: fontsForSlug(slug, category) };
 }

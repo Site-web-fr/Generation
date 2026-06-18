@@ -28,7 +28,12 @@ export interface Brand {
   address: string;
   hours: string;
   googleMaps: string;
-  fonts: { heading: string; body: string };
+  fonts: {
+    heading: string;
+    body: string;
+    headingSpacing?: string;
+    headingTransform?: 'uppercase' | 'none';
+  };
   colors: {
     bg: string;
     bgAlt: string;
@@ -522,6 +527,7 @@ const rawBrands: Brand[] = [
 
 import residents from './residents-manifest.json';
 import { brandFromResident, type ResidentManifest } from './brand-factory';
+import { fontsForSlug } from './typography';
 
 function buildDetailedOverrides(): Record<string, Brand> {
   const map: Record<string, Brand> = {};
@@ -574,9 +580,24 @@ function withAssets(brand: Brand): Brand {
   };
 }
 
+function enrichFonts(
+  slug: string,
+  category: string,
+  fonts: Brand['fonts'],
+): Brand['fonts'] {
+  const defaults = fontsForSlug(slug, category);
+  return {
+    heading: fonts.heading,
+    body: fonts.body,
+    headingSpacing: fonts.headingSpacing ?? defaults.headingSpacing,
+    headingTransform: fonts.headingTransform ?? defaults.headingTransform,
+  };
+}
+
 export const brands: Brand[] = (residents as ResidentManifest[]).map((r) => {
   const detailed = detailedBySlug[r.slug];
-  return withAssets(detailed ?? brandFromResident(r));
+  const brand = withAssets(detailed ?? brandFromResident(r));
+  return { ...brand, fonts: enrichFonts(r.slug, r.category, brand.fonts) };
 });
 
 export function getBrandBySlug(slug: string): Brand | undefined {

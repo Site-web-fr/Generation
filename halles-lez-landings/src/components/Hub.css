@@ -179,6 +179,8 @@
   font-size: 1.35rem;
   margin: 0 0 0.15rem;
   color: var(--card-accent, #fff);
+  letter-spacing: var(--font-heading-spacing, normal);
+  text-transform: var(--font-heading-transform, none);
 }
 
 .hub-card-stand {
