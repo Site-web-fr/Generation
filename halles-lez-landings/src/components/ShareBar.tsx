@@ -71,17 +71,18 @@ export function BrandLogo({
   logo?: string;
   logoFallback?: string;
 }) {
-  const primary = assetUrl(logo ?? `/logos-official/${slug}.png`);
-  const fallback = assetUrl(logoFallback ?? `/logos/${slug}.svg`);
+  const primary = assetUrl(logo ?? `/logos/${slug}.svg`);
+  const fallback = assetUrl(logoFallback ?? `/logos-official/${slug}.png`);
+  const [src, setSrc] = useState(primary);
+  const isPicto = src.includes('logos-official');
 
   return (
     <img
-      src={primary}
+      src={src}
       alt={alt}
-      className={`brand-logo ${className}`}
-      onError={(e) => {
-        const img = e.currentTarget;
-        if (img.src !== fallback) img.src = fallback;
+      className={`brand-logo ${className}${isPicto ? ' hero-logo--picto' : ''}`}
+      onError={() => {
+        if (src !== fallback) setSrc(fallback);
       }}
     />
   );

@@ -31,11 +31,15 @@ function officialLogo(slug: string): string {
   return `/logos-official/${slug}.png`;
 }
 
+function brandLogo(slug: string): string {
+  return `/logos/${slug}.svg`;
+}
+
 /** Contenu visuel enrichi (photos plats démo) pour les stands phares. */
 const richAssets: Record<string, BrandAssets> = {
   'rouge-beef': {
-    logo: officialLogo('rouge-beef'),
-    logoFallback: '/logos/rouge-beef.svg',
+    logo: brandLogo('rouge-beef'),
+    logoFallback: officialLogo('rouge-beef'),
     heroImage: hero('rouge-beef'),
     gallery: [
       { src: gallery('rouge-beef', 1), alt: 'Identité Rouge Beef — Studio Therese' },
@@ -46,8 +50,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · Studio Therese + démo IA · ${DEMO}`,
   },
   manita: {
-    logo: officialLogo('manita'),
-    logoFallback: '/logos/manita.svg',
+    logo: brandLogo('manita'),
+    logoFallback: officialLogo('manita'),
     heroImage: hero('manita'),
     gallery: [
       { src: gallery('manita', 1), alt: 'Ceviche MANITA' },
@@ -58,8 +62,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · Photos @manita_montpellier · ${DEMO}`,
   },
   naked: {
-    logo: officialLogo('naked'),
-    logoFallback: '/logos/naked.svg',
+    logo: brandLogo('naked'),
+    logoFallback: officialLogo('naked'),
     heroImage: hero('naked'),
     gallery: [
       { src: gallery('naked', 1), alt: 'Cocktail signature NAKED' },
@@ -70,8 +74,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · Inspiré @nakedmtp · ${DEMO}`,
   },
   'blue-india': {
-    logo: officialLogo('blue-india'),
-    logoFallback: '/logos/blue-india.svg',
+    logo: brandLogo('blue-india'),
+    logoFallback: officialLogo('blue-india'),
     heroImage: hero('blue-india'),
     gallery: [
       { src: gallery('blue-india', 1), alt: 'Cheese Naan Blue India' },
@@ -82,8 +86,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · Claap.fr + @blueindia_mtp · ${DEMO}`,
   },
   banger: {
-    logo: officialLogo('banger'),
-    logoFallback: '/logos/banger.svg',
+    logo: brandLogo('banger'),
+    logoFallback: officialLogo('banger'),
     heroImage: hero('banger'),
     gallery: [
       { src: gallery('banger', 1), alt: 'Smash Classic BANGER' },
@@ -94,8 +98,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · @smashbanger_co · ${DEMO}`,
   },
   soleira: {
-    logo: officialLogo('soleira'),
-    logoFallback: '/logos/soleira.svg',
+    logo: brandLogo('soleira'),
+    logoFallback: officialLogo('soleira'),
     heroImage: hero('soleira'),
     gallery: [
       { src: gallery('soleira', 1), alt: 'Cuisine SOLEIRA' },
@@ -106,8 +110,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · MarcheDuLez.com · ${DEMO}`,
   },
   'casa-asado': {
-    logo: officialLogo('casa-asado'),
-    logoFallback: '/logos/casa-asado.svg',
+    logo: brandLogo('casa-asado'),
+    logoFallback: officialLogo('casa-asado'),
     heroImage: hero('casa-asado'),
     gallery: [
       { src: gallery('casa-asado', 1), alt: 'Picanha Casa Asado' },
@@ -118,8 +122,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · @casa.asado · ${DEMO}`,
   },
   'maria-bonita': {
-    logo: officialLogo('maria-bonita'),
-    logoFallback: '/logos/maria-bonita.svg',
+    logo: brandLogo('maria-bonita'),
+    logoFallback: officialLogo('maria-bonita'),
     heroImage: hero('maria-bonita'),
     gallery: [
       { src: gallery('maria-bonita', 1), alt: 'Empanada carne picante' },
@@ -130,8 +134,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · @mariabonitamontpellier · ${DEMO}`,
   },
   bambino: {
-    logo: officialLogo('bambino'),
-    logoFallback: '/logos/bambino-tonton.svg',
+    logo: brandLogo('bambino'),
+    logoFallback: officialLogo('bambino'),
     heroImage: hero('bambino'),
     gallery: [
       { src: gallery('bambino-tonton', 1), alt: 'Pizza Truffa Lova Bambino' },
@@ -142,8 +146,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · @bambinopizzaclub · ${DEMO}`,
   },
   'tonton-haricot': {
-    logo: officialLogo('tonton-haricot'),
-    logoFallback: '/logos/bambino-tonton.svg',
+    logo: brandLogo('tonton-haricot'),
+    logoFallback: officialLogo('tonton-haricot'),
     heroImage: hero('tonton-haricot'),
     gallery: [
       { src: gallery('bambino-tonton', 2), alt: 'Salade Tonton Haricot' },
@@ -154,8 +158,8 @@ const richAssets: Record<string, BrandAssets> = {
     imageCredit: `Logo Halles du Lez · Tonton Haricot · ${DEMO}`,
   },
   'la-bodeguita': {
-    logo: officialLogo('la-bodeguita'),
-    logoFallback: '/logos/la-bodeguita.svg',
+    logo: brandLogo('la-bodeguita'),
+    logoFallback: officialLogo('la-bodeguita'),
     heroImage: hero('la-bodeguita'),
     gallery: [
       { src: gallery('la-bodeguita', 1), alt: 'Paëlla royale La Bodeguita' },
@@ -172,10 +176,10 @@ export function getBrandAssets(slug: string): BrandAssets {
   if (rich) return rich;
 
   const h = hero(slug);
-  const logo = officialLogo(slug);
+  const logo = brandLogo(slug);
   return {
     logo,
-    logoFallback: logo,
+    logoFallback: officialLogo(slug),
     heroImage: h,
     gallery: [{ src: h, alt: `Stand ${slug}` }],
     menuImages: [h, h, h],

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import { useSeo } from '../hooks/useSeo';
 import ShareBar, { BrandLogo } from './ShareBar';
@@ -9,6 +9,7 @@ import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
 import HeroDishVideo from './HeroDishVideo';
+import HeroIntro from './HeroIntro';
 import './LandingPage.css';
 
 interface Props {
@@ -42,6 +43,7 @@ function Section({
 
 export default function LandingPage({ brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
+  const reduceMotion = useReducedMotion();
   const heroRef = useRef(null);
   const featured = brand.menu[0];
   const secondary = brand.menu[1];
@@ -75,6 +77,13 @@ export default function LandingPage({ brand }: Props) {
 
   return (
     <div className="landing" style={style}>
+      <HeroIntro
+        brandName={brand.name}
+        logo={brand.logo}
+        logoFallback={brand.logoFallback}
+        primaryColor={brand.colors.primary}
+        bgColor={brand.colors.bg}
+      />
       <header className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <Link to="/" className="landing-nav-back">
           ← Propositions
@@ -157,14 +166,25 @@ export default function LandingPage({ brand }: Props) {
             transition={{ delay: 0.15, duration: 0.7 }}
           >
             <span className="hero-badge">{brand.stand} · Halles du Lez · Montpellier</span>
-            <BrandLogo
-              slug={brand.slug}
-              alt={brand.name}
-              className="hero-logo"
-              logo={brand.logo}
-              logoFallback={brand.logoFallback}
-            />
-            <h1>{brand.name}</h1>
+            <motion.div
+              className="hero-logo-wrap"
+              initial={{ opacity: 0, y: 16, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                delay: reduceMotion ? 0 : 1.05,
+                duration: reduceMotion ? 0.2 : 0.65,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <BrandLogo
+                slug={brand.slug}
+                alt={brand.name}
+                className="hero-logo"
+                logo={brand.logo}
+                logoFallback={brand.logoFallback}
+              />
+            </motion.div>
+            <h1 className="hero-title-visually-hidden">{brand.name}</h1>
             <p className="hero-subtitle">{brand.tagline}</p>
 
             {featured && (

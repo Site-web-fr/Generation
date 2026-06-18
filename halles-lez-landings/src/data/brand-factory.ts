@@ -55,8 +55,8 @@ export function brandFromResident(r: ResidentManifest): Brand {
 
   return {
     slug: r.slug,
-    logo: `/logos-official/${r.slug}.png`,
-    logoFallback: `/logos/${r.slug}.svg`,
+    logo: `/logos/${r.slug}.svg`,
+    logoFallback: `/logos-official/${r.slug}.png`,
     name: r.name,
     subtitle: r.subtitle,
     tagline: `${r.subtitle} aux Halles du Lez`,

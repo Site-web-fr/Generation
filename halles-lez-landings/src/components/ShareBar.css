@@ -73,10 +73,22 @@
 }
 
 .brand-logo.hero-logo {
-  height: clamp(3rem, 10vw, 5rem);
-  max-width: min(90vw, 320px);
-  margin: 0 auto 1rem;
+  height: clamp(3.25rem, 12vw, 5.5rem);
+  max-width: min(92vw, 420px);
+  margin: 0 auto;
   display: block;
+  filter: drop-shadow(0 8px 28px color-mix(in srgb, var(--brand-primary) 35%, transparent));
+}
+
+.hero-logo-wrap {
+  margin-bottom: 0.5rem;
+}
+
+.brand-logo.hero-logo--picto {
+  height: auto;
+  max-height: 151px;
+  width: auto;
+  max-width: 148px;
 }
 
 .brand-logo.nav-logo {
