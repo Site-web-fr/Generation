@@ -11,6 +11,7 @@ import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
 import HeroDishVideo from './HeroDishVideo';
 import HeroIntro from './HeroIntro';
+import InteractiveMenu from './InteractiveMenu';
 import './LandingPage.css';
 
 interface Props {
@@ -277,43 +278,9 @@ export default function LandingPage({ brand }: Props) {
         <div className="section-header">
           <span className="section-label">{brand.cuisine}</span>
           <h2>Nos incontournables</h2>
+          <p className="section-lead">Explorez la carte — sélectionnez un plat pour voir le détail.</p>
         </div>
-        <div className="menu-grid">
-          {brand.menu.map((item, i) => (
-            <motion.article
-              key={item.name}
-              className="menu-card"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              whileHover={{ y: -6 }}
-            >
-              {item.image ? (
-                <div className="menu-photo-wrap">
-                  <img src={assetUrl(item.image)} alt={item.name} className="menu-photo" loading="lazy" />
-                </div>
-              ) : (
-                <div className="menu-emoji">{item.emoji}</div>
-              )}
-              {item.badge && <span className="menu-badge">{item.badge}</span>}
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <div className="menu-footer">
-                <span className="menu-price">{item.price}</span>
-                {brand.uberEats ? (
-                  <a href={brand.uberEats} target="_blank" rel="noopener noreferrer" className="menu-order">
-                    Commander →
-                  </a>
-                ) : (
-                  <a href={brand.googleMaps} className="menu-order">
-                    Venir →
-                  </a>
-                )}
-              </div>
-            </motion.article>
-          ))}
-        </div>
+        <InteractiveMenu brand={brand} />
       </Section>
 
       {brand.gallery && brand.gallery.length > 0 && (
