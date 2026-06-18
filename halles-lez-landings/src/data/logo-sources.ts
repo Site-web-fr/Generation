@@ -1,59 +1,22 @@
-/** Wordmarks charte rédigés à la main — pas les génériques auto-générés. */
-export const WORDMARK_SLUGS = new Set([
-  'rouge-beef',
-  'manita',
-  'naked',
-  'blue-india',
-  'banger',
-  'soleira',
-  'casa-asado',
-  'maria-bonita',
-  'la-bodeguita',
-  'bambino',
-  'tonton-haricot',
+/**
+ * Logos réels uniquement.
+ *
+ * Par défaut, chaque stand affiche un « nameplate » typographique (son vrai nom
+ * dans sa police de charte) — pas de faux logo, pas de picto générique présenté
+ * comme logo.
+ *
+ * Quand un VRAI fichier logo est fourni par le commerçant, le déposer dans
+ * `public/logos-brand/{slug}.png` (fond transparent, largeur ≥ 400px) PUIS
+ * ajouter son slug ci-dessous. La page l'utilisera automatiquement.
+ */
+export const REAL_LOGOS = new Set<string>([
+  // ex. 'rouge-beef',  ← décommenter quand public/logos-brand/rouge-beef.png existe
 ]);
 
-export type LogoKind = 'wordmark' | 'picto';
-
-export interface ResolvedLogo {
-  /** Première URL tentée (HD utilisateur ou wordmark ou picto). */
-  logo: string;
-  logoFallback: string;
-  /** Chaîne de secours complète. */
-  logoChain: string[];
-  kind: LogoKind;
-}
-
-function official(slug: string) {
-  return `/logos-official/${slug}.png`;
-}
-
-function wordmark(slug: string) {
-  return `/logos/${slug}.svg`;
-}
-
-function brandHd(slug: string) {
+export function brandLogoSrc(slug: string): string {
   return `/logos-brand/${slug}.png`;
 }
 
-export function resolveLogo(slug: string): ResolvedLogo {
-  const picto = official(slug);
-  const hd = brandHd(slug);
-
-  if (WORDMARK_SLUGS.has(slug)) {
-    const wm = wordmark(slug);
-    return {
-      logo: hd,
-      logoFallback: wm,
-      logoChain: [hd, wm, picto],
-      kind: 'wordmark',
-    };
-  }
-
-  return {
-    logo: hd,
-    logoFallback: picto,
-    logoChain: [hd, picto],
-    kind: 'picto',
-  };
+export function hasRealLogo(slug: string): boolean {
+  return REAL_LOGOS.has(slug);
 }

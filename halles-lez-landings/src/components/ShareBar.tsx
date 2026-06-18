@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { assetUrl, copyToClipboard, exportPdf, pageUrl } from '../utils/url';
+import { copyToClipboard, exportPdf, pageUrl } from '../utils/url';
 import { pitchPageUrl } from '../utils/pitch-mode';
 import './ShareBar.css';
 
@@ -26,9 +26,7 @@ export default function ShareBar({ slug, brandName, pitchMode = false }: Props) 
       try {
         await navigator.share({
           title: `${brandName} — Halles du Lez`,
-          text: pitchMode
-            ? `Découvrez ${brandName} aux Halles du Lez`
-            : `Découvrez la proposition site web pour ${brandName}`,
+          text: `Découvrez ${brandName} aux Halles du Lez à Montpellier`,
           url,
         });
         return;
@@ -43,7 +41,7 @@ export default function ShareBar({ slug, brandName, pitchMode = false }: Props) 
     <div className="share-bar no-print">
       <div className="share-bar-inner">
         <div className="share-bar-url">
-          <span className="share-label">{pitchMode ? 'Partager cette page' : 'Lien démo mobile'}</span>
+          <span className="share-label">Partager cette page</span>
           <code>{url}</code>
         </div>
         <div className="share-bar-actions">
@@ -59,35 +57,5 @@ export default function ShareBar({ slug, brandName, pitchMode = false }: Props) 
         </div>
       </div>
     </div>
-  );
-}
-
-export function BrandLogo({
-  slug,
-  alt,
-  className = '',
-  logo,
-  logoFallback,
-}: {
-  slug: string;
-  alt: string;
-  className?: string;
-  logo?: string;
-  logoFallback?: string;
-}) {
-  const primary = assetUrl(logo ?? `/logos/${slug}.svg`);
-  const fallback = assetUrl(logoFallback ?? `/logos-official/${slug}.png`);
-  const [src, setSrc] = useState(primary);
-  const isPicto = src.includes('logos-official');
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={`brand-logo ${className}${isPicto ? ' hero-logo--picto' : ''}`}
-      onError={() => {
-        if (src !== fallback) setSrc(fallback);
-      }}
-    />
   );
 }

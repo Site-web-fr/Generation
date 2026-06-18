@@ -20,19 +20,12 @@ export interface SeoConfig {
   noindex?: boolean;
 }
 
-function absoluteAsset(path: string): string {
-  if (path.startsWith('http')) return path;
-  const base = import.meta.env.BASE_URL;
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://site-web-fr.github.io';
-  return `${origin}${base}${path.replace(/^\//, '')}`;
-}
-
 export function brandSeo(brand: Brand): SeoConfig {
-  const featured = brand.menu[0];
-  const title = `${brand.name} — ${brand.subtitle} | Halles du Lez Montpellier`;
-  const description = `${brand.tagline}. ${brand.cuisine} au ${brand.stand}, Halles du Lez Montpellier. ${featured ? `Découvrez ${featured.name} dès ${featured.price}.` : ''} ${brand.hours}.`;
+  const title = `${brand.name} — ${brand.type} | Halles du Lez Montpellier`;
+  const description = `${brand.name}, ${brand.type} au stand ${brand.stand} (${brand.entrance}) des Halles du Lez à Montpellier. ${brand.description}`;
   const canonical = pageUrl(brand.slug);
-  const image = brand.heroImage ? absoluteAsset(brand.heroImage) : undefined;
+
+  const sameAs = [brand.instagram, brand.facebook, brand.website].filter(Boolean) as string[];
 
   const jsonLd: Record<string, unknown>[] = [
     {
@@ -40,8 +33,7 @@ export function brandSeo(brand: Brand): SeoConfig {
       '@type': 'Restaurant',
       name: brand.name,
       description: brand.description,
-      servesCuisine: brand.cuisine,
-      image: image ? [image] : undefined,
+      servesCuisine: brand.type,
       url: canonical,
       telephone: brand.phone,
       address: {
@@ -53,9 +45,8 @@ export function brandSeo(brand: Brand): SeoConfig {
         name: 'Halles du Lez',
         url: 'https://hallesdulez.com',
       },
-      menu: `${canonical}#menu`,
       openingHours: brand.hours,
-      sameAs: brand.instagram ? [brand.instagram] : undefined,
+      sameAs: sameAs.length ? sameAs : undefined,
     },
     {
       '@context': 'https://schema.org',
@@ -67,26 +58,10 @@ export function brandSeo(brand: Brand): SeoConfig {
     },
   ];
 
-  if (featured?.image) {
-    jsonLd.push({
-      '@context': 'https://schema.org',
-      '@type': 'MenuItem',
-      name: featured.name,
-      description: featured.description,
-      offers: {
-        '@type': 'Offer',
-        price: featured.price.replace(/[^\d,.]/g, '').replace(',', '.'),
-        priceCurrency: 'EUR',
-      },
-      image: absoluteAsset(featured.image),
-    });
-  }
-
   return {
     title,
     description: description.slice(0, 160),
     canonical,
-    image,
     type: 'website',
     jsonLd,
   };
@@ -94,16 +69,15 @@ export function brandSeo(brand: Brand): SeoConfig {
 
 export function hubSeoWithBrands(brands: Brand[]): SeoConfig {
   return {
-    title: `${SITE_NAME} — ${brands.length} restaurants & food court`,
+    title: `${SITE_NAME} — ${brands.length} commerces du food court`,
     description:
-      'Rouge Beef, MANITA, Blue India, BANGER, SOLEIRA, Casa Asado, Maria Bonita, Bambino, La Bodeguita — corners gastronomiques aux Halles du Lez, Montpellier 34000.',
+      'Le food court des Halles du Lez à Montpellier : restaurants, bars et épiceries. Stand par stand, adresse, horaires et contacts. 1348 Avenue Raymond Dugrand, 34000.',
     canonical: HUB_URL,
-    image: absoluteAsset('/photos/hero/manita.jpg'),
     type: 'website',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
-      name: 'Restaurants Halles du Lez',
+      name: 'Commerces des Halles du Lez',
       numberOfItems: brands.length,
       itemListElement: brands.map((b, i) => ({
         '@type': 'ListItem',

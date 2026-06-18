@@ -1,43 +1,44 @@
-import { getBrandAssets } from './assets';
-import type { LogoKind } from './logo-sources';
-import type { GoogleReviews } from './stand-contacts';
+/**
+ * Source de vérité unique — résidents du food court des Halles du Lez.
+ *
+ * RÈGLE ABSOLUE : zéro contenu inventé.
+ * - Identité, stand, entrée, téléphone, réseaux → hallesdulez.com (officiel).
+ * - Descriptions & spécialités → marchedulez.com / hallesdulez.com / sites officiels
+ *   (paraphrase fidèle de texte réel, sources notées par stand).
+ * - Aucun prix, aucun avis client, aucune photo de plat inventés.
+ * - Les liens Uber Eats ne figurent QUE s'ils ont été vérifiés.
+ */
+import { paletteForSlug } from './palettes';
+import { fontsForSlug } from './typography';
 
-export interface MenuItem {
-  name: string;
-  description: string;
-  price: string;
-  badge?: string;
-  emoji: string;
-  image?: string;
-}
+export type Category = 'boire' | 'manger' | 'epicerie';
 
 export interface Brand {
   slug: string;
-  logo: string;
-  logoFallback?: string;
-  logoChain?: string[];
-  logoKind?: LogoKind;
-  heroImage?: string;
-  gallery?: { src: string; alt: string }[];
-  imageCredit?: string;
   name: string;
-  subtitle: string;
-  tagline: string;
-  description: string;
+  /** Type de cuisine officiel (Halles du Lez). */
+  type: string;
+  category: Category;
+  /** Numéro de stand officiel. */
   stand: string;
-  cuisine: string;
-  instagram?: string;
-  uberEats?: string;
+  /** Entrée la plus proche (Nord / Sud / Est / Ouest). */
+  entrance: string;
+  /** Description réelle, paraphrasée de sources publiques. */
+  description: string;
+  /** Spécialités réelles citées par les sources (sans prix inventés). */
+  specialties: string[];
+  /** Horaires réels — seulement quand vérifiés et propres au stand. */
+  hours?: string;
+
+  /** Contacts vérifiés (officiels). */
   phone?: string;
-  address: string;
-  hours: string;
-  googleMaps: string;
-  fonts: {
-    heading: string;
-    body: string;
-    headingSpacing?: string;
-    headingTransform?: 'uppercase' | 'none';
-  };
+  instagram?: string;
+  facebook?: string;
+  website?: string;
+  /** Uniquement si la boutique Uber Eats a été confirmée. */
+  uberEats?: string;
+
+  /** Design (charte par type de cuisine). */
   colors: {
     bg: string;
     bgAlt: string;
@@ -49,571 +50,577 @@ export interface Brand {
     cta: string;
     ctaText: string;
   };
+  fonts: {
+    heading: string;
+    body: string;
+    headingSpacing?: string;
+    headingTransform?: 'uppercase' | 'none';
+  };
   heroPattern: string;
   heroGlow: string;
-  menu: MenuItem[];
-  perks: string[];
-  stats: { value: string; label: string }[];
-  testimonials: { text: string; author: string }[];
-  ctaPrimary: string;
-  ctaSecondary: string;
-  googleReviews?: GoogleReviews;
+
+  /** Dérivés. */
+  address: string;
+  googleMaps: string;
+  /** Recherche Google honnête (pas d'avis fabriqués). */
+  googleReviewsUrl: string;
+}
+
+interface Resident {
+  slug: string;
+  name: string;
+  type: string;
+  category: Category;
+  stand: string;
+  entrance: string;
+  description: string;
+  specialties: string[];
+  hours?: string;
+  phone?: string;
+  ig?: string;
+  fb?: string;
+  web?: string;
+  uberEats?: string;
 }
 
 const ADDRESS = '1348 Avenue Raymond Dugrand, Halles du Lez — 34000 Montpellier';
 const MAPS =
-  'https://www.google.com/maps/search/?api=1&query=1348+Avenue+Raymond+Dugrand+Montpellier';
+  'https://www.google.com/maps/search/?api=1&query=Halles+du+Lez+1348+Avenue+Raymond+Dugrand+Montpellier';
 
-const rawBrands: Brand[] = [
+/**
+ * 36 résidents officiels du food court (hallesdulez.com).
+ * Descriptions/spécialités : recherche sourcée (marchedulez.com sauf mention).
+ */
+const RESIDENTS: Resident[] = [
   {
-    slug: 'rouge-beef',
-    logo: '/logos/rouge-beef.svg',
-    name: 'Rouge Beef',
-    subtitle: 'Burgers & viandes maturées',
-    tagline: 'Le burger haut de gamme du Massif Central',
+    slug: 'aux-copains-dabord',
+    name: "Aux Copains d'Abord",
+    type: 'Bagels & dwichs · Coffee shop',
+    category: 'manger',
+    stand: '12A',
+    entrance: 'Entrée Nord',
     description:
-      'Viandes d\'exception, bœuf maturé et burgers généreux dans un cadre industriel chaleureux. Une identité forte signée Studio Therese, pensée pour les Halles du Lez.',
-    stand: 'Stand 15A',
-    cuisine: 'Burgers · Viandes maturées',
-    instagram: 'https://instagram.com/rouge_beef',
-    uberEats:
-      'https://www.ubereats.com/fr-en/store/rouge-beef-halles-du-lez/6fq7pl3QVw-2hHdMN4ST_g',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–15h & 19h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Bebas Neue", sans-serif', body: '"DM Sans", sans-serif' },
-    colors: {
-      bg: '#0f0a0a',
-      bgAlt: '#1a1212',
-      primary: '#c41e3a',
-      secondary: '#8b1a2b',
-      accent: '#f5e6c8',
-      text: '#faf7f4',
-      muted: '#a89a94',
-      cta: '#c41e3a',
-      ctaText: '#ffffff',
-    },
-    heroPattern:
-      'repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(196,30,58,0.04) 12px, rgba(196,30,58,0.04) 24px)',
-    heroGlow: 'radial-gradient(ellipse at 70% 20%, rgba(196,30,58,0.35) 0%, transparent 55%)',
-    menu: [
-      { name: 'Classic Rouge', description: 'Bœuf maturé, cheddar, pickles maison', price: '14,90 €', badge: 'Best-seller', emoji: '🍔' },
-      { name: 'Tarte du jour', description: 'Légumes de saison, pâte feuilletée', price: '12,50 €', emoji: '🥧' },
-      { name: 'Planche maturée', description: 'Sélection bœuf, sauces du chef', price: '24,00 €', badge: 'À partager', emoji: '🥩' },
-    ],
-    perks: ['Viandes Massif Central', 'Charte graphique pro', 'Sur place & terrasse'],
-    stats: [
-      { value: '4.7★', label: 'Avis clients' },
-      { value: '100%', label: 'Fait maison' },
-      { value: 'Stand 15A', label: 'Halles du Lez' },
-    ],
-    testimonials: [
-      { text: 'Les burgers les plus généreux des Halles. La viande maturée fait toute la différence.', author: 'Client Google' },
-    ],
-    ctaPrimary: 'Commander sur Uber Eats',
-    ctaSecondary: 'Venir au stand',
+      "Foodtruck coffee shop tenu par Ismaël, diplômé barista de l'école Musetti à Milan, avec une carte gourmande de cafés et de street food.",
+    specialties: ['Cafés (expresso, frappuccino)', 'Milkshakes & smoothies', 'Bagels & sandwiches', 'Salades garnies', 'Petit déjeuner'],
+    hours: 'Mar–Dim · 8h–22h en continu',
+    ig: 'aux_copains_dabord',
   },
   {
-    slug: 'manita',
-    logo: '/logos/manita.svg',
-    name: 'MANITA',
-    subtitle: 'Saveurs entre Suds',
-    tagline: 'La caravane gourmande des frères Pourcel',
+    slug: 'kochi',
+    name: 'Kochi',
+    type: 'Sushi · Hand roll · Sando · Onigiri',
+    category: 'manger',
+    stand: '12B',
+    entrance: 'Entrée Nord',
     description:
-      'Un voyage culinaire du sud de la Camargue à l\'Amérique latine. Ceviches, BBQ et brochettes dans une ambiance festive et solaire.',
-    stand: 'Stand 1',
-    cuisine: 'Sud global · Street food chef',
-    instagram: 'https://instagram.com/manita_montpellier',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–15h & 19h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Archivo Black", sans-serif', body: '"Nunito", sans-serif' },
-    colors: {
-      bg: '#1a0f08',
-      bgAlt: '#2a1810',
-      primary: '#e85d04',
-      secondary: '#f48c06',
-      accent: '#ffd166',
-      text: '#fff8f0',
-      muted: '#c4a882',
-      cta: '#e85d04',
-      ctaText: '#1a0f08',
-    },
-    heroPattern:
-      'radial-gradient(circle at 20% 80%, rgba(232,93,4,0.15) 0%, transparent 50%)',
-    heroGlow: 'radial-gradient(ellipse at 80% 10%, rgba(255,209,102,0.2) 0%, transparent 50%)',
-    menu: [
-      { name: 'Ceviche du jour', description: 'Poisson frais, agrumes, coriandre', price: '16,90 €', badge: 'Signature', emoji: '🐟' },
-      { name: 'Brochettes BBQ', description: 'Marinade maison, légumes grillés', price: '15,50 €', emoji: '🔥' },
-      { name: 'Tacos gambas', description: 'Saint-Jacques, chorizo, avocat', price: '18,00 €', emoji: '🌮' },
-    ],
-    perks: ['Signature Pourcel', 'Produits frais', 'Ambiance fiesta'],
-    stats: [
-      { value: 'Chef', label: 'Pourcel' },
-      { value: 'Sud', label: 'Camargue → Latam' },
-      { value: 'Stand 1', label: 'Entrée Sud' },
-    ],
-    testimonials: [
-      { text: 'Une adresse audacieuse et joyeuse. Le ceviche est une révélation.', author: 'Montpellier Tourisme' },
-    ],
-    ctaPrimary: 'Réserver une table',
-    ctaSecondary: 'Voir la carte',
+      "Sushis singuliers axés goût et durabilité : handrolls, sandos et onigiris réinventés à partir de thon de Méditerranée, truite d'Ardèche et riz de Camargue.",
+    specialties: ['Sushis', 'Handrolls', 'Sandos', 'Onigiris', 'Produits locaux & durables'],
+    fb: 'kochi.montpellier',
   },
   {
-    slug: 'naked',
-    logo: '/logos/naked.svg',
-    name: 'NAKED',
-    subtitle: 'Bar à cocktails & œufs',
-    tagline: 'L\'essentiel, dans sa plus simple apparence',
+    slug: 'la-vita-al-dente',
+    name: 'La Vita al Dente',
+    type: 'Épicerie & pâtes fraîches italiennes',
+    category: 'manger',
+    stand: 'A & 17',
+    entrance: 'Entrée Sud',
     description:
-      'Cocktails minimalistes et cuisine autour de l\'œuf. Circuit court, zéro déchet, une parenthèse hors du temps au cœur du food court.',
-    stand: 'Stand G',
-    cuisine: 'Cocktails · Bar à œufs',
-    instagram: 'https://instagram.com/nakedmtp',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 10h–23h · Brunch dim.',
-    googleMaps: MAPS,
-    fonts: { heading: '"Syne", sans-serif', body: '"Inter", sans-serif' },
-    colors: {
-      bg: '#0a0a0c',
-      bgAlt: '#141418',
-      primary: '#e8e4df',
-      secondary: '#9a9590',
-      accent: '#c9a962',
-      text: '#f5f3f0',
-      muted: '#7a7672',
-      cta: '#e8e4df',
-      ctaText: '#0a0a0c',
-    },
-    heroPattern: 'linear-gradient(180deg, transparent 0%, rgba(201,169,98,0.05) 100%)',
-    heroGlow: 'radial-gradient(ellipse at 50% 0%, rgba(232,228,223,0.08) 0%, transparent 60%)',
-    menu: [
-      { name: 'Punch & Nuts', description: 'Cocktail signature maison', price: '11,00 €', badge: 'Signature', emoji: '🍸' },
-      { name: 'Œuf mollet avocat', description: 'Gingembre, graines, toast', price: '13,50 €', emoji: '🥚' },
-      { name: 'Brunch du dimanche', description: 'Formule œufs & boissons', price: '22,00 €', emoji: '☀️' },
-    ],
-    perks: ['Top 500 bars', 'Zéro déchet', 'Spiritueux premium'],
-    stats: [
-      { value: '50 Best', label: 'Inspiré' },
-      { value: '0', label: 'Déchet plastique' },
-      { value: 'Stand G', label: 'Entrée Est' },
-    ],
-    testimonials: [
-      { text: 'Des cocktails sublimes et une carte autour de l\'œuf surprenante.', author: 'Claap Montpellier' },
-    ],
-    ctaPrimary: 'Découvrir la carte',
-    ctaSecondary: 'Venir au bar',
+      "Cuisine et épicerie italienne fondée par Lorenzo : pâtes fraîches maison selon les traditions italiennes, produits sélectionnés et antipasti, au comptoir ou en terrasse.",
+    specialties: ['Pâtes fraîches maison', 'Sauces maison', 'Antipasti', 'Épicerie italienne', 'Spritz'],
+    phone: '0687560982',
+    ig: 'lavitaaldente',
   },
   {
-    slug: 'blue-india',
-    logo: '/logos/blue-india.svg',
-    name: 'Blue India',
-    subtitle: 'Cuisine indienne moderne',
-    tagline: 'L\'Inde revisitée, healthy et savoureuse',
+    slug: 'bar-des-halles',
+    name: 'Bar des Halles',
+    type: 'Bar guinguette',
+    category: 'boire',
+    stand: 'B',
+    entrance: 'Entrée Ouest',
     description:
-      'Thalis, naans garnis et cocktails bleus Butterfly Pea. Une cuisine indienne élégante inspirée de Londres, au stand 16B des Halles.',
-    stand: 'Stand 16B',
-    cuisine: 'Indien · Healthy · Ayurvédique',
-    instagram: 'https://instagram.com/blueindia_mtp',
-    uberEats: 'https://www.ubereats.com/fr/store/le-blue-india/FudxJtohRgO69y8nZTDuXA',
-    address: ADDRESS,
-    hours: 'Mar–Sam · 12h–14h30 & 19h–23h30',
-    googleMaps: MAPS,
-    fonts: { heading: '"Playfair Display", serif', body: '"Outfit", sans-serif' },
-    colors: {
-      bg: '#050818',
-      bgAlt: '#0c1230',
-      primary: '#2563eb',
-      secondary: '#1d4ed8',
-      accent: '#fbbf24',
-      text: '#eff6ff',
-      muted: '#93a8d4',
-      cta: '#2563eb',
-      ctaText: '#ffffff',
-    },
-    heroPattern:
-      'radial-gradient(circle at 30% 40%, rgba(37,99,235,0.12) 0%, transparent 45%)',
-    heroGlow: 'radial-gradient(ellipse at 70% 30%, rgba(251,191,36,0.15) 0%, transparent 50%)',
-    menu: [
-      { name: 'Cheese Naan', description: 'Fromage fondant, épices douces', price: '12,90 €', badge: 'Populaire', emoji: '🫓' },
-      { name: 'Thali dégustation', description: '5 saveurs du nord au sud', price: '19,90 €', emoji: '🍛' },
-      { name: 'Blue India cocktail', description: 'Butterfly pea, sans colorant', price: '10,00 €', badge: 'Instagram', emoji: '💙' },
-    ],
-    perks: ['Épices maison', 'Menus ayurvédiques', 'Cocktails bleus'],
-    stats: [
-      { value: '100%', label: 'Fait maison' },
-      { value: 'Healthy', label: 'Options' },
-      { value: '16B', label: 'Stand' },
-    ],
-    testimonials: [
-      { text: 'Le cheese naan et le thali sont une petite révolution pour les papilles.', author: 'Claap' },
-    ],
-    ctaPrimary: 'Commander sur Uber Eats',
-    ctaSecondary: 'Venir déguster',
+      "Bar généraliste et guinguette tenu en famille par Laye (ex-gérant du Palm Ray) et Céline. Le point de rendez-vous central des Halles, autour d'un comptoir en zinc.",
+    specialties: ['Café', 'Bière pression', 'Rosé en pichets', 'Mojitos', 'Jus & sodas'],
+    phone: '0662500963',
+    ig: 'lebardeshalles_hallesdulez',
   },
   {
-    slug: 'banger',
-    logo: '/logos/banger.svg',
-    name: 'BANGER',
-    subtitle: 'Smash burgers · Pancakes · Cookies',
-    tagline: 'Attention, ça déchire !',
+    slug: 'bar-a-lez',
+    name: 'Bar à Lez',
+    type: "Bar à vins & produits de l'Aveyron",
+    category: 'boire',
+    stand: 'C',
+    entrance: 'Entrée Ouest',
     description:
-      'Le smash burger dans toute sa splendeur : bun brioché, cheddar américain, pickles. Pancakes et cookies maison pour finir en beauté.',
-    stand: 'Stand 14A',
-    cuisine: 'Smash burger · Sucré',
-    instagram: 'https://instagram.com/smashbanger_co',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Black Ops One", cursive', body: '"Rubik", sans-serif' },
-    colors: {
-      bg: '#111108',
-      bgAlt: '#1c1c10',
-      primary: '#facc15',
-      secondary: '#eab308',
-      accent: '#ef4444',
-      text: '#fefce8',
-      muted: '#a8a882',
-      cta: '#facc15',
-      ctaText: '#111108',
-    },
-    heroPattern:
-      'repeating-linear-gradient(-12deg, transparent, transparent 8px, rgba(250,204,21,0.03) 8px, rgba(250,204,21,0.03) 16px)',
-    heroGlow: 'radial-gradient(ellipse at 60% 40%, rgba(239,68,68,0.2) 0%, transparent 50%)',
-    menu: [
-      { name: 'Smash Classic', description: '1 steak, cheddar, sauce cocktail', price: '11,90 €', badge: 'Best-seller', emoji: '🍔' },
-      { name: 'Smash XL', description: '3 steaks, double cheddar', price: '15,90 €', emoji: '🔥' },
-      { name: 'Pancakes maison', description: 'Salés ou sucrés, sirop érable', price: '9,50 €', emoji: '🥞' },
-    ],
-    perks: ['100% fait maison', 'Œufs fermiers', 'Formules L & XL'],
-    stats: [
-      { value: 'Smash', label: 'Spécialité' },
-      { value: 'Cookies', label: 'Maison' },
-      { value: '14A', label: 'Stand' },
-    ],
-    testimonials: [
-      { text: 'Le smash burger qu\'on attendait aux Halles. Les cookies sont addictifs.', author: 'Foodie local' },
-    ],
-    ctaPrimary: 'Voir le menu',
-    ctaSecondary: 'Venir au stand',
-  },
-  {
-    slug: 'soleira',
-    logo: '/logos/soleira.svg',
-    name: 'SOLEIRA',
-    subtitle: 'Cuisine du Sud-Ouest',
-    tagline: 'Le Sud-Ouest en mode street food',
-    description:
-      'Cassoulet, magret, hot-dogs toulousains et vins du domaine. Bérengère et Guillaume ensoleillent vos papilles aux Halles du Lez.',
-    stand: 'Stand 9',
-    cuisine: 'Gascon · Sud-Ouest',
-    instagram: 'https://instagram.com/soleira.montpellier',
-    uberEats: 'https://www.ubereats.com/fr/store/soleira/4EnRWm7WQAWCqO7ifmWqjg',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–14h & 19h–22h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Libre Baskerville", serif', body: '"Source Sans 3", sans-serif' },
-    colors: {
-      bg: '#1a1408',
-      bgAlt: '#2a2210',
-      primary: '#d97706',
-      secondary: '#b45309',
-      accent: '#fef3c7',
-      text: '#fffbeb',
-      muted: '#c4a574',
-      cta: '#d97706',
-      ctaText: '#1a1408',
-    },
-    heroPattern: 'radial-gradient(circle at 80% 70%, rgba(217,119,6,0.12) 0%, transparent 45%)',
-    heroGlow: 'radial-gradient(ellipse at 20% 20%, rgba(254,243,199,0.1) 0%, transparent 50%)',
-    menu: [
-      { name: 'Hot-Dog Toulousain', description: 'Saucisse, tomme brebis, confit oignons', price: '12,50 €', badge: 'Populaire', emoji: '🌭' },
-      { name: 'Cassoulet', description: 'Recette généreuse, haricots confits', price: '16,00 €', emoji: '🍲' },
-      { name: 'Magret de canard', description: 'Sauce du chef, frites maison', price: '18,50 €', emoji: '🦆' },
-    ],
-    perks: ['Vins du domaine', 'Produits du terroir', 'Accueil chaleureux'],
-    stats: [
-      { value: '4.8★', label: 'Uber Eats' },
-      { value: 'Gascon', label: 'Authenticité' },
-      { value: 'Stand 9', label: 'Entrée Nord' },
-    ],
-    testimonials: [
-      { text: 'Stand très sympathique, produits de qualité. Le hot-dog toulousain est incroyable.', author: 'Avis Uber Eats' },
-    ],
-    ctaPrimary: 'Commander sur Uber Eats',
-    ctaSecondary: 'Venir au stand',
-  },
-  {
-    slug: 'casa-asado',
-    logo: '/logos/casa-asado.svg',
-    name: 'Casa Asado',
-    subtitle: 'Bar à viandes',
-    tagline: 'L\'asado argentin au cœur des Halles',
-    description:
-      'Black Angus, picanha, tartare au couteau et côtes de taureau. Des viandes sélectionnées, grillées avec passion par Yves et son équipe.',
-    stand: 'Stand E',
-    cuisine: 'Grill · Argentin',
-    instagram: 'https://instagram.com/casa.asado',
-    address: ADDRESS,
-    hours: 'Mar–Sam · 12h–14h30 & 19h–22h30 · Dim midi',
-    googleMaps: MAPS,
-    fonts: { heading: '"Oswald", sans-serif', body: '"Work Sans", sans-serif' },
-    colors: {
-      bg: '#140a06',
-      bgAlt: '#221410',
-      primary: '#dc2626',
-      secondary: '#991b1b',
-      accent: '#fbbf24',
-      text: '#fef2f2',
-      muted: '#b89a8a',
-      cta: '#dc2626',
-      ctaText: '#ffffff',
-    },
-    heroPattern:
-      'linear-gradient(135deg, rgba(220,38,38,0.06) 0%, transparent 50%)',
-    heroGlow: 'radial-gradient(ellipse at 50% 80%, rgba(251,191,36,0.12) 0%, transparent 50%)',
-    menu: [
-      { name: 'Picanha', description: 'Bœuf Black Angus, frites maison', price: '22,00 €', badge: 'Signature', emoji: '🥩' },
-      { name: 'Tartare Charolais', description: 'Coupé au couteau, condiments', price: '16,50 €', emoji: '🔪' },
-      { name: 'Côte de bœuf', description: 'Pour les plus affamés', price: 'Sur place', emoji: '🍖' },
-    ],
-    perks: ['Viandes premium', 'Frites maison', 'Ambiance conviviale'],
-    stats: [
-      { value: '50', label: 'Couverts' },
-      { value: 'Grill', label: 'À la plancha' },
-      { value: 'Stand E', label: 'Entrée Nord' },
-    ],
-    testimonials: [
-      { text: 'Viandes tendres et savoureuses. L\'accueil est top.', author: 'Montpellier Tourisme' },
-    ],
-    ctaPrimary: 'Réserver',
-    ctaSecondary: 'Itinéraire',
-  },
-  {
-    slug: 'maria-bonita',
-    logo: '/logos/maria-bonita.svg',
-    name: 'Maria Bonita',
-    subtitle: 'Empanadas argentines',
-    tagline: '100% latino, directement en Amérique du Sud',
-    description:
-      'Empanadas carne picante, chimichurri, mate et bières argentines. La 3e adresse du Maria Social Club aux Halles du Lez.',
-    stand: 'Stand 11B',
-    cuisine: 'Argentin · Empanadas',
-    instagram: 'https://instagram.com/mariabonitamontpellier',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Righteous", cursive', body: '"Poppins", sans-serif' },
-    colors: {
-      bg: '#1a0a14',
-      bgAlt: '#2a1020',
-      primary: '#ec4899',
-      secondary: '#db2777',
-      accent: '#fbbf24',
-      text: '#fdf2f8',
-      muted: '#c49aaa',
-      cta: '#ec4899',
-      ctaText: '#ffffff',
-    },
-    heroPattern:
-      'radial-gradient(circle at 70% 30%, rgba(236,72,153,0.1) 0%, transparent 50%)',
-    heroGlow: 'radial-gradient(ellipse at 30% 70%, rgba(251,191,36,0.1) 0%, transparent 50%)',
-    menu: [
-      { name: 'Empanada carne picante', description: 'Bœuf épicé, pâte dorée', price: '4,50 €', badge: 'Classique', emoji: '🥟' },
-      { name: 'Empanada végétarienne', description: 'Légumes, fromage, épices', price: '4,00 €', emoji: '🌿' },
-      { name: 'Planche + chimichurri', description: 'À partager entre amis', price: '14,00 €', emoji: '🍺' },
-    ],
-    perks: ['Fait main', 'Culture argentine', 'Équipe 100% latino'],
-    stats: [
-      { value: '3e', label: 'Adresse MSC' },
-      { value: 'Mate', label: 'Authentique' },
-      { value: '11B', label: 'Stand' },
-    ],
-    testimonials: [
-      { text: 'Les empanadas artisanaux sont la solution idéale pour grignoter en déambulant.', author: 'Guide Halles' },
-    ],
-    ctaPrimary: 'Commander à emporter',
-    ctaSecondary: 'Suivre sur Instagram',
-  },
-  {
-    slug: 'bambino-tonton',
-    logo: '/logos/bambino-tonton.svg',
-    name: 'Bambino & Tonton Haricot',
-    subtitle: 'Pizza Club · Bar à salades',
-    tagline: 'Deux stands, une même exigence',
-    description:
-      'Bambino : pizzas napolitaines devant vous par un pizzaiolo de 25 ans d\'expérience. Tonton Haricot : salades composées, circuits courts et emballages recyclables.',
-    stand: 'Stands 3A & 3B',
-    cuisine: 'Pizza NY · Salades fraîches',
-    instagram: 'https://instagram.com/bambinopizzaclub',
-    uberEats: 'https://www.ubereats.com/fr/store/bambino-pizza-club/TGX7c4zJUlqjSitY2F5nDQ',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Space Grotesk", sans-serif', body: '"IBM Plex Sans", sans-serif' },
-    colors: {
-      bg: '#0f1218',
-      bgAlt: '#181c28',
-      primary: '#22c55e',
-      secondary: '#16a34a',
-      accent: '#f97316',
-      text: '#f0fdf4',
-      muted: '#86a88a',
-      cta: '#22c55e',
-      ctaText: '#0f1218',
-    },
-    heroPattern:
-      'repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(34,197,94,0.03) 40px, rgba(34,197,94,0.03) 41px)',
-    heroGlow: 'radial-gradient(ellipse at 40% 50%, rgba(249,115,22,0.15) 0%, transparent 50%)',
-    menu: [
-      { name: 'Truffa Lova', description: 'Signature Bambino, truffe & mozzarella', price: '16,90 €', badge: 'Bambino', emoji: '🍕' },
-      { name: 'Salade 7 ingrédients', description: 'Composez la vôtre, produits locaux', price: '12,90 €', badge: 'Tonton', emoji: '🥗' },
-      { name: 'Pizza à la part', description: 'D.O.P italien, pâte napolitaine', price: '4,50 €', emoji: '🍕' },
-    ],
-    perks: ['Charte NK Design', 'Produits D.O.P', 'Emballages recyclables'],
-    stats: [
-      { value: '25 ans', label: 'Pizzaiolo' },
-      { value: 'Local', label: 'Circuits courts' },
-      { value: '3A-3B', label: 'Stands' },
-    ],
-    testimonials: [
-      { text: 'La Truffa Lova et les salades fraîches : le combo parfait aux Halles.', author: 'Visiteur' },
-    ],
-    ctaPrimary: 'Commander Bambino sur Uber Eats',
-    ctaSecondary: 'Composer ma salade',
+      "Comptoir du chef Pierre-Olivier Prouhèze et de la famille Romagnoli (Caves Notre Dame) : grands crus et cépages locaux, accompagnés de charcuteries lozériennes et aveyronnaises.",
+    specialties: ['Vins (grands crus & cépages locaux)', 'Charcuteries de Lozère & Aveyron', 'Pâtés', 'Terrines fermières', 'Planches à partager'],
+    fb: 'baralez',
   },
   {
     slug: 'la-bodeguita',
-    logo: '/logos/la-bodeguita.svg',
     name: 'La Bodeguita',
-    subtitle: 'Paëllas & tapas espagnoles',
-    tagline: 'La vraie paëlla en 15 minutes',
+    type: 'Paëllas & tapas espagnoles',
+    category: 'manger',
+    stand: 'D',
+    entrance: 'Entrée Nord',
     description:
-      'Cuisine espagnole en mode street food : paëlla royale, végétale ou fruits de mer, tapas authentiques et sangria maison.',
-    stand: 'Stand D',
-    cuisine: 'Espagnol · Tapas · Paëlla',
-    instagram: 'https://instagram.com/labodeguita_hallesdulez',
-    address: ADDRESS,
-    hours: 'Mar–Dim · 12h–23h',
-    googleMaps: MAPS,
-    fonts: { heading: '"Cinzel", serif', body: '"Lato", sans-serif' },
-    colors: {
-      bg: '#1a1008',
-      bgAlt: '#2a1a10',
-      primary: '#ea580c',
-      secondary: '#c2410c',
-      accent: '#facc15',
-      text: '#fff7ed',
-      muted: '#c4a080',
-      cta: '#ea580c',
-      ctaText: '#ffffff',
-    },
-    heroPattern:
-      'radial-gradient(circle at 50% 100%, rgba(234,88,12,0.1) 0%, transparent 50%)',
-    heroGlow: 'radial-gradient(ellipse at 80% 20%, rgba(250,204,21,0.12) 0%, transparent 50%)',
-    menu: [
-      { name: 'Paëlla royale', description: 'Poêlon individuel, 15 min', price: '18,90 €', badge: 'Signature', emoji: '🥘' },
-      { name: 'Paëlla végétale', description: 'Légumes de saison, safran', price: '15,90 €', emoji: '🌶️' },
-      { name: 'Tapas assortis', description: 'Jambon, manchego, olives', price: '12,00 €', emoji: '🫒' },
-    ],
-    perks: ['Sangria maison', 'Vins espagnols', 'Service rapide'],
-    stats: [
-      { value: '15 min', label: 'Paëlla prête' },
-      { value: 'Espagne', label: 'Authentique' },
-      { value: 'Stand D', label: 'Entrée Nord' },
-    ],
-    testimonials: [
-      { text: 'Voyager en Espagne sans quitter Montpellier. La paëlla est excellente.', author: 'Client Halles' },
-    ],
-    ctaPrimary: 'Réserver une table',
-    ctaSecondary: 'Voir les tapas',
+      "Au cœur des Halles (stand D), La Bodeguita a succédé à Txoko : un espace de dégustation dédié à la cuisine traditionnelle espagnole travaillée aux codes de la street food.",
+    specialties: ['Paëlla en poêlon individuel', 'Paëlla royale', 'Paëlla végétale', 'Paëlla fruits de mer', 'Tapas & sangria maison'],
+    ig: 'labodeguita_hallesdulez',
+  },
+  {
+    slug: 'soleira',
+    name: 'Soleira',
+    type: 'Cuisine du Sud-Ouest',
+    category: 'manger',
+    stand: '9',
+    entrance: 'Entrée Nord',
+    description:
+      "Cuisine ensoleillée du Sud-Ouest revisitée en street food par Bérengère et Guillaume, ex-chef et sommelière également vignerons : classiques régionaux et plats généreux.",
+    specialties: ['Tapas', 'Wraps frais', 'Hot dogs', 'Cassoulet de Toulouse', 'Magret de canard', 'Vins du domaine'],
+    hours: 'Mar–Dim · 12h–14h & 19h–22h',
+    ig: 'soleira.montpellier',
+  },
+  {
+    slug: 'comptoir-alaryk',
+    name: 'Le Comptoir Alaryk',
+    type: 'Bar à bières artisanales',
+    category: 'boire',
+    stand: 'F',
+    entrance: 'Entrée Est',
+    description:
+      'La brasserie artisanale Alaryk, lancée à Béziers en 2016, pose ses fûts au cœur du food court et propose ses bières biologiques à la pression.',
+    specialties: ['Bières artisanales bio à la pression', 'Blonde', 'Blanche', 'Ambrée', 'IPA', 'Brune'],
+    web: 'alaryk.fr',
+  },
+  {
+    slug: 'naked',
+    name: 'NAKED',
+    type: 'Bar à cocktails & œufs',
+    category: 'boire',
+    stand: 'G',
+    entrance: 'Entrée Est',
+    description:
+      "Lieu de vie au croisement de l'art et de l'artisanat : drinks élaborés et plats déclinant l'œuf sous toutes ses formes. Esprit fait maison, circuit court, zéro déchet.",
+    specialties: ['Cocktails & drinks élaborés', "Plats à base d'œuf", 'Circuit court', 'Zéro déchet'],
+    ig: 'nakedmtp',
+  },
+  {
+    slug: 'blue-india',
+    name: 'Blue India',
+    type: 'Cuisine indienne',
+    category: 'manger',
+    stand: '16B',
+    entrance: 'Entrée Sud',
+    description:
+      "Cuisine indienne du fondateur d'origine indo-mauricienne : recettes familiales et traditionnelles, épices maison, du sud au nord de l'Inde, en version équilibrée.",
+    specialties: ['Cheese naan & garlic naan', 'Tandoori', 'Tikka massala', 'Butter chicken', 'Thali & plats ayurvédiques'],
+    hours: 'Mar–Sam · 12h–14h30 & 19h–23h30 · Dim 12h–15h30',
+    fb: 'blueindia_mtp',
+  },
+  {
+    slug: 'manita',
+    name: 'MANITA',
+    type: 'Saveurs entre Suds',
+    category: 'manger',
+    stand: '1',
+    entrance: 'Entrée Ouest',
+    description:
+      "Par les frères Jacques et Laurent Pourcel : une cuisine des Suds, du sud de la Camargue à l'Amérique latine. Simple et authentique, fraîche et inspirée.",
+    specialties: ['Ceviche', 'BBQ', 'Brochettes', 'Cuisine de Camargue', "Cuisine d'Amérique latine"],
+    ig: 'manita_hallesdulez',
+  },
+  {
+    slug: 'chicken-shake',
+    name: 'Chicken & Shake',
+    type: 'Poulet frit & milkshakes',
+    category: 'manger',
+    stand: '2A',
+    entrance: 'Entrée Ouest',
+    description:
+      'Concept venu des USA : poulet frit à l’américaine ultra croustillant en tenders, wings ou sandwiches, avec frites, sauces maison et milkshakes épais.',
+    specialties: ['Tenders de poulet frit', 'Wings', 'Sandwiches poulet frit', 'Frites', 'Milkshakes'],
+  },
+  {
+    slug: 'dom-pata-negra',
+    name: 'Dom Pata Negra',
+    type: 'Jambons ibériques & tapas',
+    category: 'manger',
+    stand: '4B',
+    entrance: 'Entrée Ouest',
+    description:
+      "Spécialités ibériques : produits de qualité supérieure issus des meilleurs producteurs espagnols, importés directement d'Espagne, cochon noir ibérique cuit à la plancha.",
+    specialties: ['Tapas espagnoles', 'Planches de charcuterie', 'Cochon noir ibérique de bellota', 'Jambons ibériques'],
+    phone: '0643542147',
+    fb: 'dompatanegrahallesdulez',
+  },
+  {
+    slug: 'comptoir-des-iles',
+    name: 'Le Comptoir des Îles',
+    type: 'Maurice · Madagascar · Réunion',
+    category: 'manger',
+    stand: '5B',
+    entrance: 'Entrée Ouest',
+    description:
+      "Restaurant et épicerie fine : cuisine authentique de Maurice, La Réunion, Madagascar et des Antilles, pour végétariens comme amateurs de viande.",
+    specialties: ['Rougail saucisses', 'Curry poulet massala', 'Accras de morue', 'Bœuf massalé', 'Rhums arrangés'],
+    hours: 'Mar–Sam · 12h–14h30 & 19h–23h · Dim 12h–15h · Lun fermé',
+    phone: '0638859847',
+    fb: 'LeComptoirDesIles',
+  },
+  {
+    slug: 'tonton-haricot',
+    name: 'Tonton Haricot',
+    type: 'Bar à salades',
+    category: 'manger',
+    stand: '3A',
+    entrance: 'Entrée Ouest',
+    description:
+      "Bar à salades à composer (3, 5 ou 7 ingrédients) ou créations du jour. Produits frais de saison, producteurs locaux, circuits courts et fait maison.",
+    specialties: ['Salades composables (3, 5 ou 7 ingrédients)', 'Créations du jour', 'Tartines maison', 'Soupes'],
+    ig: 'tontonharicot',
+  },
+  {
+    slug: 'bambino',
+    name: 'Bambino',
+    type: 'Pizza Club',
+    category: 'manger',
+    stand: '3B',
+    entrance: 'Entrée Ouest',
+    description:
+      "Pizza Club d'inspiration industrielle et new-yorkaise. Le pizzaiolo (25 ans d'expérience) prépare les pizzas devant vous, produits italiens DOP et pâte napolitaine.",
+    specialties: ['Pizzas napolitaines', 'Pizza entière ou à la part', 'Truffa Lova (signature truffe)', 'Produits DOP'],
+    ig: 'bambinopizzaclub',
+    uberEats: 'https://www.ubereats.com/fr/store/bambino-pizza-club/TGX7c4zJUlqjSitY2F5nDQ',
+  },
+  {
+    slug: 'ma-cocotte',
+    name: 'Ma Cocotte',
+    type: 'Cuisine traditionnelle',
+    category: 'manger',
+    stand: '4A',
+    entrance: 'Entrée Ouest',
+    description:
+      "À l'entrée des Halles, Ma Cocotte propose de savoureux plats dont l'œuf est le roi. Entièrement faits maison, ils reflètent une cuisine traditionnelle et gourmande.",
+    specialties: ['Omelettes', "Plats à base d'œuf", 'Cuisine traditionnelle', 'Fait maison'],
+    ig: 'ma_cocotte_hdl',
+  },
+  {
+    slug: 'mamaona',
+    name: 'Mamaona',
+    type: 'Healthy food · Café californien',
+    category: 'manger',
+    stand: '5A',
+    entrance: 'Entrée Ouest',
+    description:
+      "Café californien healthy fondé par Mona : cuisine inspirée des tendances californiennes et australiennes, avec des recettes vegan, sans gluten et sans lactose.",
+    specialties: ['Lunch bowls', 'Avocado toast', 'Grilled cheese', 'Açaï bowl', 'Pâtisseries (carrot cake, banana bread)'],
+    phone: '0781176879',
+    ig: 'mamaonacafe',
+  },
+  {
+    slug: 'oh-my-goz',
+    name: 'Oh My Göz',
+    type: 'Turkish street food',
+    category: 'manger',
+    stand: '6A',
+    entrance: 'Entrée Nord',
+    description:
+      "Street food turque : le gözleme, recette traditionnelle transmise de génération en génération, en version salée ou sucrée, par Noémie et Burak.",
+    specialties: ['Gözleme salé', 'Gözleme sucré', 'Street food turque'],
+    fb: 'ohmygoz_hallesdulez',
+  },
+  {
+    slug: 'hyoga',
+    name: 'Hyoga Glacier Catalan',
+    type: 'Glaces · Pancakes · Milkshakes',
+    category: 'manger',
+    stand: '6B',
+    entrance: 'Entrée Nord',
+    description:
+      'Glacier familial catalan fondé en 1977, aujourd’hui tenu par la 3e génération (Sarah Etienne). Concept de « glace truck » : glaces et pancakes maison.',
+    specialties: ['Glaces artisanales', 'Pancakes', 'Milkshakes'],
+    phone: '0762467528',
+    fb: 'hyogabycatalan',
+  },
+  {
+    slug: 'latelier',
+    name: "L'Atelier",
+    type: 'Friterie belge & pâtisserie',
+    category: 'manger',
+    stand: '7A & 7B',
+    entrance: 'Entrée Nord',
+    description:
+      'Friterie belge proposant différentes spécialités belges avec des produits frais, dont des frites fraîches venues directement de Belgique.',
+    specialties: ['Frites fraîches', 'Plats garnis', 'Croquettes', 'Sauces maison', 'Bières belges'],
+    hours: 'Mar–Sam · 11h30–15h & 18h30–23h · Dim 11h30–16h & 18h30–22h · Lun fermé',
+    phone: '0613076597',
+    fb: 'latelierhallesdulez',
+  },
+  {
+    slug: 'sax',
+    name: 'Sax',
+    type: 'Spécialités fromagères',
+    category: 'manger',
+    stand: '8A',
+    entrance: 'Entrée Nord',
+    description:
+      'Cuisine au fromage orchestrée par Sam & Max : des tapas du fromager aux plats traditionnels et à la planche à partager, au comptoir en bois, en circuit court.',
+    specialties: ['Tapas du fromager', 'Plats traditionnels', 'Planche de fromage à partager', 'Surprises du chef'],
+    phone: '0676193789',
+    ig: 'sax.specialitesfromageres',
+  },
+  {
+    slug: 'jean-le-croquant',
+    name: 'Jean le Croquant',
+    type: 'Croque-monsieur',
+    category: 'manger',
+    stand: '8B',
+    entrance: 'Entrée Nord',
+    description:
+      'Carte de croque-monsieur élaborée par la cheffe Camille Dreulle : recettes originales préparées sur place avec des produits frais et locaux.',
+    specialties: ['Croque jambon supérieur & truffe', 'Croque canard confit', 'Croque tome de Savoie IGP'],
+    phone: '0756949442',
+    web: 'jeanlecroquant.fr',
+    uberEats: 'https://www.ubereats.com/fr/store/jean-le-croquant-halles-du-lez/sU14JZthQciMZY08mGsIRA',
+  },
+  {
+    slug: 'opa',
+    name: 'OPA',
+    type: 'Greek food spot',
+    category: 'manger',
+    stand: '10A',
+    entrance: 'Entrée Nord',
+    description:
+      'Cuisine grecque aux Halles du Lez : gyros, sandwichs, salades fraîches et spécialités méditerranéennes, dans une ambiance festive et généreuse.',
+    specialties: ['Gyros', 'Sandwichs grecs', 'Salades fraîches', 'Spécialités méditerranéennes'],
+    ig: 'weareopa',
+  },
+  {
+    slug: 'bonobo',
+    name: 'Bonobo',
+    type: 'Brunch · Cuisine australienne',
+    category: 'manger',
+    stand: '10B',
+    entrance: 'Entrée Nord',
+    description:
+      "Le brunch montpelliérain installé aux Halles du Lez : brunch quotidien — pancakes, planches à partager et bowls, dans une ambiance anglo-saxonne.",
+    specialties: ['Pancakes', 'Eggs Benedict', 'Planches à partager', 'Bowls', 'Café de spécialité'],
+    web: 'bonobo-brunch.com',
+  },
+  {
+    slug: 'bouchon-petit-jardin',
+    name: 'Le Bouchon du Petit Jardin',
+    type: 'Spécialités lyonnaises',
+    category: 'manger',
+    stand: '11A',
+    entrance: 'Entrée Nord',
+    description:
+      'Hommage authentique aux bouchons lyonnais : cuisine traditionnelle de Lyon dans une ambiance chaleureuse, au cœur des Halles du Lez.',
+    specialties: ['Quenelles', 'Andouillettes', 'Cuisses de grenouille', 'Charcuterie lyonnaise'],
+    hours: 'Mar–Sam · 12h–14h30 & 19h–22h30 · Dim 11h30–15h',
+    phone: '0430969908',
+    ig: 'bouchondupetitjardin',
+    web: 'petit-jardin.com',
+  },
+  {
+    slug: 'maria-bonita',
+    name: 'Maria Bonita',
+    type: 'Empanadas argentines',
+    category: 'manger',
+    stand: '11B',
+    entrance: 'Entrée Nord',
+    description:
+      "Troisième adresse du groupe Maria Social Club, dédiée à la cuisine populaire argentine, avec une ambiance et une équipe 100 % latino.",
+    specialties: ['Empanadas carne picante', 'Empanadas végétariennes', 'Sauce chimichurri', 'Maté argentin', 'Bières'],
+    phone: '0770738936',
+    fb: 'mariabonitamontpellier',
+  },
+  {
+    slug: 'tok-tok-wok',
+    name: 'Tok Tok Wok',
+    type: 'Wok · Gua Bao · Vapeurs',
+    category: 'manger',
+    stand: '13A',
+    entrance: 'Entrée Est',
+    description:
+      'Woks à composer, minis Gua Baos fourrés, bouchées vapeur et Ha Cao. Tok Tok Wok officie désormais aux Halles du Lez (en lieu et place des Sardines).',
+    specialties: ['Woks à composer', 'Gua Baos fourrés', 'Bouchées vapeur', 'Ha Cao'],
+    ig: 'toktokwok_hallesdulez',
+  },
+  {
+    slug: 'clara-jung',
+    name: 'Clara Jung',
+    type: 'Pâtisseries créatives',
+    category: 'manger',
+    stand: '13B',
+    entrance: 'Entrée Est',
+    description:
+      "Spécialiste montpelliéraine des gâteaux de mariage et ancienne chef pâtissière en gastronomie, Clara Jung revisite avec créativité les pâtisseries françaises et étrangères.",
+    specialties: ['Kannelbullar', 'Financiers', 'Cookie shot', 'Shortbread millionaires', 'Chocolats chauds & latte'],
+    web: 'clarajung.fr',
+  },
+  {
+    slug: 'banger',
+    name: 'BANGER',
+    type: 'Smash burgers · Pancakes · Cookies',
+    category: 'manger',
+    stand: '14A',
+    entrance: 'Entrée Est',
+    description:
+      'Le smash burger a son adresse : bun brioché, steak, american cheddar, pickles et sauce cocktail maison, en formules L et XL. Aussi pancakes maison et cookies.',
+    specialties: ['Smash burger', 'Formules L & XL (2 ou 3 steaks)', 'Pancakes salés ou sucrés', 'Cookies'],
+    ig: 'smashbanger_co',
+  },
+  {
+    slug: 'cherry',
+    name: 'Cherry',
+    type: 'Crêpes & gaufres',
+    category: 'manger',
+    stand: '14B',
+    entrance: 'Entrée Est',
+    description:
+      'La crêpe bretonne en version ludique et moderne : crêpes salées et sucrées à composer, cookies moelleux et petites douceurs pour le goûter ou sur le pouce.',
+    specialties: ['Crêpes salées', 'Crêpes sucrées', 'Cookies moelleux', 'Petites douceurs'],
+  },
+  {
+    slug: 'rouge-beef',
+    name: 'Rouge Beef',
+    type: 'Burgers & viandes maturées',
+    category: 'manger',
+    stand: '15A',
+    entrance: 'Entrée Est',
+    description:
+      'Cadre contemporain mêlant style industriel et matières naturelles : burgers de viandes du Massif Central, viandes maturées, tartes salées et sucrées de saison.',
+    specialties: ['Burgers viandes du Massif Central', 'Viandes de bœuf maturées', 'Tartes salées & sucrées', "Bières & vins d'exception"],
+    phone: '0666918911',
+    ig: 'rouge_beef',
+    fb: 'rougebeefhallesdulez',
+    uberEats: 'https://www.ubereats.com/fr/store/rouge-beef-halles-du-lez/6fq7pl3QVw-2hHdMN4ST_g',
+  },
+  {
+    slug: 'ummi',
+    name: 'Ummi',
+    type: 'Saveurs orientales',
+    category: 'manger',
+    stand: '16A',
+    entrance: 'Entrée Sud',
+    description:
+      'Saveurs orientales : viandes marinées servies avec patatas au safran, légumes grillés ou en döner, en galette ou msemen. Pâtisseries orientales et couscous le vendredi.',
+    specialties: ['Pastilla poulet amandes', 'Chich taouk', 'Brochettes & merguez', 'Salade marocaine', 'Couscous du vendredi'],
+    phone: '0761413134',
+    ig: 'ummi.hallesdulez',
+    uberEats: 'https://www.ubereats.com/fr-en/store/ummi/0OaJV5wvUAOwkEgijl19_g',
+  },
+  {
+    slug: 'pitas-de-sacha',
+    name: 'Les Pitas de Sacha',
+    type: 'Falafel & chawarma',
+    category: 'manger',
+    stand: '18A',
+    entrance: 'Entrée Sud',
+    description:
+      "Touche moyen-orientale fraîche et épicée : sandwich falafel ou chawarma en pain pita, aussi en assiette, relevé de cumin, coriandre, ail et menthe, en version veggie ou carnée.",
+    specialties: ['Sandwich falafel pita', 'Sandwich chawarma pita', 'Versions en assiette', 'Option végétarienne'],
+    phone: '0762648456',
+    ig: 'lespitasdesacha_hallesdulez',
+  },
+  {
+    slug: 'rotisserie-du-lez',
+    name: 'La Rôtisserie du Lez',
+    type: 'Rôtisserie',
+    category: 'manger',
+    stand: '18B',
+    entrance: 'Entrée Sud',
+    description:
+      'Rôtisserie tenue par Yves, qui prépare ses plats rôtis devant vous. La star : le poulet fermier label rouge (entier, ½ ou ¼), midi et soir du mardi au dimanche.',
+    specialties: ['Poulet fermier label rouge', 'Magret de canard', 'Joue de porc', 'Frites', 'Sauce maison'],
+    ig: 'larotisseriedulez',
+  },
+  {
+    slug: 'casa-asado',
+    name: 'Casa Asado',
+    type: 'Bar à viandes · Grill argentin',
+    category: 'manger',
+    stand: 'E',
+    entrance: 'Entrée Nord',
+    description:
+      "Bar à viandes en hommage aux barbecues argentins : côtes de taureau ou bœuf Black Angus, tartare charolais au couteau, picanha, avec frites maison et salade fraîche.",
+    specialties: ['Côte de taureau', 'Bœuf Black Angus', 'Tartare charolais au couteau', 'Picanha', 'Frites maison'],
+    phone: '0627170517',
+    ig: 'casa.asado',
   },
 ];
 
-import residents from './residents-manifest.json';
-import { brandFromResident, type ResidentManifest } from './brand-factory';
-import { fontsForSlug } from './typography';
-import { getStandContact } from './stand-contacts';
-
-function buildDetailedOverrides(): Record<string, Brand> {
-  const map: Record<string, Brand> = {};
-  for (const b of rawBrands) {
-    if (b.slug === 'bambino-tonton') {
-      map.bambino = {
-        ...b,
-        slug: 'bambino',
-        name: 'Bambino',
-        subtitle: 'Pizza Club',
-        tagline: 'Deux stands, une même exigence — pizzas napolitaines',
-        stand: 'Stand 3B',
-        menu: [b.menu[0], b.menu[2], b.menu[0]],
-        ctaPrimary: 'Commander Bambino sur Uber Eats',
-        ctaSecondary: 'Voir les pizzas',
-      };
-      map['tonton-haricot'] = {
-        ...b,
-        slug: 'tonton-haricot',
-        name: 'Tonton Haricot',
-        subtitle: 'Bar à salades',
-        tagline: 'Composez votre salade aux Halles du Lez',
-        stand: 'Stand 3A',
-        menu: [b.menu[1], b.menu[1], b.menu[1]],
-        ctaPrimary: 'Composer ma salade',
-        ctaSecondary: 'Voir la carte',
-      };
-    } else {
-      map[b.slug] = b;
-    }
-  }
-  return map;
+function igUrl(handle?: string): string | undefined {
+  return handle ? `https://instagram.com/${handle}` : undefined;
+}
+function fbUrl(handle?: string): string | undefined {
+  return handle ? `https://facebook.com/${handle}` : undefined;
+}
+function webUrl(domain?: string): string | undefined {
+  if (!domain) return undefined;
+  return domain.startsWith('http') ? domain : `https://${domain}`;
+}
+function reviewsUrl(name: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${name} Halles du Lez Montpellier`,
+  )}`;
 }
 
-const detailedBySlug = buildDetailedOverrides();
-
-function withAssets(brand: Brand): Brand {
-  const assets = getBrandAssets(brand.slug);
+function buildBrand(r: Resident): Brand {
+  const palette = paletteForSlug(r.slug, r.category);
+  const fonts = fontsForSlug(r.slug, r.category);
   return {
-    ...brand,
-    logo: assets.logo,
-    logoFallback: assets.logoFallback,
-    logoChain: assets.logoChain,
-    logoKind: assets.logoKind,
-    heroImage: assets.heroImage,
-    gallery: assets.gallery,
-    imageCredit: assets.imageCredit,
-    menu: brand.menu.map((item, i) => ({
-      ...item,
-      image: assets.menuImages[i] || item.image,
-    })),
+    slug: r.slug,
+    name: r.name,
+    type: r.type,
+    category: r.category,
+    stand: r.stand,
+    entrance: r.entrance,
+    description: r.description,
+    specialties: r.specialties,
+    hours: r.hours,
+    phone: r.phone,
+    instagram: igUrl(r.ig),
+    facebook: fbUrl(r.fb),
+    website: webUrl(r.web),
+    uberEats: r.uberEats,
+    colors: {
+      bg: palette.bg,
+      bgAlt: palette.bgAlt,
+      primary: palette.primary,
+      secondary: palette.secondary,
+      accent: palette.accent,
+      text: palette.text,
+      muted: palette.muted,
+      cta: palette.cta,
+      ctaText: palette.ctaText,
+    },
+    fonts: {
+      heading: fonts.heading,
+      body: fonts.body,
+      headingSpacing: fonts.headingSpacing,
+      headingTransform: fonts.headingTransform,
+    },
+    heroPattern: palette.heroPattern,
+    heroGlow: palette.heroGlow,
+    address: ADDRESS,
+    googleMaps: MAPS,
+    googleReviewsUrl: reviewsUrl(r.name),
   };
 }
 
-function enrichFonts(
-  slug: string,
-  category: string,
-  fonts: Brand['fonts'],
-): Brand['fonts'] {
-  const defaults = fontsForSlug(slug, category);
-  return {
-    heading: fonts.heading,
-    body: fonts.body,
-    headingSpacing: fonts.headingSpacing ?? defaults.headingSpacing,
-    headingTransform: fonts.headingTransform ?? defaults.headingTransform,
-  };
-}
-
-export const brands: Brand[] = (residents as ResidentManifest[]).map((r) => {
-  const detailed = detailedBySlug[r.slug];
-  const contact = getStandContact(r.slug);
-  const brand = withAssets(detailed ?? brandFromResident(r));
-  return {
-    ...brand,
-    phone: brand.phone ?? contact.phone,
-    googleReviews: brand.googleReviews ?? contact.googleReviews,
-    fonts: enrichFonts(r.slug, r.category, brand.fonts),
-  };
-});
+export const brands: Brand[] = RESIDENTS.map(buildBrand);
 
 export function getBrandBySlug(slug: string): Brand | undefined {
   return brands.find((b) => b.slug === slug);
+}
+
+/** Premier lien externe « voir la carte » réellement disponible. */
+export function menuLink(brand: Brand): { href: string; label: string } | undefined {
+  if (brand.uberEats) return { href: brand.uberEats, label: 'Voir la carte sur Uber Eats' };
+  if (brand.website) return { href: brand.website, label: 'Voir le site officiel' };
+  if (brand.instagram) return { href: brand.instagram, label: 'Voir la carte sur Instagram' };
+  if (brand.facebook) return { href: brand.facebook, label: 'Voir la carte sur Facebook' };
+  return undefined;
 }

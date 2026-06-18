@@ -1,62 +1,42 @@
-import { useMemo, useState } from 'react';
-import type { LogoKind } from '../data/logo-sources';
+import { useState } from 'react';
+import { brandLogoSrc, hasRealLogo } from '../data/logo-sources';
 import { assetUrl } from '../utils/url';
 
 interface Props {
   slug: string;
   name: string;
-  logo: string;
-  logoFallback?: string;
-  logoChain?: string[];
-  kind?: LogoKind;
   className?: string;
-  variant?: 'hero' | 'nav' | 'intro';
+  variant?: 'hero' | 'nav';
 }
 
-export default function BrandHeroLogo({
-  slug,
-  name,
-  logo,
-  logoFallback,
-  logoChain,
-  className = '',
-  variant = 'hero',
-}: Props) {
-  const chain = useMemo(
-    () => logoChain ?? [logo, logoFallback].filter(Boolean) as string[],
-    [logo, logoFallback, logoChain],
-  );
+/**
+ * Affiche le nom de marque.
+ * - Si un vrai fichier logo existe (public/logos-brand/{slug}.png + slug listé
+ *   dans REAL_LOGOS), on l'affiche.
+ * - Sinon : « nameplate » typographique (le vrai nom, dans la police de charte).
+ *   Jamais de faux logo ni de picto générique.
+ */
+export default function BrandHeroLogo({ slug, name, className = '', variant = 'hero' }: Props) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImage = hasRealLogo(slug) && !imgFailed;
 
-  const [index, setIndex] = useState(0);
-  const src = assetUrl(chain[index] ?? logo);
-  const resolvedKind: LogoKind = (chain[index] ?? '').endsWith('.svg') ? 'wordmark' : 'picto';
-
-  const handleError = () => {
-    if (index < chain.length - 1) setIndex((i) => i + 1);
-  };
-
-  if (resolvedKind === 'picto') {
+  if (showImage) {
     return (
-      <div
-        className={`brand-logo-badge brand-logo-badge--${variant} ${className}`.trim()}
-        data-slug={slug}
-      >
-        <img
-          src={src}
-          alt={name}
-          className="brand-logo-picto"
-          onError={handleError}
-        />
-      </div>
+      <img
+        src={assetUrl(brandLogoSrc(slug))}
+        alt={name}
+        className={`brand-logo brand-logo--${variant} ${className}`.trim()}
+        onError={() => setImgFailed(true)}
+      />
     );
   }
 
   return (
-    <img
-      src={src}
-      alt={name}
-      className={`brand-logo brand-logo--wordmark brand-logo--${variant} ${className}`.trim()}
-      onError={handleError}
-    />
+    <span
+      className={`brand-nameplate brand-nameplate--${variant} ${className}`.trim()}
+      data-slug={slug}
+    >
+      {name}
+    </span>
   );
 }
