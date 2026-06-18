@@ -9,7 +9,6 @@ import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
 import { brandSeo } from '../utils/seo';
 import HeroDishVideo from './HeroDishVideo';
-import HallesFloorPlan from './HallesFloorPlan';
 import './LandingPage.css';
 
 interface Props {
@@ -43,7 +42,6 @@ function Section({
 
 export default function LandingPage({ brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
-  const [locationView, setLocationView] = useState<'plan' | 'maps'>('plan');
   const heroRef = useRef(null);
   const featured = brand.menu[0];
   const secondary = brand.menu[1];
@@ -347,44 +345,13 @@ export default function LandingPage({ brand }: Props) {
               )}
             </div>
           </div>
-          <div className="location-visual">
-            <div className="location-view-tabs" role="tablist" aria-label="Mode de localisation">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={locationView === 'plan'}
-                className={`location-view-tab ${locationView === 'plan' ? 'is-active' : ''}`}
-                onClick={() => setLocationView('plan')}
-              >
-                Plan des Halles
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={locationView === 'maps'}
-                className={`location-view-tab ${locationView === 'maps' ? 'is-active' : ''}`}
-                onClick={() => setLocationView('maps')}
-              >
-                Google Maps
-              </button>
-            </div>
-            {locationView === 'plan' ? (
-              <HallesFloorPlan
-                slug={brand.slug}
-                brandName={brand.name}
-                standLabel={brand.stand}
-                primaryColor={brand.colors.primary}
-              />
-            ) : (
-              <div className="location-map">
-                <iframe
-                  title={`Carte ${brand.name}`}
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2888.5!2d3.9059!3d43.5927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6af5b9210be4f%3A0x37115173b8fa1d62!2sHalles%20du%20Lez!5e0!3m2!1sfr!2sfr!4v1"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            )}
+          <div className="location-map">
+            <iframe
+              title={`Carte ${brand.name}`}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2888.5!2d3.9059!3d43.5927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6af5b9210be4f%3A0x37115173b8fa1d62!2sHalles%20du%20Lez!5e0!3m2!1sfr!2sfr!4v1"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </Section>
