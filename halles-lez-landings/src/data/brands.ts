@@ -1,4 +1,5 @@
 import { getBrandAssets } from './assets';
+import type { LogoKind } from './logo-sources';
 
 export interface MenuItem {
   name: string;
@@ -13,6 +14,8 @@ export interface Brand {
   slug: string;
   logo: string;
   logoFallback?: string;
+  logoChain?: string[];
+  logoKind?: LogoKind;
   heroImage?: string;
   gallery?: { src: string; alt: string }[];
   imageCredit?: string;
@@ -570,6 +573,8 @@ function withAssets(brand: Brand): Brand {
     ...brand,
     logo: assets.logo,
     logoFallback: assets.logoFallback,
+    logoChain: assets.logoChain,
+    logoKind: assets.logoKind,
     heroImage: assets.heroImage,
     gallery: assets.gallery,
     imageCredit: assets.imageCredit,

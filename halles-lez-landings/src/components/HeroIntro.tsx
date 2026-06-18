@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { assetUrl } from '../utils/url';
+import type { LogoKind } from '../data/logo-sources';
+import BrandHeroLogo from './BrandHeroLogo';
 import './HeroIntro.css';
 
 interface Props {
   brandName: string;
+  slug: string;
   logo: string;
   logoFallback?: string;
+  logoChain?: string[];
+  logoKind?: LogoKind;
   primaryColor: string;
   bgColor: string;
 }
@@ -15,8 +19,11 @@ const INTRO_MS = 1650;
 
 export default function HeroIntro({
   brandName,
+  slug,
   logo,
   logoFallback,
+  logoChain,
+  logoKind,
   primaryColor,
   bgColor,
 }: Props) {
@@ -64,19 +71,21 @@ export default function HeroIntro({
             >
               Halles du Lez · Montpellier
             </motion.p>
-            <motion.img
-              src={assetUrl(logo)}
-              alt=""
-              className="hero-intro-logo"
+            <motion.div
               initial={{ opacity: 0, scale: 0.72, filter: 'blur(8px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              onError={(e) => {
-                const img = e.currentTarget;
-                const fb = assetUrl(logoFallback ?? logo);
-                if (img.src !== fb) img.src = fb;
-              }}
-            />
+            >
+              <BrandHeroLogo
+                slug={slug}
+                name={brandName}
+                logo={logo}
+                logoFallback={logoFallback}
+                logoChain={logoChain}
+                kind={logoKind}
+                variant="intro"
+              />
+            </motion.div>
             <motion.div
               className="hero-intro-line"
               initial={{ scaleX: 0 }}

@@ -55,7 +55,7 @@ export function brandFromResident(r: ResidentManifest): Brand {
 
   return {
     slug: r.slug,
-    logo: `/logos/${r.slug}.svg`,
+    logo: `/logos-official/${r.slug}.png`,
     logoFallback: `/logos-official/${r.slug}.png`,
     name: r.name,
     subtitle: r.subtitle,

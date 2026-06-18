@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import type { Brand } from '../data/brands';
 import { useSeo } from '../hooks/useSeo';
-import ShareBar, { BrandLogo } from './ShareBar';
+import ShareBar from './ShareBar';
+import BrandHeroLogo from './BrandHeroLogo';
 import { brands } from '../data/brands';
 import { getBrandVideo } from '../data/videos';
 import { assetUrl } from '../utils/url';
@@ -79,8 +80,11 @@ export default function LandingPage({ brand }: Props) {
     <div className="landing" style={style}>
       <HeroIntro
         brandName={brand.name}
+        slug={brand.slug}
         logo={brand.logo}
         logoFallback={brand.logoFallback}
+        logoChain={brand.logoChain}
+        logoKind={brand.logoKind}
         primaryColor={brand.colors.primary}
         bgColor={brand.colors.bg}
       />
@@ -88,12 +92,15 @@ export default function LandingPage({ brand }: Props) {
         <Link to="/" className="landing-nav-back">
           ← Propositions
         </Link>
-        <BrandLogo
+        <BrandHeroLogo
           slug={brand.slug}
-          alt={brand.name}
-          className="nav-logo"
+          name={brand.name}
           logo={brand.logo}
           logoFallback={brand.logoFallback}
+          logoChain={brand.logoChain}
+          kind={brand.logoKind}
+          variant="nav"
+          className="nav-logo"
         />
         <div className="landing-nav-actions">
           {brand.uberEats ? (
@@ -176,12 +183,15 @@ export default function LandingPage({ brand }: Props) {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <BrandLogo
+              <BrandHeroLogo
                 slug={brand.slug}
-                alt={brand.name}
-                className="hero-logo"
+                name={brand.name}
                 logo={brand.logo}
                 logoFallback={brand.logoFallback}
+                logoChain={brand.logoChain}
+                kind={brand.logoKind}
+                variant="hero"
+                className="hero-logo"
               />
             </motion.div>
             <h1 className="hero-title-visually-hidden">{brand.name}</h1>

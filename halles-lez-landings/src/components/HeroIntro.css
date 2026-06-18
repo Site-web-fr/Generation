@@ -50,12 +50,13 @@
   color: color-mix(in srgb, var(--intro-accent) 80%, #fff);
 }
 
-.hero-intro-logo {
+.hero-intro-logo,
+.brand-logo-badge--intro .brand-logo-picto,
+.brand-logo--intro {
   width: min(78vw, 360px);
   height: auto;
   max-height: 28vh;
   object-fit: contain;
-  filter: drop-shadow(0 12px 40px color-mix(in srgb, var(--intro-accent) 45%, transparent));
 }
 
 .hero-intro-line {
