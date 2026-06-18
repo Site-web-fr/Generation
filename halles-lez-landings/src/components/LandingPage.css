@@ -11,6 +11,8 @@
 .landing h3,
 .landing .landing-nav-logo {
   font-family: var(--font-heading);
+  letter-spacing: var(--font-heading-spacing, normal);
+  text-transform: var(--font-heading-transform, none);
 }
 
 /* Nav */
@@ -319,7 +321,8 @@
   font-size: clamp(2.5rem, 7vw, 4.5rem);
   line-height: 0.95;
   margin: 0 0 0.6rem;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--font-heading-spacing, -0.02em);
+  text-transform: var(--font-heading-transform, none);
   background: linear-gradient(135deg, var(--brand-text) 0%, var(--brand-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

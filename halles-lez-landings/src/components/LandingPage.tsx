@@ -67,6 +67,8 @@ export default function LandingPage({ brand }: Props) {
     '--brand-cta-text': brand.colors.ctaText,
     '--font-heading': brand.fonts.heading,
     '--font-body': brand.fonts.body,
+    '--font-heading-spacing': brand.fonts.headingSpacing ?? 'normal',
+    '--font-heading-transform': brand.fonts.headingTransform ?? 'none',
     '--hero-pattern': brand.heroPattern,
     '--hero-glow': brand.heroGlow,
   } as React.CSSProperties;
