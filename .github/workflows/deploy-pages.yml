@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, cursor/halles-lez-landings-7629]
+    branches: [main, cursor/halles-lez-landings-7629, cursor/sorveteria-landing-066b]
   workflow_dispatch:
 
 permissions:
