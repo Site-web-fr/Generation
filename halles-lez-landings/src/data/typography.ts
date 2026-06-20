@@ -55,6 +55,7 @@ const SLUG_FONTS: Record<string, BrandFonts> = {
   'oh-my-goz': F.oswald,
   latelier: F.bebas,
   sax: F.baskerville,
+  sorveteria: F.righteous,
   'jean-le-croquant': F.bebas,
   'bouchon-petit-jardin': F.baskerville,
   'pitas-de-sacha': F.archivo,

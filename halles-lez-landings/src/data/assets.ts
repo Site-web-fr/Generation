@@ -153,6 +153,20 @@ const richAssets: Record<string, Omit<BrandAssets, keyof ReturnType<typeof logos
     menuImages: [menu('la-bodeguita', 1), menu('la-bodeguita', 2), menu('la-bodeguita', 3)],
     imageCredit: `Logo charte La Bodeguita · Picto Halles du Lez · ${DEMO}`,
   },
+  sorveteria: {
+    heroImage: '/illustrations/sorveteria-hero.svg',
+    gallery: [
+      { src: '/illustrations/sorveteria-hero.svg', alt: 'Univers rose Sorveteria avec cornets glacés' },
+      { src: '/illustrations/sorveteria-pote.svg', alt: 'Pot de glace artisanale Sorveteria' },
+      { src: '/illustrations/sorveteria-copo.svg', alt: 'Coupe glacée tropicale Sorveteria' },
+    ],
+    menuImages: [
+      '/illustrations/sorveteria-hero.svg',
+      '/illustrations/sorveteria-pote.svg',
+      '/illustrations/sorveteria-copo.svg',
+    ],
+    imageCredit: `Illustrations vectorielles Sorveteria · ${DEMO}`,
+  },
 };
 
 export function getBrandAssets(slug: string): BrandAssets {

@@ -230,6 +230,16 @@
     "category": "manger"
   },
   {
+    "slug": "sorveteria",
+    "name": "Sorveteria",
+    "subtitle": "Glaces artisanales & desserts glacés",
+    "stand": "Pop-up",
+    "picto": "pict-residents-halles-du-lez-montpellier-glaces-pancakes.png",
+    "hero": "sorveteria-hero.svg",
+    "instagram": "",
+    "category": "manger"
+  },
+  {
     "slug": "latelier",
     "name": "L'Atelier",
     "subtitle": "Friterie belge & pâtisserie",

@@ -528,6 +528,78 @@ const rawBrands: Brand[] = [
     ctaPrimary: 'Réserver une table',
     ctaSecondary: 'Voir les tapas',
   },
+  {
+    slug: 'sorveteria',
+    logo: '/logos/sorveteria.svg',
+    name: 'Sorveteria',
+    subtitle: 'Glaces artisanales & desserts glacés',
+    tagline: 'Le rituel glacé rose, joyeux et ultra-instagrammable',
+    description:
+      'Une nouvelle marque de glaces généreuses, pensée comme une expérience sensorielle et social media: cornets croustillants, pots gourmands, coupes signature et toppings minute dans une ambiance rose pop.',
+    stand: 'Pop-up dessert',
+    cuisine: 'Glacier · Sorbets · Coupes gourmandes',
+    instagram: 'https://instagram.com/sorveteria',
+    address: ADDRESS,
+    hours: 'Mar–Dim · 12h–23h · Service continu',
+    googleMaps: MAPS,
+    fonts: {
+      heading: '"Righteous", "Arial Rounded MT Bold", cursive',
+      body: '"Poppins", "Inter", sans-serif',
+      headingSpacing: '0.01em',
+      headingTransform: 'none',
+    },
+    colors: {
+      bg: '#fff3f8',
+      bgAlt: '#ffe1ee',
+      primary: '#f43f8f',
+      secondary: '#ff8fbd',
+      accent: '#ffd166',
+      text: '#4a1730',
+      muted: '#9a5571',
+      cta: '#f11272',
+      ctaText: '#ffffff',
+    },
+    heroPattern:
+      'radial-gradient(circle at 18% 20%, rgba(244,63,143,0.16) 0%, transparent 28%), radial-gradient(circle at 78% 12%, rgba(255,209,102,0.2) 0%, transparent 24%), linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,225,238,0.65) 100%)',
+    heroGlow: 'radial-gradient(ellipse at 70% 35%, rgba(244,63,143,0.25) 0%, transparent 54%)',
+    menu: [
+      {
+        name: 'Casquinha Perfeita',
+        description: 'Deux boules artisanales, cornet gaufré, cœur coulis fraise et éclats croustillants.',
+        price: '5,90 €',
+        badge: 'Signature',
+        emoji: '🍦',
+      },
+      {
+        name: 'Pote de Sorvete',
+        description: 'Pot généreux à composer: chocolat intense, vanille de Madagascar, pistache ou fruits rouges.',
+        price: '8,50 €',
+        badge: 'À composer',
+        emoji: '🍨',
+      },
+      {
+        name: 'Copo Tropical',
+        description: 'Crème glacée vanille, mangue, chantilly légère, sauce caramel et topping noix de coco.',
+        price: '7,90 €',
+        badge: 'Instagram',
+        emoji: '🥭',
+      },
+    ],
+    perks: ['Glaces artisanales', 'Toppings minute', 'Design social media prêt à poster'],
+    stats: [
+      { value: '12+', label: 'Parfums tournants' },
+      { value: '100%', label: 'Moments photo' },
+      { value: 'Service', label: 'Continu' },
+    ],
+    testimonials: [
+      {
+        text: 'Un univers rose, joyeux et très professionnel: exactement le type de marque qui donne envie de commander puis de partager.',
+        author: 'Avant-première client',
+      },
+    ],
+    ctaPrimary: 'Trouver la boutique',
+    ctaSecondary: 'Composer mon dessert',
+  },
 ];
 
 import residents from './residents-manifest.json';

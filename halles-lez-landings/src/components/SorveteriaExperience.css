@@ -1,0 +1,366 @@
+.sorveteria-experience {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  width: min(1160px, calc(100% - 2rem));
+  margin: clamp(2rem, 6vw, 5rem) auto;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, transparent);
+  border-radius: 42px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 214, 230, 0.64)),
+    radial-gradient(circle at 76% 18%, rgba(255, 209, 102, 0.24), transparent 34%);
+  box-shadow:
+    0 34px 90px rgba(244, 63, 143, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.sorveteria-experience-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sorveteria-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: 0.5;
+  animation: sorveteria-blob 10s ease-in-out infinite;
+}
+
+.sorveteria-blob--one {
+  width: 220px;
+  height: 220px;
+  top: -52px;
+  right: 18%;
+  background: #ff8fbd;
+}
+
+.sorveteria-blob--two {
+  width: 180px;
+  height: 180px;
+  bottom: -42px;
+  left: 8%;
+  background: #ffd166;
+  animation-delay: -4s;
+}
+
+@keyframes sorveteria-blob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -22px, 0) scale(1.08);
+  }
+}
+
+.sorveteria-experience-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.sorveteria-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brand-primary);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sorveteria-kicker::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--brand-accent);
+  box-shadow: 0 0 0 6px rgba(255, 209, 102, 0.28);
+}
+
+.sorveteria-experience h2 {
+  max-width: 680px;
+  margin: 0;
+  color: var(--brand-text);
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 5vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.sorveteria-experience p {
+  max-width: 620px;
+  margin: 1.25rem 0 0;
+  color: var(--brand-muted);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.sorveteria-flavor-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.72rem;
+  margin-top: 1.6rem;
+}
+
+.sorveteria-flavor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(244, 63, 143, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--brand-text);
+  font-size: 0.9rem;
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgba(244, 63, 143, 0.08);
+  animation: sorveteria-chip-float 4.8s ease-in-out infinite;
+  animation-delay: calc(var(--flavor-index) * -0.22s);
+}
+
+@keyframes sorveteria-chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.sorveteria-social-stage {
+  position: relative;
+  min-height: 560px;
+}
+
+.sorveteria-poster-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: min(280px, 48%);
+  min-height: 350px;
+  padding: 1.45rem;
+  overflow: hidden;
+  border: 10px solid rgba(255, 255, 255, 0.84);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 68% 24%, rgba(255, 255, 255, 0.95), transparent 18%),
+    linear-gradient(165deg, #ff7db1 0%, #f43f8f 48%, #ffbad4 100%);
+  color: #fff;
+  box-shadow: 0 30px 70px rgba(121, 17, 68, 0.24);
+}
+
+.sorveteria-poster-card::before {
+  content: "";
+  position: absolute;
+  inset: -12% -10% auto auto;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 34%, #fff8d3 0 18%, transparent 19%),
+    radial-gradient(circle at 58% 54%, #7b3f2d 0 22%, transparent 23%),
+    radial-gradient(circle at 32% 62%, #fff 0 20%, transparent 21%),
+    #ffd6e6;
+  transform: rotate(-12deg);
+  opacity: 0.95;
+}
+
+.sorveteria-poster-card::after {
+  content: "";
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 74px;
+  height: 74px;
+  border-radius: 50% 50% 48% 48%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.sorveteria-poster-card:nth-child(2) {
+  top: 20px;
+  left: 0;
+}
+
+.sorveteria-poster-card:nth-child(3) {
+  top: 112px;
+  right: 0;
+  background:
+    radial-gradient(circle at 70% 28%, rgba(255, 255, 255, 0.95), transparent 17%),
+    linear-gradient(165deg, #fff1bc 0%, #ff9ec5 42%, #f11272 100%);
+}
+
+.sorveteria-poster-card:nth-child(4) {
+  left: 22%;
+  bottom: 10px;
+  background:
+    radial-gradient(circle at 68% 24%, rgba(255, 255, 255, 0.95), transparent 18%),
+    linear-gradient(165deg, #f9a8c7 0%, #ff6fa8 44%, #b51662 100%);
+}
+
+.sorveteria-poster-card p,
+.sorveteria-poster-card h3,
+.sorveteria-poster-card small,
+.sorveteria-poster-card strong {
+  position: relative;
+  z-index: 1;
+}
+
+.sorveteria-poster-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.sorveteria-poster-card h3 {
+  max-width: 8ch;
+  margin: 0.2rem 0 0.65rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 0.88;
+  text-transform: uppercase;
+  text-shadow: 0 12px 24px rgba(100, 12, 54, 0.24);
+}
+
+.sorveteria-poster-card small {
+  max-width: 190px;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.sorveteria-poster-card strong {
+  width: max-content;
+  margin-top: 1rem;
+  padding: 0.42rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--brand-primary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.sorveteria-heart {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 58px;
+  height: 48px;
+  transform: rotate(-8deg);
+}
+
+.sorveteria-heart::before {
+  content: "";
+  position: absolute;
+  inset: 6px 4px 0;
+  background: #fff;
+  clip-path: path("M25 41C6 29 0 17 6 8c5-8 16-7 21 2 5-9 16-10 21-2 6 9 0 21-23 33Z");
+}
+
+.sorveteria-heart::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 17px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.sorveteria-scoop-orbit {
+  position: absolute;
+  inset: 14% 18% auto auto;
+  width: 240px;
+  height: 240px;
+  border: 1px dashed rgba(244, 63, 143, 0.38);
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.sorveteria-scoop-orbit span {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  box-shadow: 0 12px 26px rgba(244, 63, 143, 0.18);
+}
+
+.sorveteria-scoop-orbit span:nth-child(1) {
+  top: -17px;
+  left: 102px;
+  background: #fff1bc;
+}
+
+.sorveteria-scoop-orbit span:nth-child(2) {
+  right: 10px;
+  bottom: 30px;
+  background: #f9a8c7;
+}
+
+.sorveteria-scoop-orbit span:nth-child(3) {
+  bottom: 28px;
+  left: 14px;
+  background: #7b3f2d;
+}
+
+@media (max-width: 980px) {
+  .sorveteria-experience {
+    grid-template-columns: 1fr;
+  }
+
+  .sorveteria-social-stage {
+    min-height: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sorveteria-experience {
+    width: min(100% - 1rem, 560px);
+    padding: 1.35rem;
+    border-radius: 30px;
+  }
+
+  .sorveteria-social-stage {
+    display: grid;
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .sorveteria-poster-card,
+  .sorveteria-poster-card:nth-child(2),
+  .sorveteria-poster-card:nth-child(3),
+  .sorveteria-poster-card:nth-child(4) {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .sorveteria-scoop-orbit {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sorveteria-blob,
+  .sorveteria-flavor {
+    animation: none;
+  }
+}
