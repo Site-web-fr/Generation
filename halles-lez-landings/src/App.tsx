@@ -1,7 +1,7 @@
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Hub from './components/Hub';
 import LandingPage from './components/LandingPage';
-import { PitchModeProvider } from './hooks/usePitchMode';
+import { PitchModeProvider } from './hooks/PitchModeProvider';
 import { brands, getBrandBySlug } from './data/brands';
 
 const isGitHubPages = import.meta.env.BASE_URL !== '/';
