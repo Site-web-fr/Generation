@@ -6,9 +6,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: pages
@@ -57,11 +58,28 @@ jobs:
             '<title>Redirection Premium</title></head><body></body></html>' \
             > combined/premium/index.html
           touch combined/.nojekyll
+          cd combined && zip -r ../site-deploy.zip .
+
+      - name: Upload site zip (backup si Pages non activé)
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-deploy
+          path: site-deploy.zip
+          retention-days: 90
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: combined
+
+      - name: Push to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./combined
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: 'deploy: site Generation (halles + premium + pilot)'
 
   deploy:
     needs: build
@@ -73,3 +91,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true

@@ -1,72 +1,51 @@
-# ⚠️ ACTIVATION REQUISE — Les liens ne marchent pas tant que GitHub Pages n'est pas activé
+# ⚠️ POURQUOI AUCUN LIEN NE FONCTIONNE
 
-## Pourquoi rien ne fonctionne ?
+**Diagnostic confirmé :**
+- Le dépôt `Generation` est **PRIVÉ**
+- GitHub Pages est **DÉSACTIVÉ** (`has_pages: false`)
+- → Toutes les URLs renvoient **404**
 
-Le dépôt **Generation** est **privé** et **GitHub Pages n'est pas activé** (`has_pages: false`).
-
-Sur un dépôt privé avec un compte GitHub gratuit, les Pages ne sont **pas disponibles**. Il faut l'une de ces options :
-
----
-
-## Option A — Rendre le dépôt public (recommandé pour des démos client)
-
-1. Ouvrez https://github.com/Site-web-fr/Generation/settings
-2. Descendez en bas → **Danger Zone**
-3. **Change repository visibility** → **Public**
-4. Puis allez dans **Settings → Pages**
-5. **Build and deployment** → Source : **GitHub Actions**
-6. Relancez le workflow : **Actions → Deploy GitHub Pages → Run workflow**
-
-**Vos liens seront :**
-
-| Page | URL |
-|------|-----|
-| **Pilot mobile** | https://site-web-fr.github.io/Generation/pilot.html |
-| **Hub Premium** | https://site-web-fr.github.io/Generation/#/premium |
-| **Velours Auto** | https://site-web-fr.github.io/Generation/#/velours-auto |
-| **Halles du Lez** | https://site-web-fr.github.io/Generation/#/ |
+**Le code et le déploiement sont prêts.** Il manque **2 clics dans GitHub** de votre côté.
 
 ---
 
-## Option B — Garder le dépôt privé (GitHub Pro requis)
+## ✅ SOLUTION EN 2 MINUTES (obligatoire)
 
-Avec **GitHub Pro**, **Team** ou **Enterprise** :
+### Étape 1 — Rendre le dépôt public
 
-1. **Settings → Pages**
-2. Source : **GitHub Actions**
-3. Relancez le workflow **Deploy GitHub Pages**
+Les démos client doivent être visibles publiquement. Sur un compte GitHub gratuit, **Pages ne fonctionne pas sur un dépôt privé**.
 
----
+1. Ouvrez : **https://github.com/Site-web-fr/Generation/settings**
+2. Tout en bas → section **Danger Zone**
+3. Cliquez **Change repository visibility**
+4. Choisissez **Public** → confirmez
 
-## Option C — Déployer sur Netlify (gratuit, 2 minutes)
+### Étape 2 — Activer GitHub Pages
 
-1. Allez sur https://app.netlify.com/drop
-2. Glissez le dossier `halles-lez-landings/dist` (après `npm run build:pages` avec `GITHUB_PAGES=true`)
-3. Ajoutez aussi `pilot.html` à la racine du dossier
-4. Netlify vous donne une URL du type `https://xxx.netlify.app`
+1. Toujours dans Settings → menu gauche **Pages**
+2. **Build and deployment** → Source : **Deploy from a branch**
+3. Branch : **gh-pages** → dossier **/ (root)** → **Save**
 
-Pour builder localement :
+*Alternative : Source **GitHub Actions** si proposé.*
 
-```bash
-cd halles-lez-landings
-npm ci && npm ci --prefix ../premium-landings
-GITHUB_PAGES=true npm run build:pages
-cp ../pilot.html dist/pilot.html
-# Glissez le dossier dist/ sur Netlify Drop
-```
+### Étape 3 — Attendre 1 à 2 minutes
+
+Puis testez : **https://site-web-fr.github.io/Generation/pilot.html**
 
 ---
 
-## Vérifier que le déploiement a réussi
+## 📱 VOS LIENS (après activation)
 
-1. https://github.com/Site-web-fr/Generation/actions — workflow **Deploy GitHub Pages** doit être vert
-2. https://github.com/Site-web-fr/Generation/settings/pages — doit afficher une URL
+| Page | Lien |
+|------|------|
+| **Pilot mobile (favori)** | https://site-web-fr.github.io/Generation/pilot.html |
+| Hub Premium | https://site-web-fr.github.io/Generation/#/premium |
+| Velours Auto | https://site-web-fr.github.io/Generation/#/velours-auto |
+| Éclat Aesthetic | https://site-web-fr.github.io/Generation/#/eclat-aesthetic |
+| Halles du Lez | https://site-web-fr.github.io/Generation/#/ |
 
----
+### Tous les sites premium
 
-## Tous les liens premium (une fois en ligne)
-
-- https://site-web-fr.github.io/Generation/#/premium
 - https://site-web-fr.github.io/Generation/#/eclat-aesthetic
 - https://site-web-fr.github.io/Generation/#/maison-lumiere
 - https://site-web-fr.github.io/Generation/#/azure-thrill
@@ -77,3 +56,24 @@ cp ../pilot.html dist/pilot.html
 - https://site-web-fr.github.io/Generation/#/aether-aviation
 - https://site-web-fr.github.io/Generation/#/atelier-nocturne
 - https://site-web-fr.github.io/Generation/#/grand-palais-events
+
+---
+
+## 🔄 PLAN B — Netlify (si vous ne voulez pas rendre le repo public)
+
+1. Allez sur https://app.netlify.com/drop
+2. Téléchargez le ZIP depuis GitHub Actions :
+   - **Actions** → dernier workflow vert **Deploy GitHub Pages**
+   - Téléchargez l'artefact **site-deploy**
+3. Dézippez et glissez le contenu sur Netlify Drop
+4. Netlify vous donne une URL du type `https://votre-site.netlify.app`
+
+---
+
+## Vérification
+
+Le workflow **Deploy GitHub Pages** doit être ✅ vert :  
+https://github.com/Site-web-fr/Generation/actions
+
+La branche **gh-pages** contient déjà le site déployé :  
+https://github.com/Site-web-fr/Generation/tree/gh-pages
