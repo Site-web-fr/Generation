@@ -1,4 +1,4 @@
-import { chromium, devices } from 'playwright';
+import { chromium, webkit, devices } from 'playwright';
 
 const BASE = 'https://site-web-fr.github.io/Generation';
 const PAGES = [
@@ -80,6 +80,20 @@ async function run() {
     console.log('');
   }
   await mobile.close();
+
+  console.log('\n=== Mobile Safari (WebKit) ===\n');
+  const safariBrowser = await webkit.launch({ headless: true });
+  const webkitCtx = await safariBrowser.newContext({ ...devices['iPhone 13'] });
+  const safariPage = await webkitCtx.newPage();
+  for (const p of [PAGES[2], PAGES[3]]) {
+    const r = await testPage(safariPage, p);
+    results.push({ ...r, name: `[safari] ${r.name}` });
+    console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}`);
+    if (r.errors.length) console.log(`       errors: ${r.errors.join(' | ')}`);
+    console.log('');
+  }
+  await webkitCtx.close();
+  await safariBrowser.close();
 
   console.log('\n=== Desktop ===\n');
   const desktop = await browser.newContext({ viewport: { width: 1280, height: 800 } });
