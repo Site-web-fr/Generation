@@ -14,7 +14,10 @@ import {
 } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import type { SceneType } from '../../data/sites';
+import { isMobileDevice } from '../../utils/device';
 import * as THREE from 'three';
+
+const mobile = isMobileDevice();
 
 interface Props {
   type: SceneType;
@@ -44,7 +47,7 @@ function SceneLights({ accent }: { accent: string }) {
       <directionalLight position={[8, 8, 5]} intensity={1.4} color="#ffffff" />
       <directionalLight position={[-5, 3, -3]} intensity={0.6} color={accent} />
       <pointLight position={[0, 2, 3]} intensity={1.2} color={accent} distance={10} />
-      <Sparkles count={80} scale={4} size={1.5} speed={0.3} opacity={0.35} color={accent} />
+      <Sparkles count={mobile ? 20 : 60} scale={4} size={mobile ? 1 : 1.5} speed={0.3} opacity={0.35} color={accent} />
     </>
   );
 }
@@ -123,18 +126,18 @@ function WaterShape({ color, accent }: { color: string; accent: string }) {
   return (
     <group ref={group}>
       <Float speed={2.5} floatIntensity={1.2}>
-        <Torus ref={ref} args={[1, 0.32, 32, 64]} rotation={[Math.PI / 2.8, 0, 0]}>
-          <MeshTransmissionMaterial
-            backside
-            samples={8}
-            thickness={0.4}
-            chromaticAberration={0.08}
-            anisotropy={0.3}
-            distortion={0.2}
-            distortionScale={0.4}
-            temporalDistortion={0.15}
-            color={color}
-          />
+        <Torus ref={ref} args={[1, 0.32, mobile ? 16 : 32, mobile ? 32 : 64]} rotation={[Math.PI / 2.8, 0, 0]}>
+          {mobile ? (
+            <meshStandardMaterial color={color} emissive={accent} emissiveIntensity={0.3} metalness={0.6} roughness={0.2} />
+          ) : (
+            <MeshTransmissionMaterial
+              backside
+              samples={4}
+              thickness={0.4}
+              chromaticAberration={0.05}
+              color={color}
+            />
+          )}
         </Torus>
         <Sphere args={[0.25, 32, 32]} position={[0, 0.5, 0]}>
           <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={0.8} metalness={1} roughness={0} />
@@ -345,12 +348,18 @@ function SceneContent({ type, color, accent }: Props) {
 }
 
 function PostFX() {
+  if (mobile) return null;
   return (
-    <EffectComposer multisampling={4}>
-      <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} intensity={0.8} mipmapBlur />
-      <Vignette offset={0.3} darkness={0.6} />
+    <EffectComposer multisampling={2}>
+      <Bloom luminanceThreshold={0.25} luminanceSmoothing={0.9} intensity={0.5} mipmapBlur />
+      <Vignette offset={0.3} darkness={0.5} />
     </EffectComposer>
   );
+}
+
+function EnvMap() {
+  if (mobile) return null;
+  return <Environment preset="city" environmentIntensity={0.35} />;
 }
 
 function CameraRig() {
@@ -365,13 +374,17 @@ function CameraRig() {
 export default function Scene3D({ type, color, accent }: Props) {
   return (
     <div className="scene3d">
-      <Canvas camera={{ position: [0, 0, 4.8], fov: 42 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}>
+      <Canvas
+        camera={{ position: [0, 0, 4.8], fov: 42 }}
+        dpr={mobile ? 1 : [1, 1.5]}
+        gl={{ antialias: !mobile, alpha: true, powerPreference: mobile ? 'default' : 'high-performance' }}
+      >
         <SceneLights accent={accent} />
-        <Environment preset="city" environmentIntensity={0.4} />
+        <EnvMap />
         <Suspense fallback={null}>
           <SceneContent type={type} color={color} accent={accent} />
         </Suspense>
-        <CameraRig />
+        {!mobile && <CameraRig />}
         <PostFX />
       </Canvas>
       <div className="scene3d-ring" aria-hidden />

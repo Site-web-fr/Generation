@@ -6,6 +6,7 @@ import { brands, getBrandBySlug } from './data/brands';
 import PremiumHub from '@premium/components/hub/Hub';
 import PilotLinks from '@premium/components/hub/PilotLinks';
 import PremiumLanding from '@premium/components/shared/PremiumLanding';
+import ErrorBoundary from '@premium/components/shared/ErrorBoundary';
 import { sites as premiumSites, getSiteBySlug as getPremiumSite } from '@premium/data/sites';
 
 const isGitHubPages = import.meta.env.BASE_URL !== '/';
@@ -20,7 +21,17 @@ function BrandRoute({ slug }: { slug: string }) {
 function PremiumSiteRoute({ slug }: { slug: string }) {
   const site = getPremiumSite(slug);
   if (!site) return <Navigate to="/premium" replace />;
-  return <PremiumLanding site={site} />;
+  return (
+    <ErrorBoundary
+      fallback={
+        <div style={{ padding: '2rem', textAlign: 'center', color: '#f5f0eb', background: '#050508', minHeight: '100vh' }}>
+          <p>Chargement interrompu. <a href="/#/">Retour au portfolio</a></p>
+        </div>
+      }
+    >
+      <PremiumLanding site={site} />
+    </ErrorBoundary>
+  );
 }
 
 export default function App() {

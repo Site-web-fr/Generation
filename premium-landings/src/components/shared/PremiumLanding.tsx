@@ -8,6 +8,8 @@ import Scene3D from '../scenes/Scene3D';
 import Section from './Section';
 import SiteNav from './SiteNav';
 import SiteTool from './SiteTool';
+import { isMobileDevice, isTouchDevice } from '../../utils/device';
+import ErrorBoundary from './ErrorBoundary';
 import GrainOverlay from '../effects/GrainOverlay';
 import CustomCursor from '../effects/CustomCursor';
 import ScrollProgress from '../effects/ScrollProgress';
@@ -22,7 +24,7 @@ interface Props {
 }
 
 export default function PremiumLanding({ site }: Props) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(() => isMobileDevice());
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -60,7 +62,7 @@ export default function PremiumLanding({ site }: Props) {
         font={site.fonts.heading}
         onComplete={() => setLoaded(true)}
       />
-      {loaded && (
+      {loaded && !isTouchDevice() && (
         <>
           <GrainOverlay />
           <CustomCursor color={site.colors.accent} />
@@ -84,7 +86,7 @@ export default function PremiumLanding({ site }: Props) {
           <motion.div
             className="pl-hero-text"
             initial={{ opacity: 0 }}
-            animate={{ opacity: loaded ? 1 : 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="pl-hero-badges">
@@ -95,7 +97,7 @@ export default function PremiumLanding({ site }: Props) {
             <motion.p
               className="pl-tagline"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
               {site.tagline}
@@ -103,7 +105,7 @@ export default function PremiumLanding({ site }: Props) {
             <motion.p
               className="pl-desc"
               initial={{ opacity: 0 }}
-              animate={{ opacity: loaded ? 1 : 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.8 }}
             >
               {site.description}
@@ -111,7 +113,7 @@ export default function PremiumLanding({ site }: Props) {
             <motion.div
               className="pl-hero-actions"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
             >
               <MagneticButton href="#configurator" className="pl-btn pl-btn--primary">{site.ctaPrimary}</MagneticButton>
@@ -120,7 +122,7 @@ export default function PremiumLanding({ site }: Props) {
             <motion.div
               className="pl-hero-meta"
               initial={{ opacity: 0 }}
-              animate={{ opacity: loaded ? 1 : 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3 }}
             >
               <span>{site.location}</span>
@@ -131,16 +133,20 @@ export default function PremiumLanding({ site }: Props) {
           <motion.div
             className="pl-hero-scene"
             initial={{ opacity: 0, scale: 0.85, rotateY: -8 }}
-            animate={{ opacity: loaded ? 1 : 0, scale: loaded ? 1 : 0.85, rotateY: 0 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            {loaded && <Scene3D type={site.sceneType} color={site.colors.primary} accent={site.colors.accent} />}
+            <ErrorBoundary
+              fallback={<div className="scene3d scene3d--fallback" aria-hidden />}
+            >
+              <Scene3D type={site.sceneType} color={site.colors.primary} accent={site.colors.accent} />
+            </ErrorBoundary>
           </motion.div>
         </div>
         <motion.div
           className="pl-scroll-hint"
           initial={{ opacity: 0 }}
-          animate={{ opacity: loaded ? 1 : 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
         >
           <span className="pl-scroll-line" />

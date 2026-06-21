@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { sites } from '../../data/sites';
 import { useSeo, hubSeo } from '../../utils/seo';
 import { copyToClipboard, pageUrl } from '../../utils/url';
+import { isTouchDevice } from '../../utils/device';
 import GrainOverlay from '../effects/GrainOverlay';
 import CustomCursor from '../effects/CustomCursor';
 import ScrollProgress from '../effects/ScrollProgress';
@@ -97,9 +98,13 @@ export default function Hub() {
 
   return (
     <div className="hub">
-      <GrainOverlay />
-      <CustomCursor color="#d4af7a" />
-      <ScrollProgress color="#d4af7a" />
+      {!isTouchDevice() && (
+        <>
+          <GrainOverlay />
+          <CustomCursor color="#d4af7a" />
+          <ScrollProgress color="#d4af7a" />
+        </>
+      )}
 
       <div className="hub-aurora" />
       <div className="hub-grid-bg" />
