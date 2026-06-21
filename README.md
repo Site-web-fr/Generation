@@ -18,6 +18,12 @@ Landing pages ultra-premium avec UX interactive, 3D et estimateurs temps réel.
 cd premium-landings && npm install && npm run dev
 ```
 
+**Liens déployés (après activation GitHub Pages) :**
+
+- Hub premium : https://site-web-fr.github.io/Generation/#/premium
+- Exemple : https://site-web-fr.github.io/Generation/#/velours-auto
+- Pilot mobile : https://site-web-fr.github.io/Generation/pilot.html
+
 ## Halles du Lez — Propositions Landing Pages
 
 Démonstrations commerciales pour les commerces des Halles du Lez (Montpellier).

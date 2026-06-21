@@ -26,7 +26,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: halles-lez-landings/package-lock.json
+          cache-dependency-path: |
+            halles-lez-landings/package-lock.json
+            premium-landings/package-lock.json
+
+      - name: Install premium dependencies (TypeScript resolution)
+        working-directory: premium-landings
+        run: npm ci
 
       - name: Install dependencies
         working-directory: halles-lez-landings
