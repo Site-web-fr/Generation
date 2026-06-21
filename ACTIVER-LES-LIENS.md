@@ -1,4 +1,16 @@
-# ⚠️ POURQUOI AUCUN LIEN NE FONCTIONNE
+# ⚠️ ACTIVATION — Dernière étape : activer Pages dans Settings
+
+Le dépôt est maintenant **public** ✅ — il reste à activer GitHub Pages :
+
+1. https://github.com/Site-web-fr/Generation/settings/pages
+2. **Build and deployment** → Source : **Deploy from a branch**
+3. Branch : **gh-pages** → **/ (root)** → **Save**
+
+Puis attendez 1–2 minutes et testez : https://site-web-fr.github.io/Generation/pilot.html
+
+---
+
+# ⚠️ POURQUOI AUCUN LIEN NE FONCTIONNE (résolu partiellement)
 
 **Diagnostic confirmé :**
 - Le dépôt `Generation` est **PRIVÉ**
