@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Site } from '../../data/sites';
-import { applySiteTheme } from '../../data/site-themes';
+import { applyArtDirection } from '../../data/site-art-direction';
 import { getSiteEnrichment, mapsUrl } from '../../data/site-enrichment';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { phoneHref } from '../../utils/url';
@@ -17,7 +17,9 @@ import PageLoader from '../effects/PageLoader';
 import TextReveal from '../effects/TextReveal';
 import MagneticButton from '../effects/MagneticButton';
 import Marquee from '../effects/Marquee';
+import ArtDirectionDecor from './ArtDirectionDecor';
 import './PremiumLanding.css';
+import './art-direction.css';
 
 interface Props {
   site: Site;
@@ -34,7 +36,8 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function PremiumLanding({ site: rawSite }: Props) {
-  const site = useMemo(() => applySiteTheme(rawSite), [rawSite]);
+  const site = useMemo(() => applyArtDirection(rawSite), [rawSite]);
+  const art = site.art;
   const [loaded, setLoaded] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const enrichment = useMemo(() => getSiteEnrichment(site.slug), [site.slug]);
@@ -62,12 +65,16 @@ export default function PremiumLanding({ site: rawSite }: Props) {
     '--brand-glow': site.colors.glow,
     '--font-heading': site.fonts.heading,
     '--font-body': site.fonts.body,
+    '--font-display': art.fonts.display ?? site.fonts.heading,
   } as React.CSSProperties;
 
   const marqueeItems = [...site.perks, site.tagline, site.subtitle, ...site.perks];
 
   return (
-    <div className={`premium-landing premium-landing--${site.theme}`} style={style}>
+    <div
+      className={`premium-landing premium-landing--${site.theme} da-${site.slug} da-layout-${art.layout} da-btn-${art.btnStyle} da-radius-${art.radius}`}
+      style={style}
+    >
       <PageLoader
         label={site.name}
         accent={site.colors.accent}
@@ -87,10 +94,12 @@ export default function PremiumLanding({ site: rawSite }: Props) {
 
       <motion.header
         ref={heroRef}
-        className={`pl-hero pl-hero--immersive pl-hero--overlay-${site.heroOverlay}`}
+        className={`pl-hero pl-hero--immersive pl-hero--overlay-${site.heroOverlay} pl-hero--layout-${art.heroLayout}`}
         style={{ opacity: heroOpacity, y: heroY }}
       >
+        <ArtDirectionDecor art={art} slug={site.slug} />
         <div className="pl-hero-bg">
+          {art.heroLayout === 'split-block' && <div className="pl-hero-color-block" aria-hidden />}
           <img
             className="pl-hero-bg-photo"
             src={enrichment.heroImage}
@@ -107,6 +116,10 @@ export default function PremiumLanding({ site: rawSite }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+            <div className="da-credit">
+              <span className="da-credit-mood">{art.mood}</span>
+              <span className="da-credit-director">DA · <em>{art.director}</em></span>
+            </div>
             <div className="pl-hero-badges">
               <span className="pl-badge pl-badge--sector">{site.subtitle}</span>
               <span className="pl-badge pl-badge--rating">{enrichment.reviewSummary.score}★ · {enrichment.reviewSummary.count} avis</span>

@@ -1,13 +1,14 @@
 import { Suspense, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Site, ToolType } from '../../data/sites';
-import { applySiteTheme } from '../../data/site-themes';
+import { applyArtDirection } from '../../data/site-art-direction';
 import { getSiteEnrichment, mapsUrl } from '../../data/site-enrichment';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import { phoneHref } from '../../utils/url';
 import SiteNav from './SiteNav';
 import './PremiumLanding.css';
+import './art-direction.css';
 
 const toolLoaders = {
   'surgery-consultation': lazyWithRetry(() => import('../tools/SurgeryConsultation')),
@@ -47,7 +48,8 @@ interface Props {
 }
 
 export default function PremiumLandingMobile({ site: rawSite }: Props) {
-  const site = useMemo(() => applySiteTheme(rawSite), [rawSite]);
+  const site = useMemo(() => applyArtDirection(rawSite), [rawSite]);
+  const art = site.art;
   const enrichment = useMemo(() => getSiteEnrichment(site.slug), [site.slug]);
   const seo = useMemo(() => siteSeo(site), [site]);
   useSeo(seo);
@@ -70,20 +72,27 @@ export default function PremiumLandingMobile({ site: rawSite }: Props) {
     '--brand-glow': site.colors.glow,
     '--font-heading': site.fonts.heading,
     '--font-body': site.fonts.body,
+    '--font-display': art.fonts.display ?? site.fonts.heading,
   } as React.CSSProperties;
 
   return (
-    <div className={`premium-landing premium-landing--mobile premium-landing--${site.theme}`} style={style}>
+    <div
+      className={`premium-landing premium-landing--mobile premium-landing--${site.theme} da-${site.slug} da-layout-${art.layout} da-btn-${art.btnStyle} da-radius-${art.radius}`}
+      style={style}
+    >
       <SiteNav site={site} theme={site.theme} />
 
-      <header className={`pl-hero pl-hero--mobile pl-hero--immersive pl-hero--overlay-${site.heroOverlay}`}>
+      <header className={`pl-hero pl-hero--mobile pl-hero--immersive pl-hero--overlay-${site.heroOverlay} pl-hero--layout-${art.heroLayout}`}>
         <div className="pl-hero-bg">
           <img className="pl-hero-bg-photo" src={enrichment.heroImage} alt="" aria-hidden />
           <div className={`pl-hero-overlay pl-hero-overlay--${site.theme}`} />
         </div>
         <div className="pl-hero-content pl-hero-content--mobile">
           <div className="pl-hero-text">
-            <span className="pl-badge">{site.subtitle}</span>
+            <p className="da-credit da-credit--mobile">
+              <span className="da-credit-mood">{art.mood}</span>
+            </p>
+            <span className="pl-badge pl-badge--sector">{site.subtitle}</span>
             <h1 className="pl-hero-title">{site.name}</h1>
             <p className="pl-tagline">{site.tagline}</p>
             <p className="pl-desc">{site.description}</p>

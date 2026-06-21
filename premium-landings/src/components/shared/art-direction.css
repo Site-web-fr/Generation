@@ -1,0 +1,495 @@
+/* ── Art direction system — one visual identity per brand ── */
+
+.brand-logo {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  color: var(--brand-accent);
+  flex-shrink: 0;
+}
+
+.brand-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.site-nav-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+/* Director credit */
+.da-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.da-credit-mood {
+  color: var(--brand-accent);
+  font-weight: 600;
+}
+
+.da-credit-director {
+  color: var(--brand-muted);
+}
+
+.da-credit-director em {
+  font-style: normal;
+  color: var(--brand-text);
+}
+
+/* Decor layers */
+.da-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.da-racing-stripe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--brand-accent);
+  box-shadow: 0 0 40px var(--brand-glow);
+}
+
+.da-neon-slash {
+  position: absolute;
+  width: 140%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--brand-secondary), var(--brand-accent), transparent);
+  transform: rotate(-12deg);
+  opacity: 0.7;
+}
+
+.da-neon-slash--1 { top: 22%; left: -20%; }
+.da-neon-slash--2 { bottom: 30%; right: -20%; transform: rotate(8deg); }
+
+.da-rule--h {
+  position: absolute;
+  top: 12%;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: var(--brand-accent);
+}
+
+.da-rule--v {
+  position: absolute;
+  top: 5%;
+  bottom: 5%;
+  left: 48%;
+  width: 1px;
+  background: rgba(0,0,0,0.08);
+}
+
+.da-deco-corner {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--brand-accent);
+  opacity: 0.5;
+}
+
+.da-deco-corner--tl { top: 1.5rem; left: 1.5rem; border-right: none; border-bottom: none; }
+.da-deco-corner--br { bottom: 1.5rem; right: 1.5rem; border-left: none; border-top: none; }
+
+.da-spotlight {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.35) 0%, transparent 65%);
+}
+
+.da-hud {
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: 'IBM Plex Sans', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--brand-accent);
+  opacity: 0.7;
+}
+
+.da-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='%23e8b84a' fill-opacity='0.15' d='M0,60 C300,120 600,0 900,60 C1050,90 1150,30 1200,60 L1200,120 L0,120 Z'/%3E%3C/svg%3E") bottom center / cover no-repeat;
+}
+
+.da-rose-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,123,99,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,123,99,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 70% 30%, black, transparent);
+}
+
+.da-stone-blocks {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  height: 50%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 20px,
+    rgba(45,74,62,0.06) 20px,
+    rgba(45,74,62,0.06) 21px
+  );
+}
+
+.da-rope-lines {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  bottom: 0;
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--brand-accent) 0, var(--brand-accent) 8px, transparent 8px, transparent 16px);
+  opacity: 0.35;
+}
+
+/* Hero layout variants */
+.pl-hero--layout-framed-arch .pl-hero-bg-photo {
+  inset: 8%;
+  width: auto;
+  height: auto;
+  border-radius: 50% 50% 12px 12px / 30% 30% 12px 12px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.25);
+}
+
+.pl-hero--layout-diagonal-cut .pl-hero-bg-photo {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+
+.pl-hero--layout-split-block {
+  min-height: 100svh;
+}
+
+.pl-hero--layout-split-block .pl-hero-bg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pl-hero--layout-split-block .pl-hero-bg-photo {
+  grid-column: 2;
+  position: relative;
+  inset: unset;
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+}
+
+.pl-hero--layout-split-block .pl-hero-color-block {
+  grid-column: 1;
+  background: var(--brand-bg);
+  position: relative;
+  z-index: 2;
+}
+
+.pl-hero--layout-split-block .pl-hero-overlay {
+  display: none;
+}
+
+.pl-hero--layout-split-block .pl-hero-content--immersive {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: none;
+  padding: 7rem 0 4rem;
+  align-items: end;
+}
+
+.pl-hero--layout-split-block .pl-hero-text {
+  grid-column: 1;
+  padding: 0 3rem 3rem;
+}
+
+.pl-hero--layout-split-block .pl-hero-color-block {
+  grid-column: 1;
+  background: var(--brand-bg);
+  position: relative;
+  z-index: 2;
+}
+
+.pl-hero-color-block {
+  display: none;
+}
+
+.pl-hero--layout-split-block .pl-hero-color-block {
+  display: block;
+}
+
+/* Button styles per DA */
+.premium-landing.da-btn-sharp .pl-btn {
+  border-radius: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.premium-landing.da-btn-underline .pl-btn--primary {
+  background: transparent;
+  color: var(--brand-cta);
+  border-bottom: 2px solid var(--brand-cta);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.premium-landing.da-btn-underline .pl-btn--primary:hover {
+  box-shadow: none;
+  opacity: 0.8;
+}
+
+.premium-landing.da-radius-sharp .pl-reassurance-card,
+.premium-landing.da-radius-sharp .pl-service-card,
+.premium-landing.da-radius-sharp .pl-review-card,
+.premium-landing.da-radius-sharp .pl-gallery-item,
+.premium-landing.da-radius-sharp .tool-panel {
+  border-radius: 0;
+}
+
+/* ── Per-brand overrides ── */
+
+/* Éclat — rose cuivré */
+.premium-landing.da-eclat-aesthetic .pl-hero-title {
+  font-style: italic;
+  font-weight: 400;
+  background: none;
+  -webkit-text-fill-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.premium-landing.da-eclat-aesthetic .pl-tagline {
+  font-family: var(--font-heading);
+  color: var(--brand-accent);
+}
+
+.premium-landing.da-eclat-aesthetic .pl-badge--sector {
+  background: rgba(201, 123, 99, 0.15);
+  color: var(--brand-secondary);
+  border: 1px solid rgba(201, 123, 99, 0.3);
+}
+
+/* Maison Lumière — brutalist */
+.premium-landing.da-maison-lumiere .pl-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-transform: uppercase;
+  background: none;
+  -webkit-text-fill-color: #000;
+}
+
+.premium-landing.da-maison-lumiere .pl-section-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+
+.premium-landing.da-maison-lumiere .pl-hero--layout-split-block .pl-hero-text {
+  background: #fff;
+}
+
+/* Azure — néon */
+.premium-landing.da-azure-thrill .pl-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.premium-landing.da-azure-thrill .fx-marquee {
+  background: var(--brand-secondary);
+  color: #fff;
+}
+
+.premium-landing.da-azure-thrill .pl-btn--primary {
+  background: var(--brand-accent);
+  box-shadow: 0 0 30px rgba(255, 77, 41, 0.4);
+}
+
+/* Pristine — nautical brass */
+.premium-landing.da-pristine-yachts .pl-hero-title {
+  font-family: var(--font-heading);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.premium-landing.da-pristine-yachts .pl-section-label {
+  color: var(--brand-accent);
+  letter-spacing: 0.35em;
+}
+
+/* Velours — motorsport */
+.premium-landing.da-velours-auto .pl-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(4rem, 12vw, 8rem);
+  line-height: 0.9;
+  background: none;
+  -webkit-text-fill-color: #fff;
+}
+
+.premium-landing.da-velours-auto .pl-tagline {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 0.8rem;
+  color: var(--brand-accent);
+}
+
+.premium-landing.da-velours-auto .pl-hero--layout-split-block .pl-hero-text {
+  background: #050505;
+  border-left: 6px solid var(--brand-accent);
+}
+
+/* Horizon — mediterranean */
+.premium-landing.da-horizon-charter .pl-hero-title {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.premium-landing.da-horizon-charter .pl-section-header h2 {
+  font-style: italic;
+}
+
+/* Sanctum — mineral */
+.premium-landing.da-sanctum-spa .pl-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.premium-landing.da-sanctum-spa .pl-section-label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.35em;
+}
+
+.premium-landing.da-sanctum-spa .pl-reassurance-card {
+  background: var(--brand-bg-alt);
+  border: none;
+}
+
+/* Aether — cockpit */
+.premium-landing.da-aether-aviation .pl-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.premium-landing.da-aether-aviation .pl-stat-value {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+}
+
+.premium-landing.da-aether-aviation .pl-badge--sector {
+  border: 1px solid var(--brand-accent);
+  color: var(--brand-accent);
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.2em;
+}
+
+/* Atelier — art déco */
+.premium-landing.da-atelier-nocturne .pl-hero-title {
+  font-family: var(--font-heading);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.premium-landing.da-atelier-nocturne .pl-section-label::before,
+.premium-landing.da-atelier-nocturne .pl-section-label::after {
+  content: '◆';
+  margin: 0 0.5rem;
+  font-size: 0.5em;
+  color: var(--brand-accent);
+}
+
+/* Grand Palais — gala */
+.premium-landing.da-grand-palais-events .pl-hero-title {
+  font-family: var(--font-display, var(--font-heading));
+  font-weight: 400;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  letter-spacing: 0.02em;
+  background: none;
+  -webkit-text-fill-color: var(--brand-primary);
+}
+
+.premium-landing.da-grand-palais-events .pl-configurator {
+  background: var(--brand-primary);
+  color: #f5ebe0;
+}
+
+.premium-landing.da-grand-palais-events .pl-configurator .pl-section-label,
+.premium-landing.da-grand-palais-events .pl-configurator h2,
+.premium-landing.da-grand-palais-events .pl-configurator p {
+  color: #f5ebe0;
+}
+
+.premium-landing.da-grand-palais-events .pl-configurator .pl-section-label {
+  color: var(--brand-accent);
+}
+
+@media (max-width: 960px) {
+  .pl-hero--layout-split-block .pl-hero-bg {
+    grid-template-columns: 1fr;
+  }
+
+  .pl-hero--layout-split-block .pl-hero-bg-photo {
+    grid-column: 1;
+    min-height: 50vh;
+    position: absolute;
+    inset: 0;
+  }
+
+  .pl-hero--layout-split-block .pl-hero-content--immersive {
+    grid-template-columns: 1fr;
+  }
+
+  .pl-hero--layout-split-block .pl-hero-text {
+    padding: 0 1.5rem 2rem;
+  }
+
+  .da-hud { display: none; }
+}
