@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { isMobileDevice } from '../../utils/device';
 import './effects.css';
 
 interface Props {
   label: string;
   accent?: string;
   font?: string;
+  preloadImage?: string;
   onComplete?: () => void;
 }
 
 const MAX_WAIT_MS = 6000;
 
-export default function PageLoader({ label, accent = '#d4af7a', font, onComplete }: Props) {
+export default function PageLoader({ label, accent = '#d4af7a', font, preloadImage, onComplete }: Props) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
   const onCompleteRef = useRef(onComplete);
@@ -35,7 +35,7 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
     maxWait = setTimeout(finish, MAX_WAIT_MS);
 
     const start = performance.now();
-    const duration = isMobileDevice() ? 2200 : 1600;
+    const duration = 1600;
 
     const tick = (now: number) => {
       if (cancelled) return;
@@ -51,8 +51,9 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
 
     frame = requestAnimationFrame(tick);
 
-    if (isMobileDevice()) {
-      import('../scenes/Scene3D').catch(() => undefined);
+    if (preloadImage) {
+      const img = new Image();
+      img.src = preloadImage;
     }
 
     return () => {

@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Site, ToolType } from '../../data/sites';
+import { getSiteEnrichment, mapsUrl } from '../../data/site-enrichment';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import { phoneHref } from '../../utils/url';
@@ -30,11 +31,22 @@ function MobileTool({ site }: { site: Site }) {
   );
 }
 
+function Stars({ rating }: { rating: number }) {
+  return (
+    <span className="pl-stars">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i} className={i < rating ? 'pl-star pl-star--on' : 'pl-star'}>★</span>
+      ))}
+    </span>
+  );
+}
+
 interface Props {
   site: Site;
 }
 
 export default function PremiumLandingMobile({ site }: Props) {
+  const enrichment = useMemo(() => getSiteEnrichment(site.slug), [site.slug]);
   const seo = useMemo(() => siteSeo(site), [site]);
   useSeo(seo);
 
@@ -64,8 +76,12 @@ export default function PremiumLandingMobile({ site }: Props) {
 
       <header className="pl-hero pl-hero--mobile">
         <div className="pl-hero-bg">
+          <img className="pl-hero-bg-photo" src={enrichment.heroImage} alt="" aria-hidden />
           <div className="pl-hero-gradient" />
-          <div className="pl-mobile-orb" style={{ background: site.colors.glow }} />
+          <div className="pl-hero-overlay" />
+        </div>
+        <div className="pl-hero-visual pl-hero-visual--mobile">
+          <img src={enrichment.heroImage} alt={enrichment.heroImageAlt} loading="eager" />
         </div>
         <div className="pl-hero-content pl-hero-content--mobile">
           <div className="pl-hero-text">
@@ -77,10 +93,25 @@ export default function PremiumLandingMobile({ site }: Props) {
               <a href="#configurator" className="pl-btn pl-btn--primary">{site.ctaPrimary}</a>
               <a href={phoneHref(site.phone)} className="pl-btn pl-btn--ghost">{site.ctaSecondary}</a>
             </div>
-            <p className="pl-hero-meta">{site.location} · Conciergerie 24/7</p>
+            <p className="pl-hero-meta">
+              {site.location} · {enrichment.reviewSummary.score}★ ({enrichment.reviewSummary.count} avis)
+            </p>
           </div>
         </div>
       </header>
+
+      <section className="pl-reassurance pl-reassurance--mobile">
+        <h2>Votre sérénité</h2>
+        <div className="pl-reassurance-grid">
+          {enrichment.reassurance.map((item) => (
+            <div key={item.title} className="pl-reassurance-card">
+              <span className="pl-reassurance-icon">{item.icon}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section id="configurator" className="pl-configurator">
         <div className="pl-section-header">
@@ -102,6 +133,20 @@ export default function PremiumLandingMobile({ site }: Props) {
         </div>
       </section>
 
+      <section className="pl-gallery pl-gallery--mobile">
+        <div className="pl-section-header">
+          <h2>Galerie</h2>
+        </div>
+        <div className="pl-gallery-grid">
+          {enrichment.gallery.map((img) => (
+            <figure key={img.src} className="pl-gallery-item">
+              <img src={img.src} alt={img.alt} loading="lazy" />
+              {img.caption && <figcaption>{img.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+
       <section className="pl-services">
         <div className="pl-section-header">
           <h2>Services</h2>
@@ -113,6 +158,43 @@ export default function PremiumLandingMobile({ site }: Props) {
               <h3>{svc.title}</h3>
               <p>{svc.description}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="location" className="pl-location pl-location--mobile">
+        <div className="pl-section-header">
+          <h2>Localisation</h2>
+        </div>
+        <p className="pl-location-district">{enrichment.location.district}</p>
+        <dl className="pl-location-details">
+          <div><dt>Adresse</dt><dd>{enrichment.location.address}</dd></div>
+          <div><dt>Horaires</dt><dd>{enrichment.location.hours}</dd></div>
+          <div><dt>Accès</dt><dd>{enrichment.location.access}</dd></div>
+        </dl>
+        <a href={mapsUrl(enrichment.location.mapQuery)} className="pl-btn pl-btn--primary">
+          Ouvrir dans Maps
+        </a>
+      </section>
+
+      <section id="avis" className="pl-reviews pl-reviews--mobile">
+        <div className="pl-section-header">
+          <h2>Avis clients</h2>
+          <div className="pl-review-summary">
+            <span className="pl-review-score">{enrichment.reviewSummary.score}</span>
+            <Stars rating={Math.round(enrichment.reviewSummary.score)} />
+          </div>
+        </div>
+        <div className="pl-reviews-grid">
+          {enrichment.reviews.map((review, i) => (
+            <article key={`${review.author}-${i}`} className="pl-review-card">
+              <Stars rating={review.rating} />
+              <p>&ldquo;{review.text}&rdquo;</p>
+              <footer>
+                <strong>{review.author}</strong>
+                <span>{review.role}</span>
+              </footer>
+            </article>
           ))}
         </div>
       </section>
