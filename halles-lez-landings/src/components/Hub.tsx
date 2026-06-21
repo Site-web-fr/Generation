@@ -50,6 +50,13 @@ export default function Hub() {
             : `${brands.length} landing pages sur-mesure · Logos officiels Halles du Lez · Charte graphique · CRO`}
         </motion.p>
         {!pitchMode && (
+          <motion.div className="hub-pilot-row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
+            <a href="https://site-web-fr.github.io/Generation/pilot.html" className="hub-pilot-btn">
+              📱 Pilot Mobile — tous les liens
+            </a>
+          </motion.div>
+        )}
+        {!pitchMode && (
           <motion.p className="hub-deploy-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
             📱 Accessible depuis votre téléphone une fois déployé sur GitHub Pages
           </motion.p>
