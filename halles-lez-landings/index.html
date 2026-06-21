@@ -21,6 +21,27 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="boot-fallback" hidden style="display:none;min-height:100vh;background:#050508;color:#f5f0eb;font-family:system-ui,sans-serif;padding:2rem;text-align:center;">
+      <h1 style="font-size:1.25rem;margin-bottom:0.75rem;">Chargement en cours…</h1>
+      <p style="color:#9a9088;margin-bottom:1.5rem;">Si l'écran reste noir, utilisez les liens directs :</p>
+      <p><a href="./pilot.html" style="color:#d4af7a;">📱 Page Pilot</a></p>
+      <p><a href="./#/premium" style="color:#d4af7a;">✦ Premium Landings</a></p>
+      <p><a href="./#/velours-auto" style="color:#d4af7a;">Velours Auto</a></p>
+    </div>
+    <script>
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        var fb = document.getElementById('boot-fallback');
+        if (root && !root.childElementCount && fb) {
+          fb.hidden = false;
+          fb.style.display = 'block';
+        }
+      }, 12000);
+      window.addEventListener('error', function () {
+        var fb = document.getElementById('boot-fallback');
+        if (fb) { fb.hidden = false; fb.style.display = 'block'; }
+      });
+    </script>
     <noscript>
       <main style="font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem;">
         <h1>Halles du Lez — Montpellier</h1>

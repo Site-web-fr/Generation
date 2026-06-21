@@ -1,0 +1,8 @@
+[build]
+  publish = "halles-lez-landings/dist"
+  command = "cd premium-landings && npm ci && cd ../halles-lez-landings && npm ci && GITHUB_PAGES=true npm run build:pages && cp ../pilot.html dist/pilot.html"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isMobileDevice } from '../../utils/device';
-import { preloadPremiumExperience } from '../../utils/preloadPremiumChunks';
 import './effects.css';
 
 interface Props {
@@ -11,10 +10,11 @@ interface Props {
   onComplete?: () => void;
 }
 
+const MAX_WAIT_MS = 6000;
+
 export default function PageLoader({ label, accent = '#d4af7a', font, onComplete }: Props) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
-  const [status, setStatus] = useState('Préparation');
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
@@ -23,6 +23,7 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
     let cancelled = false;
     let frame: number;
     let timeout: ReturnType<typeof setTimeout>;
+    let maxWait: ReturnType<typeof setTimeout>;
 
     const finish = () => {
       if (cancelled) return;
@@ -31,30 +32,10 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
       onCompleteRef.current?.();
     };
 
-    if (isMobileDevice()) {
-      setStatus('Chargement 3D');
-      preloadPremiumExperience((pct) => {
-        if (!cancelled) setProgress(pct);
-      })
-        .then(() => {
-          if (!cancelled) {
-            setProgress(100);
-            timeout = setTimeout(finish, 400);
-          }
-        })
-        .catch(() => {
-          if (!cancelled) finish();
-        });
-
-      return () => {
-        cancelled = true;
-        clearTimeout(timeout);
-        document.body.style.overflow = '';
-      };
-    }
+    maxWait = setTimeout(finish, MAX_WAIT_MS);
 
     const start = performance.now();
-    const duration = 1600;
+    const duration = isMobileDevice() ? 2200 : 1600;
 
     const tick = (now: number) => {
       if (cancelled) return;
@@ -69,10 +50,16 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
     };
 
     frame = requestAnimationFrame(tick);
+
+    if (isMobileDevice()) {
+      import('../scenes/Scene3D').catch(() => undefined);
+    }
+
     return () => {
       cancelled = true;
-      cancelAnimationFrame(frame);
+      clearTimeout(maxWait);
       clearTimeout(timeout);
+      cancelAnimationFrame(frame);
       document.body.style.overflow = '';
     };
   }, []);
@@ -95,7 +82,6 @@ export default function PageLoader({ label, accent = '#d4af7a', font, onComplete
         <span className="fx-loader-label">Expérience premium</span>
         <span className="fx-loader-name">{label}</span>
         <span className="fx-loader-counter">{progress}</span>
-        {isMobileDevice() && <span className="fx-loader-status">{status}</span>}
         <div className="fx-loader-bar-wrap">
           <motion.div
             className="fx-loader-bar"
