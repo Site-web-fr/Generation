@@ -13,19 +13,30 @@ export default defineConfig({
     },
   },
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
         mobile: path.resolve(__dirname, 'mobile.html'),
       },
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules/three')) return 'vendor-three';
-          if (id.includes('node_modules/@react-three')) return 'vendor-r3f';
-          if (id.includes('postprocessing')) return 'vendor-postfx';
-          if (id.includes('node_modules/framer-motion')) return 'vendor-motion';
-          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) return 'vendor-react';
-          if (id.includes('node_modules/react-router')) return 'vendor-router';
+        strictExecutionOrder: true,
+        codeSplitting: {
+          groups: [
+            { name: 'vendor-three', test: /node_modules\/three\//, priority: 100 },
+            {
+              name: 'vendor-postfx',
+              test: /@react-three\/postprocessing|node_modules\/postprocessing\//,
+              priority: 95,
+            },
+            { name: 'vendor-r3f', test: /@react-three\//, priority: 90 },
+            { name: 'vendor-motion', test: /node_modules\/framer-motion/, priority: 80 },
+            {
+              name: 'vendor-react',
+              test: /node_modules\/react-dom|node_modules\/react\//,
+              priority: 70,
+            },
+            { name: 'vendor-router', test: /node_modules\/react-router/, priority: 60 },
+          ],
         },
       },
     },

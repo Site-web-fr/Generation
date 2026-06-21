@@ -124,6 +124,15 @@
   line-height: 1;
 }
 
+.fx-loader-status {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0.75rem 0 1.25rem;
+}
+
 .fx-loader-bar-wrap {
   width: min(280px, 60vw);
   height: 1px;

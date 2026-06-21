@@ -53,8 +53,8 @@ jobs:
           mkdir -p combined/premium
           printf '%s\n' \
             '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' \
-            '<meta http-equiv="refresh" content="0;url=/Generation/mobile.html#/premium">' \
-            '<script>location.replace("/Generation/mobile.html#/premium")</script>' \
+            '<meta http-equiv="refresh" content="0;url=/Generation/#/premium">' \
+            '<script>location.replace("/Generation/#/premium")</script>' \
             '<title>Redirection Premium</title></head><body></body></html>' \
             > combined/premium/index.html
           touch combined/.nojekyll

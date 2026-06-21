@@ -143,8 +143,7 @@
     const ORIGIN = 'https://site-web-fr.github.io';
     const BASE = '/Generation';
     const APP = ORIGIN + BASE + '/';
-    const MOBILE_APP = APP + 'mobile.html';
-    const PREMIUM_HUB = MOBILE_APP + '#/premium';
+    const PREMIUM_HUB = APP + '#/premium';
     const HALLES_HUB = APP + '#/';
 
     const premiumSites = [
@@ -187,7 +186,7 @@
     }
 
     function premiumUrl(slug) {
-      return MOBILE_APP + '#/' + slug;
+      return APP + '#/' + slug;
     }
 
     function hallesUrl(slug) {

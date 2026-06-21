@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useEffect, useState, useRef, type ComponentType } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import {
   Float,
@@ -12,7 +12,6 @@ import {
   MeshTransmissionMaterial,
   RoundedBox,
 } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import type { SceneType } from '../../data/sites';
 import { isMobileDevice } from '../../utils/device';
 import * as THREE from 'three';
@@ -61,7 +60,7 @@ function OrganicShape({ color, accent }: { color: string; accent: string }) {
   return (
     <group ref={group}>
       <Float speed={1.8} rotationIntensity={0.5} floatIntensity={1}>
-        <Sphere ref={inner} args={[1.15, 128, 128]} scale={[1, 1.18, 0.92]}>
+        <Sphere ref={inner} args={[1.15, mobile ? 32 : 128, mobile ? 32 : 128]} scale={[1, 1.18, 0.92]}>
           <MeshDistortMaterial
             color={color}
             roughness={0.15}
@@ -219,7 +218,7 @@ function OceanShape({ color, accent }: { color: string; accent: string }) {
   return (
     <group ref={group}>
       <Float speed={1.2} floatIntensity={0.8}>
-        <Sphere ref={ref} args={[1.05, 64, 64]}>
+        <Sphere ref={ref} args={[1.05, mobile ? 32 : 64, mobile ? 32 : 64]}>
           <MeshDistortMaterial color={color} distort={0.25} speed={2} metalness={0.6} roughness={0.2} emissive={accent} emissiveIntensity={0.25} />
         </Sphere>
         <Torus args={[1.4, 0.015, 8, 64]} rotation={[Math.PI / 2, 0, 0]}>
@@ -246,8 +245,12 @@ function WellnessShape({ color, accent }: { color: string; accent: string }) {
           <Torus args={[0.7, 0.04, 32, 64]} rotation={[Math.PI / 3, 0, 0]}>
             <meshStandardMaterial color={color} metalness={0.6} roughness={0.2} transparent opacity={0.7} />
           </Torus>
-          <Sphere args={[0.3, 64, 64]}>
-            <MeshTransmissionMaterial color={accent} thickness={0.5} roughness={0} transmission={0.95} />
+          <Sphere args={[0.3, mobile ? 16 : 64, mobile ? 16 : 64]}>
+            {mobile ? (
+              <meshStandardMaterial color={accent} metalness={0.8} roughness={0.1} emissive={accent} emissiveIntensity={0.25} />
+            ) : (
+              <MeshTransmissionMaterial color={accent} thickness={0.5} roughness={0} transmission={0.95} />
+            )}
           </Sphere>
         </Float>
       </group>
@@ -348,13 +351,15 @@ function SceneContent({ type, color, accent }: Props) {
 }
 
 function PostFX() {
-  if (mobile) return null;
-  return (
-    <EffectComposer multisampling={2}>
-      <Bloom luminanceThreshold={0.25} luminanceSmoothing={0.9} intensity={0.5} mipmapBlur />
-      <Vignette offset={0.3} darkness={0.5} />
-    </EffectComposer>
-  );
+  const [Fx, setFx] = useState<ComponentType | null>(null);
+
+  useEffect(() => {
+    if (mobile) return;
+    import('./Scene3DPostFX').then((m) => setFx(() => m.default));
+  }, []);
+
+  if (!Fx) return null;
+  return <Fx />;
 }
 
 function EnvMap() {

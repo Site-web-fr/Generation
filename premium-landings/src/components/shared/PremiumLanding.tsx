@@ -1,8 +1,9 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Site } from '../../data/sites';
 import { useSeo, siteSeo } from '../../utils/seo';
+import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import { phoneHref } from '../../utils/url';
 import Section from './Section';
 import SiteNav from './SiteNav';
@@ -18,7 +19,7 @@ import MagneticButton from '../effects/MagneticButton';
 import Marquee from '../effects/Marquee';
 import './PremiumLanding.css';
 
-const Scene3D = lazy(() => import('../scenes/Scene3D'));
+const Scene3D = lazyWithRetry(() => import('../scenes/Scene3D'));
 
 interface Props {
   site: Site;
@@ -63,13 +64,13 @@ export default function PremiumLanding({ site }: Props) {
         font={site.fonts.heading}
         onComplete={() => setLoaded(true)}
       />
-      {loaded && !isTouchDevice() && (
+      {loaded && (
         <>
           <GrainOverlay />
-          <CustomCursor color={site.colors.accent} />
           <ScrollProgress color={site.colors.accent} glow={site.colors.glow} />
         </>
       )}
+      {loaded && !isTouchDevice() && <CustomCursor color={site.colors.accent} />}
 
       <SiteNav site={site} />
 
