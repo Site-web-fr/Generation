@@ -1,0 +1,220 @@
+.hub {
+  min-height: 100vh;
+  position: relative;
+  background: #050506;
+}
+
+.hub-noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hub main {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.hub-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.hub-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9a962;
+  border: 1px solid rgba(201, 169, 98, 0.3);
+  padding: 0.45rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.hub-header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 0%, #c9a962 50%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: hub-shine 6s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes hub-shine {
+  to { background-position: 200% center; }
+}
+
+.hub-subtitle {
+  font-size: 1.1rem;
+  color: #888;
+  max-width: 640px;
+  margin: 0 auto 1rem;
+  font-weight: 300;
+}
+
+.hub-note {
+  font-size: 0.85rem;
+  color: #666;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.hub-card {
+  display: block;
+  position: relative;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+}
+
+.hub-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--card-accent) 40%, transparent);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 40px color-mix(in srgb, var(--card-accent) 10%, transparent);
+}
+
+.hub-card-glow {
+  position: absolute;
+  inset: 0;
+  background: var(--card-gradient);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hub-card > *:not(.hub-card-glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.hub-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.hub-card-sector {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+}
+
+.hub-card-budget {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hub-card h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--card-primary);
+  margin-bottom: 0.5rem;
+}
+
+.hub-card-tagline {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.hub-card-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.hub-card-features {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.hub-card-features li {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0.25rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.hub-card-features li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  font-size: 0.5rem;
+  color: var(--card-accent);
+  top: 0.45rem;
+}
+
+.hub-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hub-card-cta {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+}
+
+.hub-copy-btn {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.hub-copy-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.hub-footer {
+  text-align: center;
+  padding: 2rem;
+  color: #555;
+  font-size: 0.8rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hub-footer strong {
+  color: #888;
+}
+
+@media (max-width: 400px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+  }
+}
