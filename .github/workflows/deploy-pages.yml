@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, cursor/halles-lez-landings-7629]
+    branches: [main, cursor/premium-landings-8794]
   workflow_dispatch:
 
 permissions:
@@ -26,22 +26,41 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: halles-lez-landings/package-lock.json
+          cache-dependency-path: |
+            halles-lez-landings/package-lock.json
+            premium-landings/package-lock.json
 
-      - name: Install dependencies
+      - name: Install Halles du Lez dependencies
         working-directory: halles-lez-landings
         run: npm ci
 
-      - name: Build for GitHub Pages
+      - name: Build Halles du Lez for GitHub Pages
         working-directory: halles-lez-landings
         env:
           GITHUB_PAGES: 'true'
         run: npm run build:pages
 
+      - name: Install Premium Landings dependencies
+        working-directory: premium-landings
+        run: npm ci
+
+      - name: Build Premium Landings for GitHub Pages
+        working-directory: premium-landings
+        env:
+          GITHUB_PAGES: 'true'
+        run: npm run build:pages
+
+      - name: Combine artifacts
+        run: |
+          mkdir -p combined
+          cp -r halles-lez-landings/dist/* combined/
+          mkdir -p combined/premium
+          cp -r premium-landings/dist/* combined/premium/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: halles-lez-landings/dist
+          path: combined
 
   deploy:
     needs: build
