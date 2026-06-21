@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Restaurants et food court aux Halles du Lez, Montpellier — Rouge Beef, MANITA, Blue India, BANGER, SOLEIRA et plus." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0f0a0a" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Halles du Lez — Montpellier" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://site-web-fr.github.io/Generation/" />
+    <title>Halles du Lez — Restaurants &amp; Food Court Montpellier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Black+Ops+One&family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=IBM+Plex+Sans:wght@400;600&family=Inter:wght@400;600&family=Lato:wght@400;700&family=Libre+Baskerville:wght@700&family=Nunito:wght@400;600;700&family=Oswald:wght@500;700&family=Outfit:wght@400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@400;600&family=Righteous&family=Rubik:wght@400;600&family=Source+Sans+3:wght@400;600&family=Space+Grotesk:wght@500;700&family=Syne:wght@600;700;800&family=Work+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/Generation/assets/index-C91hCM6k.js"></script>
+    <link rel="modulepreload" crossorigin href="/Generation/assets/rolldown-runtime-Cyuzqnbw.js">
+    <link rel="modulepreload" crossorigin href="/Generation/assets/vendor-react-7H7rJkNA.js">
+    <link rel="modulepreload" crossorigin href="/Generation/assets/vendor-router-r7nWb8RA.js">
+    <link rel="modulepreload" crossorigin href="/Generation/assets/vendor-motion-Dr3kXsR5.js">
+    <link rel="stylesheet" crossorigin href="/Generation/assets/index-D_EbKC8d.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="boot-fallback" hidden style="display:none;min-height:100vh;background:#050508;color:#f5f0eb;font-family:system-ui,sans-serif;padding:2rem;text-align:center;">
+      <h1 style="font-size:1.25rem;margin-bottom:0.75rem;">Chargement en cours…</h1>
+      <p style="color:#9a9088;margin-bottom:1.5rem;">Si l'écran reste noir, utilisez les liens directs :</p>
+      <p><a href="./pilot.html" style="color:#d4af7a;">📱 Page Pilot</a></p>
+      <p id="boot-premium"></p>
+      <p id="boot-velours"></p>
+    </div>
+    <script>
+      (function () {
+        var hash = location.hostname.endsWith('github.io') && location.pathname.indexOf('/Generation') === 0;
+        function link(id, label, slug) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var href = hash ? './#/' + slug : './' + slug;
+          el.innerHTML = '<a href="' + href + '" style="color:#d4af7a;">' + label + '</a>';
+        }
+        link('boot-premium', '✦ Premium Landings', 'premium');
+        link('boot-velours', 'Velours Auto', 'velours-auto');
+      })();
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        var fb = document.getElementById('boot-fallback');
+        if (root && !root.childElementCount && fb) {
+          fb.hidden = false;
+          fb.style.display = 'block';
+        }
+      }, 12000);
+      window.addEventListener('error', function () {
+        var fb = document.getElementById('boot-fallback');
+        if (fb) { fb.hidden = false; fb.style.display = 'block'; }
+      });
+    </script>
+    <noscript>
+      <main style="font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem;">
+        <h1>Halles du Lez — Montpellier</h1>
+        <p>Food court et restaurants : Rouge Beef, MANITA, Blue India, BANGER, SOLEIRA, Casa Asado, Maria Bonita, Bambino, La Bodeguita.</p>
+        <p>1348 Avenue Raymond Dugrand, 34000 Montpellier</p>
+      </main>
+    </noscript>
+  </body>
+</html>
