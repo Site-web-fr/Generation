@@ -142,8 +142,9 @@
   <script>
     const ORIGIN = 'https://site-web-fr.github.io';
     const BASE = '/Generation';
-    const PREMIUM = ORIGIN + BASE + '/premium/';
-    const HALLES = ORIGIN + BASE + '/';
+    const APP = ORIGIN + BASE + '/';
+    const PREMIUM_HUB = APP + '#/premium';
+    const HALLES_HUB = APP + '#/';
 
     const premiumSites = [
       { slug: 'eclat-aesthetic', name: 'Éclat Aesthetic', sub: 'Chirurgie esthétique' },
@@ -171,8 +172,8 @@
       { slug: 'la-bodeguita', name: 'La Bodeguita', sub: 'Tapas & cocktails' },
     ];
 
-    document.getElementById('hub-premium').href = PREMIUM;
-    document.getElementById('hub-halles').href = HALLES;
+    document.getElementById('hub-premium').href = PREMIUM_HUB;
+    document.getElementById('hub-halles').href = HALLES_HUB;
 
     const toast = document.getElementById('toast');
     let toastTimer;
@@ -182,6 +183,14 @@
       toast.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function premiumUrl(slug) {
+      return APP + '#/' + slug;
+    }
+
+    function hallesUrl(slug) {
+      return APP + '#/' + slug;
     }
 
     function copyUrl(url, btn) {
@@ -197,10 +206,10 @@
       }
     }
 
-    function renderList(containerId, items, base) {
+    function renderList(containerId, items, urlFn) {
       const el = document.getElementById(containerId);
       items.forEach(({ slug, name, sub }) => {
-        const url = base + '#/' + slug;
+        const url = urlFn(slug);
         const row = document.createElement('div');
         row.className = 'link-row';
         row.innerHTML = `
@@ -218,8 +227,8 @@
       });
     }
 
-    renderList('premium-list', premiumSites, PREMIUM);
-    renderList('halles-list', hallesBrands, HALLES);
+    renderList('premium-list', premiumSites, premiumUrl);
+    renderList('halles-list', hallesBrands, hallesUrl);
 
     if (navigator.share) {
       const shareBtn = document.createElement('button');

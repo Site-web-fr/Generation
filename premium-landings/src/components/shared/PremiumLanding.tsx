@@ -275,7 +275,7 @@ export default function PremiumLanding({ site }: Props) {
       </Section>
 
       <footer className="pl-footer">
-        <Link to="/">← Retour au portfolio</Link>
+        <Link to="/premium">← Retour au portfolio premium</Link>
         <span>{site.name} · Crafted with precision</span>
       </footer>
     </div>

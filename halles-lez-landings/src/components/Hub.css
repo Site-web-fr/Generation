@@ -57,6 +57,10 @@
 
 .hub-pilot-row {
   margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
 }
 
 .hub-pilot-btn {
@@ -68,6 +72,11 @@
   color: #f0f0f5;
   font-size: 0.9rem;
   text-decoration: none;
+}
+
+.hub-pilot-btn--gold {
+  border-color: rgba(212, 175, 122, 0.35);
+  color: #d4af7a;
 }
 
 .hub-deploy-note {

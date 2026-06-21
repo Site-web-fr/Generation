@@ -132,7 +132,7 @@ export default function Hub() {
               href="https://site-web-fr.github.io/Generation/pilot.html"
               className="hub-pilot-link hub-pilot-link--outline"
             >
-              Ouvrir la page pilot (déployée)
+              Page pilot (favori téléphone)
             </a>
           </motion.div>
           <motion.p

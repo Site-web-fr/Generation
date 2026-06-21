@@ -4,12 +4,15 @@ import { sites } from '../../data/sites';
 import { copyToClipboard, pageUrl } from '../../utils/url';
 import './PilotLinks.css';
 
-const DEPLOY_BASE = 'https://site-web-fr.github.io/Generation/premium';
-const HALLES_BASE = 'https://site-web-fr.github.io/Generation';
-const PILOT_STATIC = 'https://site-web-fr.github.io/Generation/pilot.html';
+const DEPLOY_BASE = 'https://site-web-fr.github.io/Generation';
+const PILOT_STATIC = `${DEPLOY_BASE}/pilot.html`;
 
 function absPremiumUrl(slug: string) {
   return `${DEPLOY_BASE}/#/${slug}`;
+}
+
+function absPremiumHub() {
+  return `${DEPLOY_BASE}/#/premium`;
 }
 
 export default function PilotLinks() {
@@ -36,17 +39,17 @@ export default function PilotLinks() {
       <section className="pilot-section">
         <h2>Portfolios</h2>
         <div className="pilot-hubs">
-          <a href={DEPLOY_BASE + '/'} className="pilot-hub-card">
+          <a href={absPremiumHub()} className="pilot-hub-card">
             <strong>✦ Premium Landings</strong>
             <span>Hub des 10 démos</span>
-            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(DEPLOY_BASE + '/', 'hub-premium'); }}>
+            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(absPremiumHub(), 'hub-premium'); }}>
               {copied === 'hub-premium' ? '✓ Copié' : 'Copier'}
             </button>
           </a>
-          <a href={HALLES_BASE} className="pilot-hub-card pilot-hub-card--halles">
+          <a href={`${DEPLOY_BASE}/#/`} className="pilot-hub-card pilot-hub-card--halles">
             <strong>🍽 Halles du Lez</strong>
             <span>Food court Montpellier</span>
-            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(HALLES_BASE, 'hub-halles'); }}>
+            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(`${DEPLOY_BASE}/#/`, 'hub-halles'); }}>
               {copied === 'hub-halles' ? '✓ Copié' : 'Copier'}
             </button>
           </a>

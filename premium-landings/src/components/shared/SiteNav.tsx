@@ -19,7 +19,7 @@ export default function SiteNav({ site }: Props) {
 
   return (
     <nav ref={ref} className="site-nav">
-      <Link to="/" className="site-nav-back">← Portfolio</Link>
+      <Link to="/premium" className="site-nav-back">← Portfolio</Link>
       <span className="site-nav-brand">{site.name}</span>
       <a href="#configurator" className="site-nav-cta">{site.ctaPrimary}</a>
     </nav>

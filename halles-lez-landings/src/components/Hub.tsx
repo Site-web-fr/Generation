@@ -52,8 +52,11 @@ export default function Hub() {
         {!pitchMode && (
           <motion.div className="hub-pilot-row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
             <a href="https://site-web-fr.github.io/Generation/pilot.html" className="hub-pilot-btn">
-              📱 Pilot Mobile — tous les liens
+              📱 Pilot Mobile
             </a>
+            <Link to="/premium" className="hub-pilot-btn hub-pilot-btn--gold">
+              ✦ Premium Landings
+            </Link>
           </motion.div>
         )}
         {!pitchMode && (

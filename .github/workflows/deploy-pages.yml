@@ -26,37 +26,30 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            halles-lez-landings/package-lock.json
-            premium-landings/package-lock.json
+          cache-dependency-path: halles-lez-landings/package-lock.json
 
-      - name: Install Halles du Lez dependencies
+      - name: Install dependencies
         working-directory: halles-lez-landings
         run: npm ci
 
-      - name: Build Halles du Lez for GitHub Pages
+      - name: Build unified app (Halles + Premium)
         working-directory: halles-lez-landings
         env:
           GITHUB_PAGES: 'true'
         run: npm run build:pages
 
-      - name: Install Premium Landings dependencies
-        working-directory: premium-landings
-        run: npm ci
-
-      - name: Build Premium Landings for GitHub Pages
-        working-directory: premium-landings
-        env:
-          GITHUB_PAGES: 'true'
-        run: npm run build:pages
-
-      - name: Combine artifacts
+      - name: Prepare deploy bundle
         run: |
           mkdir -p combined
           cp -r halles-lez-landings/dist/* combined/
-          mkdir -p combined/premium
-          cp -r premium-landings/dist/* combined/premium/
           cp pilot.html combined/pilot.html
+          mkdir -p combined/premium
+          printf '%s\n' \
+            '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' \
+            '<meta http-equiv="refresh" content="0;url=/Generation/#/premium">' \
+            '<script>location.replace("/Generation/#/premium")</script>' \
+            '<title>Redirection Premium</title></head><body></body></html>' \
+            > combined/premium/index.html
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
@@ -65,4 +58,4 @@ jobs:
           publish_dir: ./combined
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: 'deploy: GitHub Pages — halles + premium + pilot mobile'
+          commit_message: 'deploy: unified Generation app — halles + premium + pilot'
