@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Site } from '../../data/sites';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { phoneHref } from '../../utils/url';
-import Scene3D from '../scenes/Scene3D';
 import Section from './Section';
 import SiteNav from './SiteNav';
 import SiteTool from './SiteTool';
-import { isMobileDevice, isTouchDevice } from '../../utils/device';
+import { isTouchDevice } from '../../utils/device';
 import ErrorBoundary from './ErrorBoundary';
 import GrainOverlay from '../effects/GrainOverlay';
 import CustomCursor from '../effects/CustomCursor';
@@ -19,12 +18,14 @@ import MagneticButton from '../effects/MagneticButton';
 import Marquee from '../effects/Marquee';
 import './PremiumLanding.css';
 
+const Scene3D = lazy(() => import('../scenes/Scene3D'));
+
 interface Props {
   site: Site;
 }
 
 export default function PremiumLanding({ site }: Props) {
-  const [loaded, setLoaded] = useState(() => isMobileDevice());
+  const [loaded, setLoaded] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -136,10 +137,10 @@ export default function PremiumLanding({ site }: Props) {
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            <ErrorBoundary
-              fallback={<div className="scene3d scene3d--fallback" aria-hidden />}
-            >
-              <Scene3D type={site.sceneType} color={site.colors.primary} accent={site.colors.accent} />
+            <ErrorBoundary fallback={<div className="scene3d scene3d--fallback" aria-hidden />}>
+              <Suspense fallback={<div className="scene3d scene3d--fallback" aria-hidden />}>
+                <Scene3D type={site.sceneType} color={site.colors.primary} accent={site.colors.accent} />
+              </Suspense>
             </ErrorBoundary>
           </motion.div>
         </div>

@@ -7,8 +7,13 @@ export function assetUrl(path: string): string {
 export function pageUrl(slug?: string): string {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-  if (!slug) return `${origin}${base}/`;
-  return `${origin}${base}/#/${slug}`;
+  const onMobileEntry =
+    typeof window !== 'undefined' && window.location.pathname.includes('mobile.html');
+  const entry = onMobileEntry ? '/mobile.html' : '/';
+  if (!slug) {
+    return onMobileEntry ? `${origin}${base}/mobile.html#/premium` : `${origin}${base}/`;
+  }
+  return `${origin}${base}${entry}#/${slug}`;
 }
 
 export function copyToClipboard(text: string): void {
