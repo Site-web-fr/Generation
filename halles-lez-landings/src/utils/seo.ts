@@ -14,6 +14,7 @@ export interface SeoConfig {
   title: string;
   description: string;
   canonical: string;
+  siteName?: string;
   image?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
@@ -147,7 +148,7 @@ export function applySeo(config: SeoConfig) {
   upsertMeta('og:description', config.description, 'property');
   upsertMeta('og:type', config.type ?? 'website', 'property');
   upsertMeta('og:locale', 'fr_FR', 'property');
-  upsertMeta('og:site_name', SITE_NAME, 'property');
+  upsertMeta('og:site_name', config.siteName ?? SITE_NAME, 'property');
   upsertMeta('twitter:card', config.image ? 'summary_large_image' : 'summary');
   upsertMeta('twitter:title', config.title);
   upsertMeta('twitter:description', config.description);

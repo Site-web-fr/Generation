@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" role="img" aria-labelledby="title desc">
+  <title id="title">Pot de glace Sorveteria</title>
+  <desc id="desc">Pot gourmand de glaces avec toppings et ambiance rose.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="900" y1="0" y2="1125" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe9f2"/>
+      <stop offset=".6" stop-color="#ffb8d4"/>
+      <stop offset="1" stop-color="#f43f8f"/>
+    </linearGradient>
+    <linearGradient id="cup" x1="226" x2="706" y1="520" y2="930" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#ffe6ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="30" stdDeviation="24" flood-color="#7c1746" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="900" height="1125" rx="70" fill="url(#bg)"/>
+  <g opacity=".45">
+    <circle cx="152" cy="174" r="52" fill="#fff"/>
+    <circle cx="752" cy="244" r="86" fill="#ffd166"/>
+    <circle cx="168" cy="884" r="106" fill="#fff"/>
+    <path d="M80 452c122-116 232-116 330 0s214 118 348 0" fill="none" stroke="#fff" stroke-width="28" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(0 20)">
+    <ellipse cx="450" cy="532" rx="292" ry="98" fill="#ffffff"/>
+    <path d="M203 532h494l-62 385c-9 57-57 99-115 99H380c-58 0-106-42-115-99l-62-385Z" fill="url(#cup)"/>
+    <ellipse cx="450" cy="916" rx="185" ry="58" fill="#fbd3e4"/>
+    <path d="M280 626c80 58 163 70 249 34 49-20 91-19 126 3" fill="none" stroke="#f43f8f" stroke-width="18" stroke-linecap="round" opacity=".6"/>
+    <text x="450" y="812" text-anchor="middle" font-size="72" font-family="Arial Rounded MT Bold, Poppins, sans-serif" font-weight="900" fill="#f11272">POTE</text>
+    <text x="450" y="858" text-anchor="middle" font-size="25" font-family="Poppins, Arial, sans-serif" font-weight="900" letter-spacing="4" fill="#7c1746">DE SORVETE</text>
+    <circle cx="330" cy="420" r="112" fill="#f9a8c7"/>
+    <circle cx="452" cy="365" r="126" fill="#fff1bc"/>
+    <circle cx="574" cy="430" r="111" fill="#7b3f2d"/>
+    <circle cx="424" cy="481" r="105" fill="#fff7f0"/>
+    <path d="M278 466c56 33 110 30 162-9M494 466c45-27 93-27 144 0M363 342c46-24 95-22 146 4" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" opacity=".72"/>
+    <path d="M330 322c-26-58-4-116 60-144" fill="none" stroke="#4a1730" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="391" cy="174" r="16" fill="#f11272"/>
+    <circle cx="540" cy="358" r="12" fill="#ffd166"/>
+    <circle cx="327" cy="485" r="13" fill="#f11272"/>
+    <circle cx="596" cy="464" r="12" fill="#ffbad4"/>
+  </g>
+  <g transform="translate(632 712)" filter="url(#shadow)">
+    <rect width="184" height="140" rx="30" fill="#fff" opacity=".94"/>
+    <text x="92" y="48" text-anchor="middle" font-size="22" font-family="Poppins, Arial, sans-serif" font-weight="900" fill="#f11272">5 TOPPINGS</text>
+    <text x="92" y="80" text-anchor="middle" font-size="18" font-family="Poppins, Arial, sans-serif" font-weight="800" fill="#7c1746">fruits frais</text>
+    <text x="92" y="108" text-anchor="middle" font-size="18" font-family="Poppins, Arial, sans-serif" font-weight="800" fill="#7c1746">sauces maison</text>
+  </g>
+</svg>

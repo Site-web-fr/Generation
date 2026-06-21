@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" role="img" aria-labelledby="title desc">
+  <title id="title">Cornet signature Sorveteria</title>
+  <desc id="desc">Illustration rose et creme avec un cornet de glaces artisanales.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="900" y1="0" y2="1125" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff7fb"/>
+      <stop offset=".48" stop-color="#ffd8e8"/>
+      <stop offset="1" stop-color="#ff85b9"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="35%" r="56%">
+      <stop stop-color="#fff" stop-opacity=".95"/>
+      <stop offset=".55" stop-color="#fff0f6" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f43f8f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="28" stdDeviation="26" flood-color="#8a164d" flood-opacity=".24"/>
+    </filter>
+    <pattern id="sprinkles" width="82" height="82" patternUnits="userSpaceOnUse">
+      <rect width="82" height="82" fill="none"/>
+      <rect x="8" y="16" width="28" height="8" rx="4" fill="#fff" opacity=".45" transform="rotate(-18 22 20)"/>
+      <rect x="48" y="48" width="24" height="8" rx="4" fill="#ffd166" opacity=".55" transform="rotate(22 60 52)"/>
+      <circle cx="64" cy="18" r="5" fill="#f43f8f" opacity=".35"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="1125" rx="70" fill="url(#bg)"/>
+  <rect width="900" height="1125" rx="70" fill="url(#sprinkles)" opacity=".8"/>
+  <circle cx="450" cy="398" r="430" fill="url(#glow)"/>
+  <g opacity=".9">
+    <path d="M116 188c44-60 116-65 170-9 49 51 119 46 173-13" fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round" opacity=".58"/>
+    <path d="M624 862c36-54 94-61 143-14" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" opacity=".45"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(0 12)">
+    <path d="M450 960 260 525h380L450 960Z" fill="#c98445"/>
+    <path d="M286 563h328M320 640h260M352 716h196M388 794h124M292 540l220 398M608 540 388 938" fill="none" stroke="#8a4f27" stroke-width="13" stroke-linecap="round" opacity=".42"/>
+    <circle cx="450" cy="390" r="158" fill="#fff1bc"/>
+    <circle cx="314" cy="474" r="134" fill="#f9a8c7"/>
+    <circle cx="585" cy="474" r="134" fill="#7b3f2d"/>
+    <circle cx="448" cy="502" r="145" fill="#f4d6be"/>
+    <path d="M280 496c84 43 136 14 172-30 42 63 112 74 198 29 2 148-85 238-201 238-119 0-197-92-169-237Z" fill="#fff8f0"/>
+    <path d="M338 404c32-25 79-33 129-14M508 438c32-20 70-19 108 2M370 565c70 32 142 27 213-8" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" opacity=".72"/>
+    <circle cx="506" cy="308" r="17" fill="#f43f8f"/>
+    <circle cx="388" cy="333" r="13" fill="#ff5d9e"/>
+    <circle cx="571" cy="382" r="12" fill="#ffd166"/>
+    <circle cx="327" cy="533" r="12" fill="#ffd166"/>
+    <path d="M426 278c18-36 67-36 86 0" fill="none" stroke="#f43f8f" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(78 764)" filter="url(#shadow)">
+    <rect width="260" height="170" rx="34" fill="#fff" opacity=".92"/>
+    <text x="130" y="58" text-anchor="middle" font-size="25" font-family="Poppins, Arial, sans-serif" font-weight="900" fill="#f11272">JA PEDIU</text>
+    <text x="130" y="98" text-anchor="middle" font-size="42" font-family="Arial Rounded MT Bold, Poppins, sans-serif" font-weight="900" fill="#4a1730">sorvete?</text>
+    <text x="130" y="132" text-anchor="middle" font-size="18" font-family="Poppins, Arial, sans-serif" font-weight="700" fill="#9a5571">glaces faites pour sourire</text>
+  </g>
+  <g transform="translate(672 98)">
+    <rect x="0" y="0" width="126" height="96" rx="28" fill="#fff" opacity=".9"/>
+    <path d="M63 73c-33-21-45-42-34-58 9-14 27-11 34 4 7-15 25-18 34-4 11 16-1 37-34 58Z" fill="#f43f8f"/>
+  </g>
+</svg>

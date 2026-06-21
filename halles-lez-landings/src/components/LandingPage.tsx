@@ -82,7 +82,7 @@ export default function LandingPage({ brand }: Props) {
   } as React.CSSProperties;
 
   return (
-    <div className="landing" style={style}>
+    <div className="landing" style={style} data-brand={brand.slug}>
       <HeroIntro
         brandName={brand.name}
         slug={brand.slug}
