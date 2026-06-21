@@ -1,20 +1,23 @@
 import { motion } from 'framer-motion';
 import type { SiteEnrichment } from '../../data/site-enrichment';
+import type { SiteTheme } from '../../data/site-themes';
 
 interface Props {
   enrichment: SiteEnrichment;
+  theme: SiteTheme;
+  overlay: 'soft' | 'medium' | 'dramatic';
 }
 
-export default function HeroVisual({ enrichment }: Props) {
-  const thumbs = enrichment.gallery.slice(0, 2);
+export default function HeroVisual({ enrichment, theme, overlay }: Props) {
+  const isDark = theme === 'dark';
 
   return (
-    <div className="pl-hero-visual">
+    <div className={`pl-hero-visual pl-hero-visual--${theme}`}>
       <motion.div
-        className="pl-hero-photo pl-hero-photo--main"
-        initial={{ opacity: 0, scale: 1.08 }}
+        className={`pl-hero-photo pl-hero-photo--immersive pl-hero-photo--overlay-${overlay}`}
+        initial={{ opacity: 0, scale: 1.06 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
       >
         <img
           src={enrichment.heroImage}
@@ -23,23 +26,8 @@ export default function HeroVisual({ enrichment }: Props) {
           fetchPriority="high"
           decoding="async"
         />
-        <div className="pl-hero-photo-shine" />
+        {!isDark && <div className="pl-hero-photo-veil" />}
       </motion.div>
-      {thumbs.length >= 2 && (
-        <div className="pl-hero-photo-stack">
-          {thumbs.map((img, i) => (
-            <motion.div
-              key={img.src}
-              className="pl-hero-photo pl-hero-photo--thumb"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + i * 0.15, duration: 0.8 }}
-            >
-              <img src={img.src} alt={img.alt} loading="eager" decoding="async" />
-            </motion.div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

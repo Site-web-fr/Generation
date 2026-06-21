@@ -62,7 +62,7 @@ export const siteEnrichment: Record<string, SiteEnrichment> = {
     reassurance: [
       { icon: '🏥', title: 'Certification HAS', text: 'Établissement agréé, protocoles chirurgicaux les plus stricts d\'Europe.' },
       { icon: '🔒', title: 'Confidentialité totale', text: 'Entrée discrète, dossier médical chiffré, discrétion absolue garantie.' },
-      { icon: '✦', title: 'Simulation 3D incluse', text: 'Visualisez le résultat avant toute décision avec notre moteur de simulation.' },
+      { icon: '✦', title: 'Visualisation incluse', text: 'Visualisez le résultat avant toute décision grâce à notre outil de simulation photo.' },
       { icon: '♡', title: 'Suivi 12 mois', text: 'Accompagnement personnalisé du premier rendez-vous à la récupération complète.' },
     ],
     location: {

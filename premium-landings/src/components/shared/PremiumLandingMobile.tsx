@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Site, ToolType } from '../../data/sites';
+import { applySiteTheme } from '../../data/site-themes';
 import { getSiteEnrichment, mapsUrl } from '../../data/site-enrichment';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
@@ -45,7 +46,8 @@ interface Props {
   site: Site;
 }
 
-export default function PremiumLandingMobile({ site }: Props) {
+export default function PremiumLandingMobile({ site: rawSite }: Props) {
+  const site = useMemo(() => applySiteTheme(rawSite), [rawSite]);
   const enrichment = useMemo(() => getSiteEnrichment(site.slug), [site.slug]);
   const seo = useMemo(() => siteSeo(site), [site]);
   useSeo(seo);
@@ -71,17 +73,13 @@ export default function PremiumLandingMobile({ site }: Props) {
   } as React.CSSProperties;
 
   return (
-    <div className="premium-landing premium-landing--mobile" style={style}>
-      <SiteNav site={site} />
+    <div className={`premium-landing premium-landing--mobile premium-landing--${site.theme}`} style={style}>
+      <SiteNav site={site} theme={site.theme} />
 
-      <header className="pl-hero pl-hero--mobile">
+      <header className={`pl-hero pl-hero--mobile pl-hero--immersive pl-hero--overlay-${site.heroOverlay}`}>
         <div className="pl-hero-bg">
           <img className="pl-hero-bg-photo" src={enrichment.heroImage} alt="" aria-hidden />
-          <div className="pl-hero-gradient" />
-          <div className="pl-hero-overlay" />
-        </div>
-        <div className="pl-hero-visual pl-hero-visual--mobile">
-          <img src={enrichment.heroImage} alt={enrichment.heroImageAlt} loading="eager" />
+          <div className={`pl-hero-overlay pl-hero-overlay--${site.theme}`} />
         </div>
         <div className="pl-hero-content pl-hero-content--mobile">
           <div className="pl-hero-text">

@@ -155,7 +155,7 @@ export default function Hub() {
             transition={{ delay: 0.8 }}
           >
             <span><strong>10</strong> secteurs premium</span>
-            <span><strong>3D</strong> interactif</span>
+            <span><strong>Photo</strong> & UX</span>
             <span><strong>100%</strong> autonome</span>
             <span><strong>24/7</strong> conciergerie</span>
           </motion.div>

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Site } from '../../data/sites';
+import { applySiteTheme } from '../../data/site-themes';
 import { getSiteEnrichment, mapsUrl } from '../../data/site-enrichment';
 import { useSeo, siteSeo } from '../../utils/seo';
 import { phoneHref } from '../../utils/url';
@@ -16,7 +17,6 @@ import PageLoader from '../effects/PageLoader';
 import TextReveal from '../effects/TextReveal';
 import MagneticButton from '../effects/MagneticButton';
 import Marquee from '../effects/Marquee';
-import HeroVisual from './HeroVisual';
 import './PremiumLanding.css';
 
 interface Props {
@@ -33,7 +33,8 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-export default function PremiumLanding({ site }: Props) {
+export default function PremiumLanding({ site: rawSite }: Props) {
+  const site = useMemo(() => applySiteTheme(rawSite), [rawSite]);
   const [loaded, setLoaded] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const enrichment = useMemo(() => getSiteEnrichment(site.slug), [site.slug]);
@@ -66,7 +67,7 @@ export default function PremiumLanding({ site }: Props) {
   const marqueeItems = [...site.perks, site.tagline, site.subtitle, ...site.perks];
 
   return (
-    <div className="premium-landing" style={style}>
+    <div className={`premium-landing premium-landing--${site.theme}`} style={style}>
       <PageLoader
         label={site.name}
         accent={site.colors.accent}
@@ -76,15 +77,19 @@ export default function PremiumLanding({ site }: Props) {
       />
       {loaded && (
         <>
-          <GrainOverlay />
+          {site.theme === 'dark' && <GrainOverlay />}
           <ScrollProgress color={site.colors.accent} glow={site.colors.glow} />
         </>
       )}
-      {loaded && !isTouchDevice() && <CustomCursor color={site.colors.accent} />}
+      {loaded && site.theme === 'dark' && !isTouchDevice() && <CustomCursor color={site.colors.accent} />}
 
-      <SiteNav site={site} />
+      <SiteNav site={site} theme={site.theme} />
 
-      <motion.header ref={heroRef} className="pl-hero" style={{ opacity: heroOpacity, y: heroY }}>
+      <motion.header
+        ref={heroRef}
+        className={`pl-hero pl-hero--immersive pl-hero--overlay-${site.heroOverlay}`}
+        style={{ opacity: heroOpacity, y: heroY }}
+      >
         <div className="pl-hero-bg">
           <img
             className="pl-hero-bg-photo"
@@ -93,36 +98,33 @@ export default function PremiumLanding({ site }: Props) {
             aria-hidden
             loading="eager"
           />
-          <div className="pl-hero-gradient" />
-          <div className="pl-hero-overlay" />
-          <div className="pl-hero-noise" />
-          <div className="pl-vignette" />
+          <div className={`pl-hero-overlay pl-hero-overlay--${site.theme}`} />
         </div>
-        <div className="pl-hero-content">
+        <div className="pl-hero-content pl-hero-content--immersive">
           <motion.div
             className="pl-hero-text"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="pl-hero-badges">
-              <span className="fx-award-badge">Site of the Day · Ready</span>
-              <span className="pl-badge">{site.subtitle}</span>
+              <span className="pl-badge pl-badge--sector">{site.subtitle}</span>
+              <span className="pl-badge pl-badge--rating">{enrichment.reviewSummary.score}★ · {enrichment.reviewSummary.count} avis</span>
             </div>
             <TextReveal text={site.name} className="pl-hero-title" delay={0.3} />
             <motion.p
               className="pl-tagline"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
             >
               {site.tagline}
             </motion.p>
             <motion.p
-              className="pl-desc"
+              className="pl-desc pl-desc--hero"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.8 }}
+              transition={{ delay: 0.9, duration: 0.8 }}
             >
               {site.description}
             </motion.p>
@@ -130,39 +132,29 @@ export default function PremiumLanding({ site }: Props) {
               className="pl-hero-actions"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
+              transition={{ delay: 1, duration: 0.6 }}
             >
               <MagneticButton href="#configurator" className="pl-btn pl-btn--primary">{site.ctaPrimary}</MagneticButton>
               <MagneticButton href={phoneHref(site.phone)} className="pl-btn pl-btn--ghost">{site.ctaSecondary}</MagneticButton>
             </motion.div>
-            <motion.div
+            <motion.p
               className="pl-hero-meta"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3 }}
+              transition={{ delay: 1.2 }}
             >
-              <span>{site.location}</span>
-              <span className="pl-divider">·</span>
-              <span>{enrichment.reviewSummary.score}★ · {enrichment.reviewSummary.count} avis</span>
-            </motion.div>
-          </motion.div>
-          <motion.div
-            className="pl-hero-scene"
-            initial={{ opacity: 0, scale: 0.92, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <HeroVisual enrichment={enrichment} />
+              📍 {site.location}
+            </motion.p>
           </motion.div>
         </div>
         <motion.div
           className="pl-scroll-hint"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          transition={{ delay: 1.4 }}
         >
           <span className="pl-scroll-line" />
-          Scroll
+          Découvrir
         </motion.div>
       </motion.header>
 
@@ -288,14 +280,18 @@ export default function PremiumLanding({ site }: Props) {
             <motion.div
               key={svc.title}
               className="pl-horizontal-card"
+              style={{ '--card-img': `url(${enrichment.gallery[i % enrichment.gallery.length].src})` } as React.CSSProperties}
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
             >
-              <span className="pl-service-icon">{svc.icon}</span>
-              <h4>{svc.title}</h4>
-              <p>{svc.description}</p>
+              <div className="pl-horizontal-card-img" />
+              <div className="pl-horizontal-card-body">
+                <span className="pl-service-icon">{svc.icon}</span>
+                <h4>{svc.title}</h4>
+                <p>{svc.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -310,16 +306,20 @@ export default function PremiumLanding({ site }: Props) {
           {site.services.map((svc, i) => (
             <motion.div
               key={svc.title}
-              className="pl-service-card"
+              className="pl-service-card pl-service-card--photo"
+              style={{ '--svc-img': `url(${enrichment.gallery[i % enrichment.gallery.length].src})` } as React.CSSProperties}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.15, duration: 0.7 }}
               viewport={{ once: true, margin: '-60px' }}
               whileHover={{ y: -6 }}
             >
-              <span className="pl-service-icon">{svc.icon}</span>
-              <h3>{svc.title}</h3>
-              <p>{svc.description}</p>
+              <div className="pl-service-card-photo" />
+              <div className="pl-service-card-body">
+                <span className="pl-service-icon">{svc.icon}</span>
+                <h3>{svc.title}</h3>
+                <p>{svc.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
