@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { brands } from '../data/brands';
+import { premiumLandings } from '../data/premium-landings';
 import { usePitchMode } from '../hooks/usePitchMode';
 import { useSeo } from '../hooks/useSeo';
 import { hubSeoWithBrands } from '../utils/seo';
@@ -55,6 +56,27 @@ export default function Hub() {
           </motion.p>
         )}
       </header>
+
+      {!pitchMode && (
+        <motion.div
+          className="hub-premium-banner"
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.28 }}
+        >
+          <div>
+            <span>Nouvelle présentation grand compte</span>
+            <h2>{premiumLandings.length} concepts de landing pages premium</h2>
+            <p>
+              Chirurgie esthétique, immobilier de prestige, jet ski Dubai, yacht cleaning, supercars et services luxe
+              avec estimateurs, UX autonomes et animations 3D CSS.
+            </p>
+          </div>
+          <Link to="/premium" className="hub-premium-link">
+            Ouvrir le portfolio →
+          </Link>
+        </motion.div>
+      )}
 
       <div className="hub-grid">
         {brands.map((brand, i) => (
