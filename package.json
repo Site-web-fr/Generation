@@ -1,0 +1,21 @@
+{
+  "name": "premium-landing-pages",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "sites/*"
+  ],
+  "scripts": {
+    "dev:lumiere": "npm run dev -w sites/01-lumiere-aesthetics",
+    "dev:prestige": "npm run dev -w sites/02-prestige-properties",
+    "dev:aquarush": "npm run dev -w sites/03-aquarush-dubai",
+    "dev:aqualux": "npm run dev -w sites/04-aqualux-marine",
+    "dev:apex": "npm run dev -w sites/05-apex-drive",
+    "dev:altitude": "npm run dev -w sites/06-altitude-private",
+    "dev:serene": "npm run dev -w sites/07-serene-sanctuary",
+    "dev:maison": "npm run dev -w sites/08-maison-gourmet",
+    "dev:elite": "npm run dev -w sites/09-elite-events",
+    "dev:horizon": "npm run dev -w sites/10-horizon-yachts",
+    "build:all": "for dir in sites/*/; do npm run build -w $dir; done"
+  }
+}

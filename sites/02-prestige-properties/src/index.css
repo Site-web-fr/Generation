@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0A0F1E;
+  --navy-mid: #111827;
+  --gold: #C9A96E;
+  --gold-light: #E8D5A3;
+  --cream: #F5F0E8;
+  --slate: #8899AA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+.cursor {
+  position: fixed; width: 10px; height: 10px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+
+.cursor-follower {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+
+.cursor-follower.hovered { width: 56px; height: 56px; background: rgba(201,169,110,0.08); }
+
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.font-serif { font-family: 'Playfair Display', serif; }
+.text-gold { color: var(--gold); }
+.bg-gold { background: var(--gold); }
+
+.gradient-gold {
+  background: linear-gradient(135deg, #8B6914, #C9A96E, #E8D5A3);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,169,110,0.12);
+  backdrop-filter: blur(20px);
+}
+
+.glass-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(201,169,110,0.35);
+  transition: all 0.4s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8B6914, #C9A96E);
+  color: #0A0F1E;
+  padding: 14px 36px;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  cursor: none;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(201,169,110,0.4); }
+
+.btn-outline {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 14px 36px;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  cursor: none;
+  transition: all 0.3s ease;
+}
+.btn-outline:hover { background: var(--gold); color: var(--navy); }
+
+.section-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 20px auto;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }

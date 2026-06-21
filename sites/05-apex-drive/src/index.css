@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #080808; color: #F5F5F5; font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; }
+
+.cursor { position: fixed; width: 10px; height: 10px; background: #DC143C; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); mix-blend-mode: difference; }
+.cursor-follower { position: fixed; width: 36px; height: 36px; border: 1px solid #DC143C; border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease; mix-blend-mode: difference; }
+.cursor-follower.hovered { width: 56px; height: 56px; }
+
+.font-display { font-family: 'Cormorant Garamond', serif; }
+
+.gradient-red {
+  background: linear-gradient(135deg, #8B0000, #DC143C, #FF4D6D);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.gradient-chrome {
+  background: linear-gradient(135deg, #808080, #C0C0C0, #E8E8E8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.glass-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(20px); }
+.glass-card:hover { background: rgba(255,255,255,0.04); border-color: rgba(220,20,60,0.3); transition: all 0.3s; }
+
+.btn-primary { background: #DC143C; color: white; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; border: none; cursor: none; transition: all 0.3s; }
+.btn-primary:hover { background: #FF1744; box-shadow: 0 8px 32px rgba(220,20,60,0.5); }
+.btn-outline { border: 1px solid rgba(255,255,255,0.2); color: #F5F5F5; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.3s; }
+.btn-outline:hover { border-color: #DC143C; color: #DC143C; }
+
+.section-divider { width: 60px; height: 2px; background: linear-gradient(to right, #DC143C, transparent); margin: 20px 0; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #DC143C; border-radius: 2px; }
+
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 20s linear infinite; }

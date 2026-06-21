@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ocean: #003366;
+  --cyan: #00B4D8;
+  --orange: #FF6B35;
+  --white: #F0F8FF;
+  --dark: #001122;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--dark); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; }
+
+.cursor { position: fixed; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease; }
+.cursor-follower { position: fixed; width: 36px; height: 36px; border: 1px solid var(--cyan); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease; }
+.cursor-follower.hovered { width: 56px; height: 56px; background: rgba(0,180,216,0.1); }
+
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.text-cyan { color: var(--cyan); }
+.text-orange { color: var(--orange); }
+
+.gradient-cyan {
+  background: linear-gradient(135deg, #0077B6, #00B4D8, #90E0EF);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.glass-card { background: rgba(0,180,216,0.05); border: 1px solid rgba(0,180,216,0.15); backdrop-filter: blur(20px); }
+.glass-card:hover { background: rgba(0,180,216,0.08); border-color: rgba(0,180,216,0.35); transition: all 0.3s ease; }
+
+.btn-primary { background: linear-gradient(135deg, var(--orange), #FF8C42); color: white; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; border: none; cursor: none; transition: all 0.3s; }
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(255,107,53,0.5); }
+.btn-outline { border: 1px solid var(--cyan); color: var(--cyan); padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.3s; }
+.btn-outline:hover { background: var(--cyan); color: var(--dark); }
+
+.section-divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--cyan), var(--orange)); margin: 20px auto; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+@keyframes wave { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-25px) scaleY(1.1); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }

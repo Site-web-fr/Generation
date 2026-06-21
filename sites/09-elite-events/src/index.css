@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #08060A; color: #F5EEF8; font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; }
+
+.cursor { position: fixed; width: 8px; height: 8px; background: #B76E79; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); mix-blend-mode: difference; }
+.cursor-follower { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(183,110,121,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease; mix-blend-mode: difference; }
+.font-display { font-family: 'Cormorant Garamond', serif; }
+
+.gradient-rose {
+  background: linear-gradient(135deg, #6B2737, #B76E79, #D4A5AA);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.gradient-champagne {
+  background: linear-gradient(135deg, #C9A96E, #F7E7CE, #C9A96E);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.glass-card { background: rgba(183,110,121,0.04); border: 1px solid rgba(183,110,121,0.12); backdrop-filter: blur(20px); }
+.glass-card:hover { background: rgba(183,110,121,0.08); border-color: rgba(183,110,121,0.3); transition: all 0.3s; }
+.btn-primary { background: linear-gradient(135deg, #6B2737, #B76E79); color: white; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; border: none; cursor: none; transition: all 0.3s; }
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(183,110,121,0.4); }
+.btn-outline { border: 1px solid rgba(183,110,121,0.4); color: #B76E79; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.3s; }
+.btn-outline:hover { background: rgba(183,110,121,0.1); }
+.section-divider { width: 50px; height: 1px; background: linear-gradient(to right, transparent, #B76E79, transparent); margin: 20px auto; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #08060A; }
+::-webkit-scrollbar-thumb { background: #B76E79; border-radius: 2px; }

@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #04071A; color: #E8EFF8; font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; }
+
+.cursor { position: fixed; width: 10px; height: 10px; background: #C9A96E; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+.cursor-follower { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(201,169,110,0.6); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease; }
+.cursor-follower.hovered { width: 56px; height: 56px; background: rgba(201,169,110,0.05); }
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.gradient-gold { background: linear-gradient(135deg, #8B6914, #C9A96E, #E8D5A3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.glass-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,169,110,0.12); backdrop-filter: blur(20px); }
+.glass-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(201,169,110,0.3); transition: all 0.3s; }
+.btn-primary { background: linear-gradient(135deg, #8B6914, #C9A96E); color: #04071A; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; border: none; cursor: none; transition: all 0.3s; }
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(201,169,110,0.4); }
+.btn-outline { border: 1px solid rgba(201,169,110,0.4); color: #C9A96E; padding: 14px 36px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; cursor: none; transition: all 0.3s; }
+.btn-outline:hover { background: rgba(201,169,110,0.1); }
+.section-divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, #C9A96E, transparent); margin: 20px auto; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #04071A; }
+::-webkit-scrollbar-thumb { background: #C9A96E; border-radius: 2px; }

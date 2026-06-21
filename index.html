@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>10 Premium Landing Pages — Portfolio Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #050505; color: #F5F5F5; font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; cursor: none; }
+
+  .cursor { position: fixed; width: 10px; height: 10px; background: #C9A96E; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(201,169,110,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: 0.15s ease; }
+
+  .header { text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,169,110,0.08) 0%, transparent 70%); }
+
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 2vw, 18px); letter-spacing: 0.4em; text-transform: uppercase; color: #C9A96E; margin-bottom: 20px; opacity: 0.8; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 8vw, 100px); font-weight: 300; line-height: 0.9; margin-bottom: 24px; }
+  h1 span { background: linear-gradient(135deg, #8B6914, #C9A96E, #E8D5A3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
+  .header p { color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto; font-size: 16px; line-height: 1.7; }
+
+  .divider { width: 80px; height: 1px; background: linear-gradient(to right, transparent, #C9A96E, transparent); margin: 30px auto; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2px; max-width: 1400px; margin: 0 auto; padding: 0 24px 60px; }
+
+  .card { position: relative; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; display: block; }
+  .card:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+  .card-num { position: absolute; top: 16px; left: 16px; font-family: 'Cormorant Garamond', serif; font-size: 11px; letter-spacing: 0.3em; color: rgba(255,255,255,0.2); }
+  .card-tag { position: absolute; top: 16px; right: 16px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--accent); color: var(--accent); background: rgba(0,0,0,0.3); }
+
+  .card-visual { height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .card-visual svg { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+  .card-icon { font-size: 48px; position: relative; z-index: 1; filter: drop-shadow(0 0 20px var(--accent)); }
+
+  .card-body { padding: 24px; }
+  .card-category { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); opacity: 0.8; margin-bottom: 8px; }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: #F5F5F5; margin-bottom: 8px; line-height: 1.1; }
+  .card-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 20px; }
+  .card-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .card-feature { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+  .card-cta { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
+  .card-cta::after { content: '→'; transition: transform 0.3s; }
+  .card:hover .card-cta::after { transform: translateX(6px); }
+
+  .footer { text-align: center; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer p { color: rgba(255,255,255,0.2); font-size: 12px; letter-spacing: 0.2em; }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    h1 { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<header class="header">
+  <div class="logo">Collection Prestige · 2024</div>
+  <h1>10 Landing Pages<br /><span>d'Exception</span></h1>
+  <div class="divider"></div>
+  <p>Une collection de sites premium conçus pour des marques de luxe exigeantes. Chaque site intègre des animations Three.js, des interactions avancées et une expérience utilisateur irréprochable.</p>
+</header>
+
+<div class="grid">
+
+  <a href="sites/01-lumiere-aesthetics/index.html" class="card" style="--accent: #C9A96E;">
+    <div class="card-num">01</div>
+    <div class="card-tag">Chirurgie Esthétique</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #1A1A1A, #2D1810);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><circle cx="200" cy="100" r="70" fill="none" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/><circle cx="200" cy="100" r="50" fill="rgba(201,169,110,0.05)" stroke="rgba(201,169,110,0.15)" stroke-width="0.3"/><circle cx="200" cy="100" r="90" fill="none" stroke="rgba(201,169,110,0.15)" stroke-width="0.3" stroke-dasharray="4 8"/></svg>
+      <div class="card-icon">✨</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Médecine Esthétique</div>
+      <div class="card-title">Lumière Aesthetics</div>
+      <div class="card-desc">Centre de chirurgie esthétique d'excellence. Sphere 3D, carte des traitements interactive, devis en ligne, prise de RDV.</div>
+      <div class="card-features"><span class="card-feature">Three.js</span><span class="card-feature">Carte Interactive</span><span class="card-feature">Estimateur</span><span class="card-feature">Booking</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/02-prestige-properties/index.html" class="card" style="--accent: #C9A96E;">
+    <div class="card-num">02</div>
+    <div class="card-tag">Immobilier</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #0A0F1E, #1E2D5F);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><path d="M180,40 L200,20 L220,40 L220,120 L180,120 Z" fill="none" stroke="rgba(201,169,110,0.4)" stroke-width="0.8"/><rect x="185" y="90" width="30" height="30" fill="rgba(201,169,110,0.08)" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/><line x1="100" y1="40" x2="300" y2="40" stroke="rgba(201,169,110,0.1)" stroke-width="0.3"/></svg>
+      <div class="card-icon">🏛️</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Immobilier Premium</div>
+      <div class="card-title">Prestige Properties</div>
+      <div class="card-desc">Agence immobilière d'exception. Immeuble wireframe 3D, catalogue propriétés, simulateur financier avancé.</div>
+      <div class="card-features"><span class="card-feature">Wireframe 3D</span><span class="card-feature">Listings</span><span class="card-feature">Calculateur</span><span class="card-feature">Contact</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/03-aquarush-dubai/index.html" class="card" style="--accent: #00B4D8;">
+    <div class="card-num">03</div>
+    <div class="card-tag">Dubai · Sport Nautique</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #001122, #003366);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><path d="M0,120 Q100,80 200,120 Q300,160 400,120" fill="none" stroke="rgba(0,180,216,0.4)" stroke-width="1"/><path d="M0,140 Q100,100 200,140 Q300,180 400,140" fill="none" stroke="rgba(0,180,216,0.2)" stroke-width="0.5"/></svg>
+      <div class="card-icon">🌊</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Location Jet Ski</div>
+      <div class="card-title">AquaRush Dubai</div>
+      <div class="card-desc">Location jet ski à Dubai. Océan 3D animé, sélection de flotte, tours guidés, calculateur de réservation en temps réel.</div>
+      <div class="card-features"><span class="card-feature">Ocean 3D</span><span class="card-feature">Fleet Viewer</span><span class="card-feature">Route Map</span><span class="card-feature">Booking</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/04-aqualux-marine/index.html" class="card" style="--accent: #C9A96E;">
+    <div class="card-num">04</div>
+    <div class="card-tag">Yacht Detailing</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #040E1A, #0A2D4A);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><ellipse cx="200" cy="140" rx="130" ry="20" fill="rgba(201,169,110,0.1)"/><path d="M80,140 Q110,90 160,85 Q200,80 240,85 Q290,90 320,140 Z" fill="rgba(201,169,110,0.2)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/><line x1="200" y1="25" x2="200" y2="85" stroke="rgba(201,169,110,0.5)" stroke-width="0.8"/></svg>
+      <div class="card-icon">⚓</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Détailing Nautique</div>
+      <div class="card-title">AquaLux Marine</div>
+      <div class="card-desc">Services de nettoyage yacht premium. Scène yacht 3D, sélection par type, processus animé, estimateur de devis.</div>
+      <div class="card-features"><span class="card-feature">Yacht 3D</span><span class="card-feature">Sélecteur</span><span class="card-feature">Processus</span><span class="card-feature">Devis</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/05-apex-drive/index.html" class="card" style="--accent: #DC143C;">
+    <div class="card-num">05</div>
+    <div class="card-tag">Location Véhicules</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #080808, #1A0000);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><ellipse cx="200" cy="150" rx="120" ry="18" fill="rgba(220,20,60,0.1)"/><path d="M80,130 Q110,90 150,85 Q200,78 250,85 Q290,90 320,130 L330,148 L70,148 Z" fill="rgba(220,20,60,0.3)" stroke="rgba(220,20,60,0.5)" stroke-width="0.5"/><circle cx="115" cy="148" r="18" fill="#0A0A0A" stroke="rgba(220,20,60,0.5)" stroke-width="1.5"/><circle cx="285" cy="148" r="18" fill="#0A0A0A" stroke="rgba(220,20,60,0.5)" stroke-width="1.5"/></svg>
+      <div class="card-icon">🏎️</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Véhicules Premium</div>
+      <div class="card-title">Apex Drive</div>
+      <div class="card-desc">Location de supercars de luxe. Voiture 3D interactive, flotte complète, configurateur de location avec estimateur de prix.</div>
+      <div class="card-features"><span class="card-feature">Car 3D</span><span class="card-feature">Configurateur</span><span class="card-feature">Fleet</span><span class="card-feature">Estimateur</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/06-altitude-private/index.html" class="card" style="--accent: #C9A96E;">
+    <div class="card-num">06</div>
+    <div class="card-tag">Aviation Privée</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #04071A, #1E2D6A);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><circle cx="200" cy="100" r="70" fill="none" stroke="rgba(201,169,110,0.2)" stroke-width="0.5"/><path d="M135,75 Q175,60 200,70 Q225,60 265,75" fill="none" stroke="rgba(201,169,110,0.4)" stroke-width="1" stroke-dasharray="3 6"/><circle cx="155" cy="65" r="3" fill="rgba(201,169,110,0.6)"/><circle cx="245" cy="65" r="3" fill="rgba(201,169,110,0.6)"/></svg>
+      <div class="card-icon">✈️</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Charter Aérien</div>
+      <div class="card-title">Altitude Private</div>
+      <div class="card-desc">Aviation privée d'exception. Globe 3D avec routes aériennes, flotte de jets, calculateur de vol instantané.</div>
+      <div class="card-features"><span class="card-feature">Globe 3D</span><span class="card-feature">Routes</span><span class="card-feature">Flotte</span><span class="card-feature">Calculateur</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/07-serene-sanctuary/index.html" class="card" style="--accent: #7FB27A;">
+    <div class="card-num">07</div>
+    <div class="card-tag">Spa & Wellness</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #0A1A12, #1B4332);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><ellipse cx="200" cy="100" rx="80" ry="80" fill="none" stroke="rgba(127,178,122,0.2)" stroke-width="0.5"/><ellipse cx="200" cy="100" rx="55" ry="55" fill="rgba(127,178,122,0.04)" stroke="rgba(127,178,122,0.15)" stroke-width="0.3"/><ellipse cx="200" cy="100" rx="30" ry="30" fill="rgba(127,178,122,0.08)" stroke="rgba(127,178,122,0.3)" stroke-width="0.5"/></svg>
+      <div class="card-icon">🌿</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Spa de Luxe</div>
+      <div class="card-title">Serene Sanctuary</div>
+      <div class="card-desc">Centre wellness premium. Particules zen 3D, catalogue de soins, forfaits bien-être, système de réservation complet.</div>
+      <div class="card-features"><span class="card-feature">Zen 3D</span><span class="card-feature">Soins</span><span class="card-feature">Forfaits</span><span class="card-feature">RDV</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/08-maison-gourmet/index.html" class="card" style="--accent: #C9A96E;">
+    <div class="card-num">08</div>
+    <div class="card-tag">Gastronomie</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #0F0804, #2D1810);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><circle cx="200" cy="100" r="50" fill="none" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/><circle cx="200" cy="100" r="30" fill="rgba(201,169,110,0.05)" stroke="rgba(201,169,110,0.2)" stroke-width="0.3"/><path d="M200,55 L208,85 L240,85 L215,105 L225,135 L200,115 L175,135 L185,105 L160,85 L192,85 Z" fill="rgba(201,169,110,0.1)" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/></svg>
+      <div class="card-icon">👨‍🍳</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Chef Privé</div>
+      <div class="card-title">Maison Gourmet</div>
+      <div class="card-desc">Chefs étoilés à domicile. Particules gastronomiques 3D, menus exclusifs, calculateur événement complet.</div>
+      <div class="card-features"><span class="card-feature">Food 3D</span><span class="card-feature">Menus</span><span class="card-feature">Événements</span><span class="card-feature">Devis</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/09-elite-events/index.html" class="card" style="--accent: #B76E79;">
+    <div class="card-num">09</div>
+    <div class="card-tag">Organisation Événements</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #08060A, #1A0A14);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><rect x="170" y="80" width="20" height="60" fill="none" stroke="rgba(183,110,121,0.4)" stroke-width="0.8" transform="rotate(45, 200, 110)"/><circle cx="150" cy="70" r="4" fill="rgba(183,110,121,0.5)"/><circle cx="250" cy="70" r="4" fill="rgba(183,110,121,0.5)"/><circle cx="200" cy="130" r="4" fill="rgba(201,169,110,0.5)"/></svg>
+      <div class="card-icon">💍</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Événements Prestige</div>
+      <div class="card-title">Élite Events</div>
+      <div class="card-desc">Organisation d'événements premium. Particules glamour 3D, portfolio créations, budgétiseur événement interactif.</div>
+      <div class="card-features"><span class="card-feature">Glamour 3D</span><span class="card-feature">Portfolio</span><span class="card-feature">Types</span><span class="card-feature">Budget</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+  <a href="sites/10-horizon-yachts/index.html" class="card" style="--accent: #19A7CE;">
+    <div class="card-num">10</div>
+    <div class="card-tag">Yacht Charter</div>
+    <div class="card-visual" style="background: linear-gradient(135deg, #030B18, #0B2447);">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><path d="M0,140 Q100,100 200,140 Q300,180 400,140" fill="rgba(25,167,206,0.1)" stroke="rgba(25,167,206,0.3)" stroke-width="0.5"/><path d="M80,140 Q120,95 170,90 Q200,85 230,90 Q280,95 320,140 Z" fill="rgba(25,167,206,0.15)" stroke="rgba(25,167,206,0.4)" stroke-width="0.5"/><line x1="200" y1="45" x2="200" y2="90" stroke="rgba(201,169,110,0.5)" stroke-width="0.8"/></svg>
+      <div class="card-icon">⛵</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">Croisières Privées</div>
+      <div class="card-title">Horizon Yachts</div>
+      <div class="card-desc">Charter yacht de luxe. Océan & yacht 3D dynamique, flotte superyachts, destinations mondiales, configurateur de croisière.</div>
+      <div class="card-features"><span class="card-feature">Ocean 3D</span><span class="card-feature">Flotte</span><span class="card-feature">Destinations</span><span class="card-feature">Charter</span></div>
+      <div class="card-cta">Voir le Site</div>
+    </div>
+  </a>
+
+</div>
+
+<footer class="footer">
+  <p>© 2024 · Collection de 10 Landing Pages Premium · React.js + Three.js + GSAP</p>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor')
+  const ring = document.getElementById('ring')
+  let mx = 0, my = 0, rx = 0, ry = 0
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'
+  })
+
+  const animate = () => {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px'
+    requestAnimationFrame(animate)
+  }
+  animate()
+</script>
+</body>
+</html>
