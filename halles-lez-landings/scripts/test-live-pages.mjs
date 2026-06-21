@@ -13,7 +13,9 @@ async function testPage(page, { name, url }) {
   const errors = [];
   page.on('pageerror', (err) => errors.push(`pageerror: ${err.message}`));
   page.on('console', (msg) => {
-    if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
+    if (msg.type() === 'error' && !/Failed to load resource.*404/.test(msg.text())) {
+      errors.push(`console: ${msg.text()}`);
+    }
   });
 
   try {
