@@ -4,154 +4,208 @@
   color: #f5f0eb;
   position: relative;
   overflow: hidden;
+  cursor: none;
 }
 
 .hub-aurora {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(212, 175, 122, 0.12), transparent),
-    radial-gradient(ellipse 50% 50% at 80% 60%, rgba(91, 127, 212, 0.1), transparent),
-    radial-gradient(ellipse 40% 30% at 50% 90%, rgba(0, 212, 255, 0.08), transparent);
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(212, 175, 122, 0.14), transparent),
+    radial-gradient(ellipse 50% 50% at 80% 60%, rgba(91, 127, 212, 0.12), transparent),
+    radial-gradient(ellipse 40% 30% at 50% 90%, rgba(0, 212, 255, 0.1), transparent);
   pointer-events: none;
+  animation: hub-aurora-shift 20s ease-in-out infinite alternate;
+}
+
+@keyframes hub-aurora-shift {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.05); }
 }
 
 .hub-grid-bg {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
+
+.hub-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
   pointer-events: none;
 }
 
 .hub-main {
   position: relative;
   z-index: 1;
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 4rem 2rem 6rem;
+  padding: 6rem 2rem 6rem;
 }
 
 .hub-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 .hub-badge {
   display: inline-block;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: #d4af7a;
-  border: 1px solid rgba(212, 175, 122, 0.3);
-  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(212, 175, 122, 0.35);
+  padding: 0.55rem 1.4rem;
   border-radius: 100px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(12px);
 }
 
-.hub-header h1 {
+.hub-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.8rem, 7vw, 5rem);
   font-weight: 700;
-  margin: 0 0 1rem;
-  line-height: 1.1;
-}
-
-.hub-title-accent {
-  background: linear-gradient(135deg, #d4af7a, #f0e6d3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin: 0 0 1.5rem;
+  line-height: 1.05;
+  display: block;
 }
 
 .hub-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #9a9088;
-  max-width: 700px;
-  margin: 0 auto 0.75rem;
-  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
 }
 
-.hub-note {
-  font-size: 0.9rem;
+.hub-stats-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #6b6560;
+}
+
+.hub-stats-row strong {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  color: #d4af7a;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom: 0.2rem;
 }
 
 .hub-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.75rem;
 }
 
 .hub-card {
   position: relative;
   display: block;
-  padding: 2rem;
-  background: var(--card-bg, #0a0a0c);
+  background: #0a0a0c;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 24px;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s;
+  transition: border-color 0.4s, box-shadow 0.4s;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hub-card:hover {
-  transform: translateY(-6px);
   border-color: var(--card-accent);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 60px var(--card-glow);
 }
 
 .hub-card-glow {
   position: absolute;
   top: -50%;
   right: -30%;
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   background: var(--card-glow);
   filter: blur(80px);
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.5s;
+  pointer-events: none;
 }
 
 .hub-card:hover .hub-card-glow {
-  opacity: 0.6;
+  opacity: 0.7;
+}
+
+.hub-card-preview {
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hub-card-preview-orb {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(40px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+}
+
+.hub-card-body {
+  padding: 1.75rem 2rem 2rem;
 }
 
 .hub-card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .hub-card-number {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--card-accent);
-  opacity: 0.5;
+  opacity: 0.35;
+  line-height: 1;
 }
 
-.hub-card-budget {
-  font-size: 0.75rem;
-  padding: 0.3rem 0.8rem;
-  border: 1px solid rgba(255,255,255,0.15);
+.hub-card-award {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 0.3rem 0.7rem;
   border-radius: 100px;
-  color: #9a9088;
 }
 
 .hub-card h2 {
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   margin: 0 0 0.25rem;
   color: var(--card-primary);
 }
 
 .hub-card-sub {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #9a9088;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   margin: 0 0 0.75rem;
 }
 
@@ -171,9 +225,10 @@
 }
 
 .hub-card-features span {
-  font-size: 0.7rem;
-  padding: 0.3rem 0.7rem;
-  background: rgba(255,255,255,0.05);
+  font-size: 0.68rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 100px;
   color: #8a8480;
 }
@@ -187,14 +242,14 @@
 }
 
 .hub-card-cta {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--card-accent);
 }
 
 .hub-copy-btn {
-  font-size: 0.75rem;
-  padding: 0.4rem 0.8rem;
+  font-size: 0.72rem;
+  padding: 0.4rem 0.9rem;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 8px;
@@ -212,13 +267,20 @@
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 2rem;
+  padding: 2.5rem;
   border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #6b6560;
+  letter-spacing: 0.05em;
 }
 
 @media (max-width: 600px) {
-  .hub-main { padding: 3rem 1.25rem 4rem; }
+  .hub-main { padding: 4rem 1.25rem; }
   .hub-cards { grid-template-columns: 1fr; }
+  .hub { cursor: auto; }
+  .hub-stats-row { gap: 1.25rem; }
+}
+
+@media (pointer: coarse) {
+  .hub { cursor: auto; }
 }
