@@ -3,7 +3,7 @@ import Hub from './components/Hub';
 import LandingPage from './components/LandingPage';
 import PremiumHub from './components/PremiumHub';
 import PremiumLandingPage from './components/PremiumLandingPage';
-import { PitchModeProvider } from './hooks/usePitchMode';
+import { PitchModeProvider } from './hooks/PitchModeProvider';
 import { brands, getBrandBySlug } from './data/brands';
 import { getPremiumLandingBySlug } from './data/premium-landings';
 
