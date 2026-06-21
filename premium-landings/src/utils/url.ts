@@ -5,15 +5,23 @@ export function assetUrl(path: string): string {
 }
 
 export function pageUrl(slug?: string): string {
+  const base = import.meta.env.BASE_URL;
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-  const onMobileEntry =
-    typeof window !== 'undefined' && window.location.pathname.includes('mobile.html');
-  const entry = onMobileEntry ? '/mobile.html' : '/';
-  if (!slug) {
-    return onMobileEntry ? `${origin}${base}/mobile.html#/premium` : `${origin}${base}/`;
+  const basePath = base.endsWith('/') ? base : `${base}/`;
+
+  if (base !== '/') {
+    const hash = slug ? `#/${slug}` : '#/';
+    return `${origin}${basePath}${hash}`;
   }
-  return `${origin}${base}${entry}#/${slug}`;
+
+  const path = slug ? `${base}${slug}`.replace(/\/{2,}/g, '/') : base;
+  return new URL(path, origin).href;
+}
+
+export function pilotPageUrl(): string {
+  const base = import.meta.env.BASE_URL;
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  return new URL(`${base}pilot.html`, origin).href;
 }
 
 export function copyToClipboard(text: string): void {

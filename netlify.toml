@@ -1,7 +1,11 @@
 [build]
+  command = "cd premium-landings && npm ci && cd ../halles-lez-landings && npm ci && npm run build:netlify && cp ../pilot.html dist/pilot.html"
   publish = "halles-lez-landings/dist"
-  command = "cd premium-landings && npm ci && cd ../halles-lez-landings && npm ci && GITHUB_PAGES=true npm run build:pages && cp ../pilot.html dist/pilot.html"
 
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback (BrowserRouter on Netlify — base /)
 [[redirects]]
   from = "/*"
   to = "/index.html"

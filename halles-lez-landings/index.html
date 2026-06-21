@@ -25,10 +25,21 @@
       <h1 style="font-size:1.25rem;margin-bottom:0.75rem;">Chargement en cours…</h1>
       <p style="color:#9a9088;margin-bottom:1.5rem;">Si l'écran reste noir, utilisez les liens directs :</p>
       <p><a href="./pilot.html" style="color:#d4af7a;">📱 Page Pilot</a></p>
-      <p><a href="./#/premium" style="color:#d4af7a;">✦ Premium Landings</a></p>
-      <p><a href="./#/velours-auto" style="color:#d4af7a;">Velours Auto</a></p>
+      <p id="boot-premium"></p>
+      <p id="boot-velours"></p>
     </div>
     <script>
+      (function () {
+        var hash = location.hostname.endsWith('github.io') && location.pathname.indexOf('/Generation') === 0;
+        function link(id, label, slug) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var href = hash ? './#/' + slug : './' + slug;
+          el.innerHTML = '<a href="' + href + '" style="color:#d4af7a;">' + label + '</a>';
+        }
+        link('boot-premium', '✦ Premium Landings', 'premium');
+        link('boot-velours', 'Velours Auto', 'velours-auto');
+      })();
       setTimeout(function () {
         var root = document.getElementById('root');
         var fb = document.getElementById('boot-fallback');

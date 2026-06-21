@@ -1,19 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { sites } from '../../data/sites';
-import { copyToClipboard, pageUrl } from '../../utils/url';
+import { copyToClipboard, pageUrl, pilotPageUrl } from '../../utils/url';
 import './PilotLinks.css';
-
-const DEPLOY_BASE = 'https://site-web-fr.github.io/Generation';
-const PILOT_STATIC = `${DEPLOY_BASE}/pilot.html`;
-
-function absPremiumUrl(slug: string) {
-  return `${DEPLOY_BASE}/#/${slug}`;
-}
-
-function absPremiumHub() {
-  return `${DEPLOY_BASE}/#/premium`;
-}
 
 export default function PilotLinks() {
   const [copied, setCopied] = useState<string | null>(null);
@@ -31,7 +20,7 @@ export default function PilotLinks() {
         <span className="pilot-badge">📱 Pilot Mobile</span>
         <h1>Liens directs</h1>
         <p>Tous les projets — copiez et ouvrez sur votre téléphone</p>
-        <a href={PILOT_STATIC} className="pilot-static-link">
+        <a href={pilotPageUrl()} className="pilot-static-link">
           Page pilot autonome (favori Safari)
         </a>
       </header>
@@ -39,17 +28,17 @@ export default function PilotLinks() {
       <section className="pilot-section">
         <h2>Portfolios</h2>
         <div className="pilot-hubs">
-          <a href={absPremiumHub()} className="pilot-hub-card">
+          <a href={pageUrl('premium')} className="pilot-hub-card">
             <strong>✦ Premium Landings</strong>
             <span>Hub des 10 démos</span>
-            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(absPremiumHub(), 'hub-premium'); }}>
+            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(pageUrl('premium'), 'hub-premium'); }}>
               {copied === 'hub-premium' ? '✓ Copié' : 'Copier'}
             </button>
           </a>
-          <a href={`${DEPLOY_BASE}/#/`} className="pilot-hub-card pilot-hub-card--halles">
+          <a href={pageUrl()} className="pilot-hub-card pilot-hub-card--halles">
             <strong>🍽 Halles du Lez</strong>
             <span>Food court Montpellier</span>
-            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(`${DEPLOY_BASE}/#/`, 'hub-halles'); }}>
+            <button type="button" onClick={(e) => { e.preventDefault(); handleCopy(pageUrl(), 'hub-halles'); }}>
               {copied === 'hub-halles' ? '✓ Copié' : 'Copier'}
             </button>
           </a>
@@ -60,7 +49,7 @@ export default function PilotLinks() {
         <h2>Premium — 10 sites client</h2>
         <ul className="pilot-list">
           {sites.map((site) => {
-            const url = absPremiumUrl(site.slug);
+            const url = pageUrl(site.slug);
             return (
               <li key={site.slug} className="pilot-row">
                 <a href={url}>
@@ -92,7 +81,7 @@ export default function PilotLinks() {
       </section>
 
       <footer className="pilot-footer">
-        <p>Déployé sur GitHub Pages · {DEPLOY_BASE}</p>
+        <p>{typeof window !== 'undefined' ? window.location.origin : ''}</p>
       </footer>
     </div>
   );

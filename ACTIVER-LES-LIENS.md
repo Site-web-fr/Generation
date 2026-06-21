@@ -71,14 +71,15 @@ Puis testez : **https://site-web-fr.github.io/Generation/pilot.html**
 
 ---
 
-## 🔄 PLAN B — Netlify (si vous ne voulez pas rendre le repo public)
+## 🔄 PLAN B — Netlify (équipe sitewebmontpellier)
 
-1. Allez sur https://app.netlify.com/drop
-2. Téléchargez le ZIP depuis GitHub Actions :
-   - **Actions** → dernier workflow vert **Deploy GitHub Pages**
-   - Téléchargez l'artefact **site-deploy**
-3. Dézippez et glissez le contenu sur Netlify Drop
-4. Netlify vous donne une URL du type `https://votre-site.netlify.app`
+Guide complet : **[NETLIFY-DEPLOY.md](./NETLIFY-DEPLOY.md)**
+
+Tableau de bord : https://app.netlify.com/teams/sitewebmontpellier/projects
+
+**Résumé :** Add new project → Import **Site-web-fr/Generation** → Netlify lit `netlify.toml` automatiquement → Deploy.
+
+Alternative manuelle : https://app.netlify.com/drop + artefact ZIP **site-deploy** depuis GitHub Actions.
 
 ---
 

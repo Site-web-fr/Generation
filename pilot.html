@@ -136,15 +136,23 @@
     <div class="link-list" id="halles-list"></div>
   </section>
 
-  <footer>Site-web-fr/Generation · GitHub Pages</footer>
+  <footer>Site-web-fr/Generation · Hébergement auto-détecté</footer>
   <div class="toast" id="toast">Lien copié ✓</div>
 
   <script>
-    const ORIGIN = 'https://site-web-fr.github.io';
-    const BASE = '/Generation';
+    const isGitHubPages =
+      location.hostname.endsWith('github.io') && location.pathname.startsWith('/Generation');
+    const ORIGIN = location.origin;
+    const BASE = isGitHubPages ? '/Generation' : '';
     const APP = ORIGIN + BASE + '/';
-    const PREMIUM_HUB = APP + '#/premium';
-    const HALLES_HUB = APP + '#/';
+
+    function appUrl(slug) {
+      if (isGitHubPages) return slug ? APP + '#/' + slug : APP + '#/';
+      return slug ? APP + slug : APP;
+    }
+
+    const PREMIUM_HUB = appUrl('premium');
+    const HALLES_HUB = appUrl('');
 
     const premiumSites = [
       { slug: 'eclat-aesthetic', name: 'Éclat Aesthetic', sub: 'Chirurgie esthétique' },
@@ -186,11 +194,11 @@
     }
 
     function premiumUrl(slug) {
-      return APP + '#/' + slug;
+      return appUrl(slug);
     }
 
     function hallesUrl(slug) {
-      return APP + '#/' + slug;
+      return appUrl(slug);
     }
 
     function copyUrl(url, btn) {
