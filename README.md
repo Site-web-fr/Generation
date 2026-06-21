@@ -1,5 +1,9 @@
 # Workspace
 
+## ⚠️ Les liens ne marchent pas encore ?
+
+→ Lisez **[ACTIVER-LES-LIENS.md](ACTIVER-LES-LIENS.md)** — le dépôt est privé, GitHub Pages doit être activé (ou passer le repo en public).
+
 ## Pilot Mobile (téléphone)
 
 **Tous les liens en un seul endroit :**

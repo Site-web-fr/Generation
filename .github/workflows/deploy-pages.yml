@@ -2,11 +2,11 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, cursor/premium-landings-8794]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -56,12 +56,20 @@ jobs:
             '<script>location.replace("/Generation/#/premium")</script>' \
             '<title>Redirection Premium</title></head><body></body></html>' \
             > combined/premium/index.html
+          touch combined/.nojekyll
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./combined
-          publish_branch: gh-pages
-          force_orphan: true
-          commit_message: 'deploy: unified Generation app — halles + premium + pilot'
+          path: combined
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
