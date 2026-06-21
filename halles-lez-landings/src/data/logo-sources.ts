@@ -11,7 +11,6 @@ export const WORDMARK_SLUGS = new Set([
   'la-bodeguita',
   'bambino',
   'tonton-haricot',
-  'sorveteria',
 ]);
 
 export type LogoKind = 'wordmark' | 'picto';
@@ -40,16 +39,6 @@ function brandHd(slug: string) {
 export function resolveLogo(slug: string): ResolvedLogo {
   const picto = official(slug);
   const hd = brandHd(slug);
-
-  if (slug === 'sorveteria') {
-    const wm = wordmark(slug);
-    return {
-      logo: wm,
-      logoFallback: wm,
-      logoChain: [wm],
-      kind: 'wordmark',
-    };
-  }
 
   if (WORDMARK_SLUGS.has(slug)) {
     const wm = wordmark(slug);

@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, cursor/halles-lez-landings-7629, cursor/sorveteria-landing-066b]
+    branches: [main, cursor/halles-lez-landings-7629]
   workflow_dispatch:
 
 permissions:
@@ -27,11 +27,6 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: halles-lez-landings/package-lock.json
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Install dependencies
         working-directory: halles-lez-landings

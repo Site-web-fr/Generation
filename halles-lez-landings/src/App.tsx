@@ -1,6 +1,7 @@
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Hub from './components/Hub';
 import LandingPage from './components/LandingPage';
+import SorveteriaSite from './components/SorveteriaSite';
 import { PitchModeProvider } from './hooks/PitchModeProvider';
 import { brands, getBrandBySlug } from './data/brands';
 
@@ -19,6 +20,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Hub />} />
+          <Route path="/sorveteria" element={<SorveteriaSite />} />
           {brands.map((b) => (
             <Route key={b.slug} path={`/${b.slug}`} element={<BrandRoute slug={b.slug} />} />
           ))}

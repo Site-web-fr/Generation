@@ -13,7 +13,6 @@ import HeroDishVideo from './HeroDishVideo';
 import HeroIntro from './HeroIntro';
 import InteractiveMenu from './InteractiveMenu';
 import GoogleReviews from './GoogleReviews';
-import SorveteriaExperience from './SorveteriaExperience';
 import { usePitchMode } from '../hooks/usePitchMode';
 import { formatPhoneDisplay, phoneHref } from '../data/stand-contacts';
 import './LandingPage.css';
@@ -298,8 +297,6 @@ export default function LandingPage({ brand }: Props) {
           ))}
         </div>
       </Section>
-
-      {brand.slug === 'sorveteria' && <SorveteriaExperience />}
 
       <Section className="menu-section" id="menu">
         <div className="section-header">

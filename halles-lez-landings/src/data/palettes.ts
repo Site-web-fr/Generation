@@ -193,7 +193,6 @@ const SLUG_PALETTE: Record<string, keyof typeof PALETTES> = {
   'la-vita-al-dente': 'italien',
   cherry: 'sucre',
   hyoga: 'sucre',
-  sorveteria: 'sucre',
   'clara-jung': 'sucre',
   mamaona: 'healthy',
   bonobo: 'healthy',
