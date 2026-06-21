@@ -1,0 +1,197 @@
+/* Shared layout primitives across the five landing pages */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+
+.split--reverse .split__visual {
+  order: 2;
+}
+
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .split--reverse .split__visual {
+    order: 0;
+  }
+}
+
+.split__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  margin: 18px 0 22px;
+}
+
+.split__body {
+  display: grid;
+  gap: 18px;
+}
+
+.split__list {
+  list-style: none;
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.split__list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+.split__list li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Decorative visual panel (gradient/abstract, no image asset needed) */
+.panel {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 3.4;
+  background:
+    radial-gradient(80% 80% at 20% 10%, var(--accent-glow), transparent 55%),
+    radial-gradient(70% 70% at 90% 90%, rgba(255, 255, 255, 0.08), transparent 55%),
+    linear-gradient(160deg, var(--surface), var(--bg-soft));
+}
+
+.panel canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.panel__tag {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Full-width quote / statement band */
+.band {
+  background:
+    radial-gradient(60% 120% at 50% 0%, var(--accent-glow), transparent 60%),
+    var(--bg-soft);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Configurator section intro inline */
+.cfg-section__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+/* Pricing / package cards */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+@media (max-width: 860px) {
+  .tiers {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tier {
+  padding: clamp(26px, 3vw, 38px);
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+
+.tier:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.tier--featured {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-glow), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.tier__name {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.tier__price {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--accent-2);
+}
+
+.tier__price small {
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+}
+
+.tier__list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.tier__list li {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  font-weight: 300;
+  padding-left: 22px;
+  position: relative;
+}
+
+.tier__list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.7rem;
+  top: 3px;
+}
+
+/* Gallery (real estate / generic) */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 2vw, 22px);
+}
+
+@media (max-width: 860px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}

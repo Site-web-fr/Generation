@@ -1,0 +1,215 @@
+.cfg-field {
+  display: grid;
+  gap: 14px;
+}
+
+.cfg-field__label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+/* Chips */
+.cfg-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cfg-chip {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.35s var(--ease);
+  min-width: 0;
+}
+
+.cfg-chip:hover {
+  border-color: var(--line-strong);
+}
+
+.cfg-chip.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #06070a;
+}
+
+.cfg-chip__label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.cfg-chip__sub {
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+/* Range */
+.cfg-range__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.cfg-range__value {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.cfg-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) var(--pct),
+    rgba(255, 255, 255, 0.12) var(--pct),
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  outline: none;
+}
+
+.cfg-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 4px solid var(--accent);
+  box-shadow: 0 4px 18px var(--accent-glow);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease);
+}
+
+.cfg-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+.cfg-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 4px solid var(--accent);
+  cursor: pointer;
+}
+
+/* Swatches */
+.cfg-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cfg-swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--swatch);
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 1px var(--line) inset;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.cfg-swatch:hover {
+  transform: scale(1.1);
+}
+
+.cfg-swatch.is-active {
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  transform: scale(1.08);
+}
+
+/* Readout */
+.cfg-readout {
+  display: grid;
+  gap: 8px;
+  padding-top: clamp(18px, 3vw, 28px);
+  border-top: 1px solid var(--line);
+}
+
+.cfg-readout__caption {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cfg-readout__amount {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  line-height: 1;
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.cfg-readout__note {
+  font-size: 0.84rem;
+}
+
+.cfg-readout__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* Generic configurator layout */
+.config {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: stretch;
+}
+
+@media (max-width: 920px) {
+  .config {
+    grid-template-columns: 1fr;
+  }
+}
+
+.config__visual {
+  position: relative;
+  min-height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: radial-gradient(120% 120% at 50% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
+    var(--surface);
+}
+
+.config__visual canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.config__panel {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 30px);
+  align-content: start;
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.config__hint {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  pointer-events: none;
+}

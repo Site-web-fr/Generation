@@ -1,0 +1,114 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: clamp(40px, 8vh, 90px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero__scene canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+      120% 80% at 70% 20%,
+      transparent 0%,
+      rgba(6, 7, 10, 0.4) 60%,
+      var(--bg) 100%
+    ),
+    linear-gradient(180deg, rgba(6, 7, 10, 0.5) 0%, transparent 30%, var(--bg) 100%);
+}
+
+.hero__inner {
+  position: relative;
+}
+
+.hero__eyebrow {
+  margin-bottom: clamp(18px, 3vw, 30px);
+}
+
+.hero__title {
+  max-width: 16ch;
+  margin-bottom: clamp(20px, 3vw, 34px);
+  perspective: 600px;
+}
+
+.hero__lead {
+  margin-bottom: clamp(26px, 4vw, 42px);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero__foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: clamp(40px, 7vh, 80px);
+}
+
+.hero__back {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.3s var(--ease);
+}
+
+.hero__back:hover {
+  color: var(--accent);
+}
+
+.hero__scroll {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.hero__scroll-line {
+  width: 54px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: var(--accent);
+  animation: scroll-cue 2s var(--ease) infinite;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}

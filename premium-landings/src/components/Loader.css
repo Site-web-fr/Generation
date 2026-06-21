@@ -1,0 +1,70 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg);
+  display: grid;
+  grid-template-rows: 1fr auto auto auto;
+  padding: clamp(24px, 5vw, 60px);
+  overflow: hidden;
+}
+
+.loader__brand {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  color: var(--ink);
+  align-self: start;
+}
+
+.loader__center {
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.loader__word {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(3rem, 12vw, 9rem);
+  color: var(--accent-2);
+  line-height: 1;
+}
+
+.loader__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.loader__meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.loader__count {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.loader__bar {
+  margin-top: 20px;
+  height: 2px;
+  width: 100%;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.loader__bar-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}

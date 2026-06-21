@@ -1,0 +1,172 @@
+.hub-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hub-hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hub-hero__scene canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hub-hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(80% 80% at 50% 40%, transparent, var(--bg) 95%),
+    linear-gradient(180deg, transparent 50%, var(--bg) 100%);
+}
+
+.hub-hero__inner {
+  padding-top: 120px;
+  padding-bottom: 60px;
+}
+
+.hub-hero__title {
+  max-width: 18ch;
+  margin: clamp(20px, 3vw, 32px) 0;
+  perspective: 600px;
+}
+
+.hub-hero__lead {
+  max-width: 54ch;
+}
+
+.hub-hero__scroll {
+  margin-top: clamp(36px, 6vw, 64px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.hub-hero__scroll-line {
+  width: 70px;
+  height: 1px;
+  background: var(--accent);
+  transition: background 0.5s var(--ease);
+}
+
+/* Brand index */
+.hub-index {
+  list-style: none;
+  margin-top: clamp(24px, 4vw, 48px);
+}
+
+.hub-index__row {
+  border-top: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 34px) 0;
+  transition: padding-left 0.5s var(--ease);
+}
+
+.hub-index__row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.hub-index__row:hover {
+  padding-left: clamp(8px, 1.5vw, 22px);
+}
+
+.hub-index__link {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: baseline;
+  gap: clamp(14px, 3vw, 40px);
+}
+
+.hub-index__num {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  transition: color 0.4s var(--ease);
+}
+
+.hub-index__name {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 6vw, 4.4rem);
+  line-height: 1;
+  color: var(--ink);
+  transition: color 0.4s var(--ease);
+}
+
+.hub-index__row:hover .hub-index__name {
+  color: var(--accent);
+}
+
+.hub-index__cat {
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: right;
+}
+
+.hub-index__arrow {
+  font-size: 1.4rem;
+  color: var(--accent);
+  transform: translateX(-6px);
+  opacity: 0;
+  transition: all 0.4s var(--ease);
+}
+
+.hub-index__row:hover .hub-index__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hub-index__blurb {
+  max-width: 60ch;
+  margin-top: 14px;
+  font-size: 0.96rem;
+  font-weight: 300;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.6s var(--ease), opacity 0.5s var(--ease),
+    margin-top 0.4s var(--ease);
+}
+
+.hub-index__row:hover .hub-index__blurb {
+  max-height: 80px;
+  opacity: 1;
+}
+
+@media (max-width: 820px) {
+  .hub-index__link {
+    grid-template-columns: auto 1fr auto;
+  }
+  .hub-index__cat {
+    display: none;
+  }
+  .hub-index__blurb {
+    max-height: none;
+    opacity: 1;
+    margin-top: 12px;
+  }
+}
+
+/* Manifesto */
+.hub-manifesto {
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: clamp(28px, 5vw, 48px);
+}
+
+.hub-manifesto__text {
+  font-size: clamp(1.8rem, 5vw, 4rem);
+  max-width: 22ch;
+}
