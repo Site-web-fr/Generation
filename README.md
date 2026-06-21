@@ -1,5 +1,13 @@
 # Workspace
 
+## Pilot Mobile (téléphone)
+
+**Tous les liens en un seul endroit :**
+
+→ **https://site-web-fr.github.io/Generation/pilot.html**
+
+→ Voir [`MOBILE-PILOT.md`](MOBILE-PILOT.md) pour la liste complète
+
 ## Premium Landings — 10 Propositions Client (~10 000 €/site)
 
 Landing pages ultra-premium avec UX interactive, 3D et estimateurs temps réel.

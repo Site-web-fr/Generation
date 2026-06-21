@@ -119,6 +119,22 @@ export default function Hub() {
             className="hub-title"
             delay={0.1}
           />
+          <motion.div
+            className="hub-pilot-banner"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <a href="/pilot" className="hub-pilot-link">
+              📱 Pilot Mobile — tous les liens
+            </a>
+            <a
+              href="https://site-web-fr.github.io/Generation/pilot.html"
+              className="hub-pilot-link hub-pilot-link--outline"
+            >
+              Ouvrir la page pilot (déployée)
+            </a>
+          </motion.div>
           <motion.p
             className="hub-subtitle"
             initial={{ opacity: 0 }}

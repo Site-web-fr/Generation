@@ -1,5 +1,6 @@
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Hub from './components/hub/Hub';
+import PilotLinks from './components/hub/PilotLinks';
 import PremiumLanding from './components/shared/PremiumLanding';
 import { sites, getSiteBySlug } from './data/sites';
 
@@ -17,6 +18,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Hub />} />
+        <Route path="/pilot" element={<PilotLinks />} />
         {sites.map((s) => (
           <Route key={s.slug} path={`/${s.slug}`} element={<SiteRoute slug={s.slug} />} />
         ))}

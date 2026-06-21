@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#050508" />
+  <title>Pilot Mobile — Tous les projets</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #050508;
+      color: #f5f0eb;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem max(2rem, env(safe-area-inset-bottom));
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { text-align: center; margin-bottom: 2rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #d4af7a;
+      border: 1px solid rgba(212,175,122,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .sub { font-size: 0.9rem; color: #8a8480; max-width: 320px; margin: 0 auto; }
+    section { margin-bottom: 2rem; }
+    h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #d4af7a;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hub-links { display: grid; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .hub-card {
+      display: block;
+      padding: 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .hub-card strong { display: block; font-size: 1.05rem; margin-bottom: 0.25rem; }
+    .hub-card span { font-size: 0.8rem; color: #8a8480; }
+    .hub-card.premium { border-color: rgba(212,175,122,0.3); }
+    .hub-card.halles { border-color: rgba(196,30,58,0.3); }
+    .link-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .link-row a {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+    .link-row a strong { display: block; font-size: 0.9rem; }
+    .link-row a small { font-size: 0.72rem; color: #6b6560; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .btn {
+      flex-shrink: 0;
+      border: none;
+      background: rgba(255,255,255,0.08);
+      color: #d4af7a;
+      font-size: 0.7rem;
+      padding: 0.9rem 0.75rem;
+      cursor: pointer;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+    .btn:active { background: rgba(212,175,122,0.2); }
+    .btn.copied { color: #7a9e7e; }
+    .toast {
+      position: fixed;
+      bottom: max(1.5rem, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #d4af7a;
+      color: #050508;
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+      z-index: 100;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    footer { text-align: center; font-size: 0.75rem; color: #5a5550; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="badge">Pilot Mobile</span>
+    <h1>Tous vos projets</h1>
+    <p class="sub">Liens directs pour piloter et visualiser depuis votre téléphone</p>
+  </header>
+
+  <section>
+    <h2>Portfolios</h2>
+    <div class="hub-links">
+      <a class="hub-card premium" id="hub-premium" href="#">
+        <strong>✦ Premium Landings</strong>
+        <span>10 sites client · 3D · Estimateurs</span>
+      </a>
+      <a class="hub-card halles" id="hub-halles" href="#">
+        <strong>🍽 Halles du Lez</strong>
+        <span>Restaurants · Food court Montpellier</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Premium — 10 démos client</h2>
+    <div class="link-list" id="premium-list"></div>
+  </section>
+
+  <section>
+    <h2>Halles du Lez — Restaurants</h2>
+    <div class="link-list" id="halles-list"></div>
+  </section>
+
+  <footer>Site-web-fr/Generation · GitHub Pages</footer>
+  <div class="toast" id="toast">Lien copié ✓</div>
+
+  <script>
+    const ORIGIN = 'https://site-web-fr.github.io';
+    const BASE = '/Generation';
+    const PREMIUM = ORIGIN + BASE + '/premium/';
+    const HALLES = ORIGIN + BASE + '/';
+
+    const premiumSites = [
+      { slug: 'eclat-aesthetic', name: 'Éclat Aesthetic', sub: 'Chirurgie esthétique' },
+      { slug: 'maison-lumiere', name: 'Maison Lumière', sub: 'Immobilier de luxe' },
+      { slug: 'azure-thrill', name: 'Azure Thrill', sub: 'Jet ski Dubai' },
+      { slug: 'pristine-yachts', name: 'Pristine Yachts', sub: 'Nettoyage yacht' },
+      { slug: 'velours-auto', name: 'Velours Auto', sub: 'Location véhicules premium' },
+      { slug: 'horizon-charter', name: 'Horizon Charter', sub: 'Yacht charter' },
+      { slug: 'sanctum-spa', name: 'Sanctum Spa', sub: 'Wellness & longévité' },
+      { slug: 'aether-aviation', name: 'Aether Aviation', sub: 'Aviation privée' },
+      { slug: 'atelier-nocturne', name: 'Atelier Nocturne', sub: 'Haute joaillerie' },
+      { slug: 'grand-palais-events', name: 'Le Grand Palais Events', sub: 'Événements d\'exception' },
+    ];
+
+    const hallesBrands = [
+      { slug: 'rouge-beef', name: 'Rouge Beef', sub: 'Burgers & viandes' },
+      { slug: 'manita', name: 'MANITA', sub: 'Cuisine italienne' },
+      { slug: 'naked', name: 'Naked', sub: 'Healthy food' },
+      { slug: 'blue-india', name: 'Blue India', sub: 'Cuisine indienne' },
+      { slug: 'banger', name: 'BANGER', sub: 'Street food' },
+      { slug: 'soleira', name: 'SOLEIRA', sub: 'Cuisine méditerranéenne' },
+      { slug: 'casa-asado', name: 'Casa Asado', sub: 'Grill & viandes' },
+      { slug: 'maria-bonita', name: 'Maria Bonita', sub: 'Mexicain' },
+      { slug: 'bambino', name: 'Bambino', sub: 'Pizza' },
+      { slug: 'la-bodeguita', name: 'La Bodeguita', sub: 'Tapas & cocktails' },
+    ];
+
+    document.getElementById('hub-premium').href = PREMIUM;
+    document.getElementById('hub-halles').href = HALLES;
+
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function copyUrl(url, btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          btn.textContent = '✓';
+          btn.classList.add('copied');
+          showToast('Lien copié — collez dans Safari/Chrome');
+          setTimeout(() => { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+        });
+      } else {
+        prompt('Copiez ce lien :', url);
+      }
+    }
+
+    function renderList(containerId, items, base) {
+      const el = document.getElementById(containerId);
+      items.forEach(({ slug, name, sub }) => {
+        const url = base + '#/' + slug;
+        const row = document.createElement('div');
+        row.className = 'link-row';
+        row.innerHTML = `
+          <a href="${url}">
+            <strong>${name}</strong>
+            <small>${sub}</small>
+          </a>
+          <button class="btn" type="button">Copier</button>
+        `;
+        row.querySelector('.btn').addEventListener('click', (e) => {
+          e.preventDefault();
+          copyUrl(url, e.target);
+        });
+        el.appendChild(row);
+      });
+    }
+
+    renderList('premium-list', premiumSites, PREMIUM);
+    renderList('halles-list', hallesBrands, HALLES);
+
+    if (navigator.share) {
+      const shareBtn = document.createElement('button');
+      shareBtn.textContent = 'Partager cette page pilot';
+      shareBtn.className = 'hub-card';
+      shareBtn.style.cssText = 'width:100%;cursor:pointer;color:inherit;font:inherit;margin-top:0.75rem;';
+      shareBtn.onclick = () => navigator.share({
+        title: 'Pilot Mobile — Projets',
+        url: location.href,
+      });
+      document.querySelector('header').appendChild(shareBtn);
+    }
+  </script>
+</body>
+</html>
