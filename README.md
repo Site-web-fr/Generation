@@ -1,4 +1,9 @@
-# Workspace
+# Generation
+
+Démos publiques : **landings premium** (~10 000 €/site) et **Halles du Lez** (prospection food court).
+
+> Le site parent commercial [site-web.fr](https://site-web.fr) est dans le dépôt [`vitrine-produit`](https://github.com/Site-web-fr/vitrine-produit).  
+> Ce dépôt sert aux démos et propositions, pas à la vitrine principale.
 
 ## ⚠️ Les liens ne marchent pas encore ?
 
